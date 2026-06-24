@@ -9276,6 +9276,4191 @@ class FocusSessionsCompanion extends UpdateCompanion<FocusSessionRow> {
   }
 }
 
+class $SpacesTable extends Spaces with TableInfo<$SpacesTable, SpaceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpacesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _iconKeyMeta = const VerificationMeta(
+    'iconKey',
+  );
+  @override
+  late final GeneratedColumn<String> iconKey = GeneratedColumn<String>(
+    'icon_key',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _colorValueMeta = const VerificationMeta(
+    'colorValue',
+  );
+  @override
+  late final GeneratedColumn<int> colorValue = GeneratedColumn<int>(
+    'color_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    description,
+    iconKey,
+    colorValue,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'spaces';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('icon_key')) {
+      context.handle(
+        _iconKeyMeta,
+        iconKey.isAcceptableOrUnknown(data['icon_key']!, _iconKeyMeta),
+      );
+    }
+    if (data.containsKey('color_value')) {
+      context.handle(
+        _colorValueMeta,
+        colorValue.isAcceptableOrUnknown(data['color_value']!, _colorValueMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      iconKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}icon_key'],
+      ),
+      colorValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}color_value'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $SpacesTable createAlias(String alias) {
+    return $SpacesTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceRow extends DataClass implements Insertable<SpaceRow> {
+  final String id;
+  final String name;
+  final String? description;
+  final String? iconKey;
+  final int? colorValue;
+  final int sortOrder;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const SpaceRow({
+    required this.id,
+    required this.name,
+    this.description,
+    this.iconKey,
+    this.colorValue,
+    required this.sortOrder,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || iconKey != null) {
+      map['icon_key'] = Variable<String>(iconKey);
+    }
+    if (!nullToAbsent || colorValue != null) {
+      map['color_value'] = Variable<int>(colorValue);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  SpacesCompanion toCompanion(bool nullToAbsent) {
+    return SpacesCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      iconKey: iconKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(iconKey),
+      colorValue: colorValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(colorValue),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory SpaceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      iconKey: serializer.fromJson<String?>(json['iconKey']),
+      colorValue: serializer.fromJson<int?>(json['colorValue']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'iconKey': serializer.toJson<String?>(iconKey),
+      'colorValue': serializer.toJson<int?>(colorValue),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  SpaceRow copyWith({
+    String? id,
+    String? name,
+    Value<String?> description = const Value.absent(),
+    Value<String?> iconKey = const Value.absent(),
+    Value<int?> colorValue = const Value.absent(),
+    int? sortOrder,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => SpaceRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    iconKey: iconKey.present ? iconKey.value : this.iconKey,
+    colorValue: colorValue.present ? colorValue.value : this.colorValue,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  SpaceRow copyWithCompanion(SpacesCompanion data) {
+    return SpaceRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      iconKey: data.iconKey.present ? data.iconKey.value : this.iconKey,
+      colorValue: data.colorValue.present
+          ? data.colorValue.value
+          : this.colorValue,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('iconKey: $iconKey, ')
+          ..write('colorValue: $colorValue, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    description,
+    iconKey,
+    colorValue,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.iconKey == this.iconKey &&
+          other.colorValue == this.colorValue &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class SpacesCompanion extends UpdateCompanion<SpaceRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<String?> iconKey;
+  final Value<int?> colorValue;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const SpacesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.iconKey = const Value.absent(),
+    this.colorValue = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpacesCompanion.insert({
+    required String id,
+    required String name,
+    this.description = const Value.absent(),
+    this.iconKey = const Value.absent(),
+    this.colorValue = const Value.absent(),
+    required int sortOrder,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       sortOrder = Value(sortOrder),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? iconKey,
+    Expression<int>? colorValue,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (iconKey != null) 'icon_key': iconKey,
+      if (colorValue != null) 'color_value': colorValue,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpacesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<String?>? iconKey,
+    Value<int?>? colorValue,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return SpacesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      iconKey: iconKey ?? this.iconKey,
+      colorValue: colorValue ?? this.colorValue,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (iconKey.present) {
+      map['icon_key'] = Variable<String>(iconKey.value);
+    }
+    if (colorValue.present) {
+      map['color_value'] = Variable<int>(colorValue.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpacesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('iconKey: $iconKey, ')
+          ..write('colorValue: $colorValue, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceRecordTypesTable extends SpaceRecordTypes
+    with TableInfo<$SpaceRecordTypesTable, SpaceRecordTypeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceRecordTypesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _spaceIdMeta = const VerificationMeta(
+    'spaceId',
+  );
+  @override
+  late final GeneratedColumn<String> spaceId = GeneratedColumn<String>(
+    'space_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES spaces (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    spaceId,
+    name,
+    description,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_record_types';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceRecordTypeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('space_id')) {
+      context.handle(
+        _spaceIdMeta,
+        spaceId.isAcceptableOrUnknown(data['space_id']!, _spaceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_spaceIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceRecordTypeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceRecordTypeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      spaceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}space_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $SpaceRecordTypesTable createAlias(String alias) {
+    return $SpaceRecordTypesTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceRecordTypeRow extends DataClass
+    implements Insertable<SpaceRecordTypeRow> {
+  final String id;
+  final String spaceId;
+  final String name;
+  final String? description;
+  final int sortOrder;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const SpaceRecordTypeRow({
+    required this.id,
+    required this.spaceId,
+    required this.name,
+    this.description,
+    required this.sortOrder,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['space_id'] = Variable<String>(spaceId);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  SpaceRecordTypesCompanion toCompanion(bool nullToAbsent) {
+    return SpaceRecordTypesCompanion(
+      id: Value(id),
+      spaceId: Value(spaceId),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory SpaceRecordTypeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceRecordTypeRow(
+      id: serializer.fromJson<String>(json['id']),
+      spaceId: serializer.fromJson<String>(json['spaceId']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'spaceId': serializer.toJson<String>(spaceId),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  SpaceRecordTypeRow copyWith({
+    String? id,
+    String? spaceId,
+    String? name,
+    Value<String?> description = const Value.absent(),
+    int? sortOrder,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => SpaceRecordTypeRow(
+    id: id ?? this.id,
+    spaceId: spaceId ?? this.spaceId,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  SpaceRecordTypeRow copyWithCompanion(SpaceRecordTypesCompanion data) {
+    return SpaceRecordTypeRow(
+      id: data.id.present ? data.id.value : this.id,
+      spaceId: data.spaceId.present ? data.spaceId.value : this.spaceId,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordTypeRow(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    spaceId,
+    name,
+    description,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceRecordTypeRow &&
+          other.id == this.id &&
+          other.spaceId == this.spaceId &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class SpaceRecordTypesCompanion extends UpdateCompanion<SpaceRecordTypeRow> {
+  final Value<String> id;
+  final Value<String> spaceId;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const SpaceRecordTypesCompanion({
+    this.id = const Value.absent(),
+    this.spaceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceRecordTypesCompanion.insert({
+    required String id,
+    required String spaceId,
+    required String name,
+    this.description = const Value.absent(),
+    required int sortOrder,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       spaceId = Value(spaceId),
+       name = Value(name),
+       sortOrder = Value(sortOrder),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceRecordTypeRow> custom({
+    Expression<String>? id,
+    Expression<String>? spaceId,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (spaceId != null) 'space_id': spaceId,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceRecordTypesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? spaceId,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceRecordTypesCompanion(
+      id: id ?? this.id,
+      spaceId: spaceId ?? this.spaceId,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (spaceId.present) {
+      map['space_id'] = Variable<String>(spaceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordTypesCompanion(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceFieldsTable extends SpaceFields
+    with TableInfo<$SpaceFieldsTable, SpaceFieldRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceFieldsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordTypeIdMeta = const VerificationMeta(
+    'recordTypeId',
+  );
+  @override
+  late final GeneratedColumn<String> recordTypeId = GeneratedColumn<String>(
+    'record_type_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES space_record_types (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fieldKeyMeta = const VerificationMeta(
+    'fieldKey',
+  );
+  @override
+  late final GeneratedColumn<String> fieldKey = GeneratedColumn<String>(
+    'field_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fieldTypeMeta = const VerificationMeta(
+    'fieldType',
+  );
+  @override
+  late final GeneratedColumn<String> fieldType = GeneratedColumn<String>(
+    'field_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isRequiredMeta = const VerificationMeta(
+    'isRequired',
+  );
+  @override
+  late final GeneratedColumn<bool> isRequired = GeneratedColumn<bool>(
+    'is_required',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_required" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _optionsJsonMeta = const VerificationMeta(
+    'optionsJson',
+  );
+  @override
+  late final GeneratedColumn<String> optionsJson = GeneratedColumn<String>(
+    'options_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    recordTypeId,
+    name,
+    fieldKey,
+    fieldType,
+    isRequired,
+    sortOrder,
+    optionsJson,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_fields';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceFieldRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('record_type_id')) {
+      context.handle(
+        _recordTypeIdMeta,
+        recordTypeId.isAcceptableOrUnknown(
+          data['record_type_id']!,
+          _recordTypeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordTypeIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('field_key')) {
+      context.handle(
+        _fieldKeyMeta,
+        fieldKey.isAcceptableOrUnknown(data['field_key']!, _fieldKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldKeyMeta);
+    }
+    if (data.containsKey('field_type')) {
+      context.handle(
+        _fieldTypeMeta,
+        fieldType.isAcceptableOrUnknown(data['field_type']!, _fieldTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldTypeMeta);
+    }
+    if (data.containsKey('is_required')) {
+      context.handle(
+        _isRequiredMeta,
+        isRequired.isAcceptableOrUnknown(data['is_required']!, _isRequiredMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isRequiredMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('options_json')) {
+      context.handle(
+        _optionsJsonMeta,
+        optionsJson.isAcceptableOrUnknown(
+          data['options_json']!,
+          _optionsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceFieldRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceFieldRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      recordTypeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}record_type_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      fieldKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field_key'],
+      )!,
+      fieldType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field_type'],
+      )!,
+      isRequired: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_required'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      optionsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}options_json'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $SpaceFieldsTable createAlias(String alias) {
+    return $SpaceFieldsTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceFieldRow extends DataClass implements Insertable<SpaceFieldRow> {
+  final String id;
+  final String recordTypeId;
+  final String name;
+  final String fieldKey;
+  final String fieldType;
+  final bool isRequired;
+  final int sortOrder;
+  final String? optionsJson;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const SpaceFieldRow({
+    required this.id,
+    required this.recordTypeId,
+    required this.name,
+    required this.fieldKey,
+    required this.fieldType,
+    required this.isRequired,
+    required this.sortOrder,
+    this.optionsJson,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['record_type_id'] = Variable<String>(recordTypeId);
+    map['name'] = Variable<String>(name);
+    map['field_key'] = Variable<String>(fieldKey);
+    map['field_type'] = Variable<String>(fieldType);
+    map['is_required'] = Variable<bool>(isRequired);
+    map['sort_order'] = Variable<int>(sortOrder);
+    if (!nullToAbsent || optionsJson != null) {
+      map['options_json'] = Variable<String>(optionsJson);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  SpaceFieldsCompanion toCompanion(bool nullToAbsent) {
+    return SpaceFieldsCompanion(
+      id: Value(id),
+      recordTypeId: Value(recordTypeId),
+      name: Value(name),
+      fieldKey: Value(fieldKey),
+      fieldType: Value(fieldType),
+      isRequired: Value(isRequired),
+      sortOrder: Value(sortOrder),
+      optionsJson: optionsJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(optionsJson),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory SpaceFieldRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceFieldRow(
+      id: serializer.fromJson<String>(json['id']),
+      recordTypeId: serializer.fromJson<String>(json['recordTypeId']),
+      name: serializer.fromJson<String>(json['name']),
+      fieldKey: serializer.fromJson<String>(json['fieldKey']),
+      fieldType: serializer.fromJson<String>(json['fieldType']),
+      isRequired: serializer.fromJson<bool>(json['isRequired']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      optionsJson: serializer.fromJson<String?>(json['optionsJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'recordTypeId': serializer.toJson<String>(recordTypeId),
+      'name': serializer.toJson<String>(name),
+      'fieldKey': serializer.toJson<String>(fieldKey),
+      'fieldType': serializer.toJson<String>(fieldType),
+      'isRequired': serializer.toJson<bool>(isRequired),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'optionsJson': serializer.toJson<String?>(optionsJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  SpaceFieldRow copyWith({
+    String? id,
+    String? recordTypeId,
+    String? name,
+    String? fieldKey,
+    String? fieldType,
+    bool? isRequired,
+    int? sortOrder,
+    Value<String?> optionsJson = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => SpaceFieldRow(
+    id: id ?? this.id,
+    recordTypeId: recordTypeId ?? this.recordTypeId,
+    name: name ?? this.name,
+    fieldKey: fieldKey ?? this.fieldKey,
+    fieldType: fieldType ?? this.fieldType,
+    isRequired: isRequired ?? this.isRequired,
+    sortOrder: sortOrder ?? this.sortOrder,
+    optionsJson: optionsJson.present ? optionsJson.value : this.optionsJson,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  SpaceFieldRow copyWithCompanion(SpaceFieldsCompanion data) {
+    return SpaceFieldRow(
+      id: data.id.present ? data.id.value : this.id,
+      recordTypeId: data.recordTypeId.present
+          ? data.recordTypeId.value
+          : this.recordTypeId,
+      name: data.name.present ? data.name.value : this.name,
+      fieldKey: data.fieldKey.present ? data.fieldKey.value : this.fieldKey,
+      fieldType: data.fieldType.present ? data.fieldType.value : this.fieldType,
+      isRequired: data.isRequired.present
+          ? data.isRequired.value
+          : this.isRequired,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      optionsJson: data.optionsJson.present
+          ? data.optionsJson.value
+          : this.optionsJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceFieldRow(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('name: $name, ')
+          ..write('fieldKey: $fieldKey, ')
+          ..write('fieldType: $fieldType, ')
+          ..write('isRequired: $isRequired, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('optionsJson: $optionsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    recordTypeId,
+    name,
+    fieldKey,
+    fieldType,
+    isRequired,
+    sortOrder,
+    optionsJson,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceFieldRow &&
+          other.id == this.id &&
+          other.recordTypeId == this.recordTypeId &&
+          other.name == this.name &&
+          other.fieldKey == this.fieldKey &&
+          other.fieldType == this.fieldType &&
+          other.isRequired == this.isRequired &&
+          other.sortOrder == this.sortOrder &&
+          other.optionsJson == this.optionsJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class SpaceFieldsCompanion extends UpdateCompanion<SpaceFieldRow> {
+  final Value<String> id;
+  final Value<String> recordTypeId;
+  final Value<String> name;
+  final Value<String> fieldKey;
+  final Value<String> fieldType;
+  final Value<bool> isRequired;
+  final Value<int> sortOrder;
+  final Value<String?> optionsJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const SpaceFieldsCompanion({
+    this.id = const Value.absent(),
+    this.recordTypeId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.fieldKey = const Value.absent(),
+    this.fieldType = const Value.absent(),
+    this.isRequired = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.optionsJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceFieldsCompanion.insert({
+    required String id,
+    required String recordTypeId,
+    required String name,
+    required String fieldKey,
+    required String fieldType,
+    required bool isRequired,
+    required int sortOrder,
+    this.optionsJson = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       recordTypeId = Value(recordTypeId),
+       name = Value(name),
+       fieldKey = Value(fieldKey),
+       fieldType = Value(fieldType),
+       isRequired = Value(isRequired),
+       sortOrder = Value(sortOrder),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceFieldRow> custom({
+    Expression<String>? id,
+    Expression<String>? recordTypeId,
+    Expression<String>? name,
+    Expression<String>? fieldKey,
+    Expression<String>? fieldType,
+    Expression<bool>? isRequired,
+    Expression<int>? sortOrder,
+    Expression<String>? optionsJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (recordTypeId != null) 'record_type_id': recordTypeId,
+      if (name != null) 'name': name,
+      if (fieldKey != null) 'field_key': fieldKey,
+      if (fieldType != null) 'field_type': fieldType,
+      if (isRequired != null) 'is_required': isRequired,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (optionsJson != null) 'options_json': optionsJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceFieldsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? recordTypeId,
+    Value<String>? name,
+    Value<String>? fieldKey,
+    Value<String>? fieldType,
+    Value<bool>? isRequired,
+    Value<int>? sortOrder,
+    Value<String?>? optionsJson,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceFieldsCompanion(
+      id: id ?? this.id,
+      recordTypeId: recordTypeId ?? this.recordTypeId,
+      name: name ?? this.name,
+      fieldKey: fieldKey ?? this.fieldKey,
+      fieldType: fieldType ?? this.fieldType,
+      isRequired: isRequired ?? this.isRequired,
+      sortOrder: sortOrder ?? this.sortOrder,
+      optionsJson: optionsJson ?? this.optionsJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (recordTypeId.present) {
+      map['record_type_id'] = Variable<String>(recordTypeId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (fieldKey.present) {
+      map['field_key'] = Variable<String>(fieldKey.value);
+    }
+    if (fieldType.present) {
+      map['field_type'] = Variable<String>(fieldType.value);
+    }
+    if (isRequired.present) {
+      map['is_required'] = Variable<bool>(isRequired.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (optionsJson.present) {
+      map['options_json'] = Variable<String>(optionsJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceFieldsCompanion(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('name: $name, ')
+          ..write('fieldKey: $fieldKey, ')
+          ..write('fieldType: $fieldType, ')
+          ..write('isRequired: $isRequired, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('optionsJson: $optionsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceStatusesTable extends SpaceStatuses
+    with TableInfo<$SpaceStatusesTable, SpaceStatusRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceStatusesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordTypeIdMeta = const VerificationMeta(
+    'recordTypeId',
+  );
+  @override
+  late final GeneratedColumn<String> recordTypeId = GeneratedColumn<String>(
+    'record_type_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES space_record_types (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _colorValueMeta = const VerificationMeta(
+    'colorValue',
+  );
+  @override
+  late final GeneratedColumn<int> colorValue = GeneratedColumn<int>(
+    'color_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    recordTypeId,
+    name,
+    colorValue,
+    sortOrder,
+    isDefault,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_statuses';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceStatusRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('record_type_id')) {
+      context.handle(
+        _recordTypeIdMeta,
+        recordTypeId.isAcceptableOrUnknown(
+          data['record_type_id']!,
+          _recordTypeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordTypeIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('color_value')) {
+      context.handle(
+        _colorValueMeta,
+        colorValue.isAcceptableOrUnknown(data['color_value']!, _colorValueMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isDefaultMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceStatusRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceStatusRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      recordTypeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}record_type_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      colorValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}color_value'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $SpaceStatusesTable createAlias(String alias) {
+    return $SpaceStatusesTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceStatusRow extends DataClass implements Insertable<SpaceStatusRow> {
+  final String id;
+  final String recordTypeId;
+  final String name;
+  final int? colorValue;
+  final int sortOrder;
+  final bool isDefault;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const SpaceStatusRow({
+    required this.id,
+    required this.recordTypeId,
+    required this.name,
+    this.colorValue,
+    required this.sortOrder,
+    required this.isDefault,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['record_type_id'] = Variable<String>(recordTypeId);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || colorValue != null) {
+      map['color_value'] = Variable<int>(colorValue);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  SpaceStatusesCompanion toCompanion(bool nullToAbsent) {
+    return SpaceStatusesCompanion(
+      id: Value(id),
+      recordTypeId: Value(recordTypeId),
+      name: Value(name),
+      colorValue: colorValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(colorValue),
+      sortOrder: Value(sortOrder),
+      isDefault: Value(isDefault),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory SpaceStatusRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceStatusRow(
+      id: serializer.fromJson<String>(json['id']),
+      recordTypeId: serializer.fromJson<String>(json['recordTypeId']),
+      name: serializer.fromJson<String>(json['name']),
+      colorValue: serializer.fromJson<int?>(json['colorValue']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'recordTypeId': serializer.toJson<String>(recordTypeId),
+      'name': serializer.toJson<String>(name),
+      'colorValue': serializer.toJson<int?>(colorValue),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  SpaceStatusRow copyWith({
+    String? id,
+    String? recordTypeId,
+    String? name,
+    Value<int?> colorValue = const Value.absent(),
+    int? sortOrder,
+    bool? isDefault,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => SpaceStatusRow(
+    id: id ?? this.id,
+    recordTypeId: recordTypeId ?? this.recordTypeId,
+    name: name ?? this.name,
+    colorValue: colorValue.present ? colorValue.value : this.colorValue,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isDefault: isDefault ?? this.isDefault,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  SpaceStatusRow copyWithCompanion(SpaceStatusesCompanion data) {
+    return SpaceStatusRow(
+      id: data.id.present ? data.id.value : this.id,
+      recordTypeId: data.recordTypeId.present
+          ? data.recordTypeId.value
+          : this.recordTypeId,
+      name: data.name.present ? data.name.value : this.name,
+      colorValue: data.colorValue.present
+          ? data.colorValue.value
+          : this.colorValue,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceStatusRow(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('name: $name, ')
+          ..write('colorValue: $colorValue, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    recordTypeId,
+    name,
+    colorValue,
+    sortOrder,
+    isDefault,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceStatusRow &&
+          other.id == this.id &&
+          other.recordTypeId == this.recordTypeId &&
+          other.name == this.name &&
+          other.colorValue == this.colorValue &&
+          other.sortOrder == this.sortOrder &&
+          other.isDefault == this.isDefault &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class SpaceStatusesCompanion extends UpdateCompanion<SpaceStatusRow> {
+  final Value<String> id;
+  final Value<String> recordTypeId;
+  final Value<String> name;
+  final Value<int?> colorValue;
+  final Value<int> sortOrder;
+  final Value<bool> isDefault;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const SpaceStatusesCompanion({
+    this.id = const Value.absent(),
+    this.recordTypeId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.colorValue = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceStatusesCompanion.insert({
+    required String id,
+    required String recordTypeId,
+    required String name,
+    this.colorValue = const Value.absent(),
+    required int sortOrder,
+    required bool isDefault,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       recordTypeId = Value(recordTypeId),
+       name = Value(name),
+       sortOrder = Value(sortOrder),
+       isDefault = Value(isDefault),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceStatusRow> custom({
+    Expression<String>? id,
+    Expression<String>? recordTypeId,
+    Expression<String>? name,
+    Expression<int>? colorValue,
+    Expression<int>? sortOrder,
+    Expression<bool>? isDefault,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (recordTypeId != null) 'record_type_id': recordTypeId,
+      if (name != null) 'name': name,
+      if (colorValue != null) 'color_value': colorValue,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isDefault != null) 'is_default': isDefault,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceStatusesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? recordTypeId,
+    Value<String>? name,
+    Value<int?>? colorValue,
+    Value<int>? sortOrder,
+    Value<bool>? isDefault,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceStatusesCompanion(
+      id: id ?? this.id,
+      recordTypeId: recordTypeId ?? this.recordTypeId,
+      name: name ?? this.name,
+      colorValue: colorValue ?? this.colorValue,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isDefault: isDefault ?? this.isDefault,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (recordTypeId.present) {
+      map['record_type_id'] = Variable<String>(recordTypeId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (colorValue.present) {
+      map['color_value'] = Variable<int>(colorValue.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceStatusesCompanion(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('name: $name, ')
+          ..write('colorValue: $colorValue, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceRecordsTable extends SpaceRecords
+    with TableInfo<$SpaceRecordsTable, SpaceRecordRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordTypeIdMeta = const VerificationMeta(
+    'recordTypeId',
+  );
+  @override
+  late final GeneratedColumn<String> recordTypeId = GeneratedColumn<String>(
+    'record_type_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES space_record_types (id)',
+    ),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statusIdMeta = const VerificationMeta(
+    'statusId',
+  );
+  @override
+  late final GeneratedColumn<String> statusId = GeneratedColumn<String>(
+    'status_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES space_statuses (id)',
+    ),
+  );
+  static const VerificationMeta _fieldsJsonMeta = const VerificationMeta(
+    'fieldsJson',
+  );
+  @override
+  late final GeneratedColumn<String> fieldsJson = GeneratedColumn<String>(
+    'fields_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    recordTypeId,
+    title,
+    statusId,
+    fieldsJson,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceRecordRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('record_type_id')) {
+      context.handle(
+        _recordTypeIdMeta,
+        recordTypeId.isAcceptableOrUnknown(
+          data['record_type_id']!,
+          _recordTypeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordTypeIdMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('status_id')) {
+      context.handle(
+        _statusIdMeta,
+        statusId.isAcceptableOrUnknown(data['status_id']!, _statusIdMeta),
+      );
+    }
+    if (data.containsKey('fields_json')) {
+      context.handle(
+        _fieldsJsonMeta,
+        fieldsJson.isAcceptableOrUnknown(data['fields_json']!, _fieldsJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldsJsonMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceRecordRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceRecordRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      recordTypeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}record_type_id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      statusId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status_id'],
+      ),
+      fieldsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fields_json'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $SpaceRecordsTable createAlias(String alias) {
+    return $SpaceRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceRecordRow extends DataClass implements Insertable<SpaceRecordRow> {
+  final String id;
+  final String recordTypeId;
+  final String title;
+  final String? statusId;
+  final String fieldsJson;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const SpaceRecordRow({
+    required this.id,
+    required this.recordTypeId,
+    required this.title,
+    this.statusId,
+    required this.fieldsJson,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['record_type_id'] = Variable<String>(recordTypeId);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || statusId != null) {
+      map['status_id'] = Variable<String>(statusId);
+    }
+    map['fields_json'] = Variable<String>(fieldsJson);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  SpaceRecordsCompanion toCompanion(bool nullToAbsent) {
+    return SpaceRecordsCompanion(
+      id: Value(id),
+      recordTypeId: Value(recordTypeId),
+      title: Value(title),
+      statusId: statusId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(statusId),
+      fieldsJson: Value(fieldsJson),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory SpaceRecordRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceRecordRow(
+      id: serializer.fromJson<String>(json['id']),
+      recordTypeId: serializer.fromJson<String>(json['recordTypeId']),
+      title: serializer.fromJson<String>(json['title']),
+      statusId: serializer.fromJson<String?>(json['statusId']),
+      fieldsJson: serializer.fromJson<String>(json['fieldsJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'recordTypeId': serializer.toJson<String>(recordTypeId),
+      'title': serializer.toJson<String>(title),
+      'statusId': serializer.toJson<String?>(statusId),
+      'fieldsJson': serializer.toJson<String>(fieldsJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  SpaceRecordRow copyWith({
+    String? id,
+    String? recordTypeId,
+    String? title,
+    Value<String?> statusId = const Value.absent(),
+    String? fieldsJson,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => SpaceRecordRow(
+    id: id ?? this.id,
+    recordTypeId: recordTypeId ?? this.recordTypeId,
+    title: title ?? this.title,
+    statusId: statusId.present ? statusId.value : this.statusId,
+    fieldsJson: fieldsJson ?? this.fieldsJson,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  SpaceRecordRow copyWithCompanion(SpaceRecordsCompanion data) {
+    return SpaceRecordRow(
+      id: data.id.present ? data.id.value : this.id,
+      recordTypeId: data.recordTypeId.present
+          ? data.recordTypeId.value
+          : this.recordTypeId,
+      title: data.title.present ? data.title.value : this.title,
+      statusId: data.statusId.present ? data.statusId.value : this.statusId,
+      fieldsJson: data.fieldsJson.present
+          ? data.fieldsJson.value
+          : this.fieldsJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordRow(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('title: $title, ')
+          ..write('statusId: $statusId, ')
+          ..write('fieldsJson: $fieldsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    recordTypeId,
+    title,
+    statusId,
+    fieldsJson,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceRecordRow &&
+          other.id == this.id &&
+          other.recordTypeId == this.recordTypeId &&
+          other.title == this.title &&
+          other.statusId == this.statusId &&
+          other.fieldsJson == this.fieldsJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class SpaceRecordsCompanion extends UpdateCompanion<SpaceRecordRow> {
+  final Value<String> id;
+  final Value<String> recordTypeId;
+  final Value<String> title;
+  final Value<String?> statusId;
+  final Value<String> fieldsJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const SpaceRecordsCompanion({
+    this.id = const Value.absent(),
+    this.recordTypeId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.statusId = const Value.absent(),
+    this.fieldsJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceRecordsCompanion.insert({
+    required String id,
+    required String recordTypeId,
+    required String title,
+    this.statusId = const Value.absent(),
+    required String fieldsJson,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       recordTypeId = Value(recordTypeId),
+       title = Value(title),
+       fieldsJson = Value(fieldsJson),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceRecordRow> custom({
+    Expression<String>? id,
+    Expression<String>? recordTypeId,
+    Expression<String>? title,
+    Expression<String>? statusId,
+    Expression<String>? fieldsJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (recordTypeId != null) 'record_type_id': recordTypeId,
+      if (title != null) 'title': title,
+      if (statusId != null) 'status_id': statusId,
+      if (fieldsJson != null) 'fields_json': fieldsJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceRecordsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? recordTypeId,
+    Value<String>? title,
+    Value<String?>? statusId,
+    Value<String>? fieldsJson,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceRecordsCompanion(
+      id: id ?? this.id,
+      recordTypeId: recordTypeId ?? this.recordTypeId,
+      title: title ?? this.title,
+      statusId: statusId ?? this.statusId,
+      fieldsJson: fieldsJson ?? this.fieldsJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (recordTypeId.present) {
+      map['record_type_id'] = Variable<String>(recordTypeId.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (statusId.present) {
+      map['status_id'] = Variable<String>(statusId.value);
+    }
+    if (fieldsJson.present) {
+      map['fields_json'] = Variable<String>(fieldsJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('recordTypeId: $recordTypeId, ')
+          ..write('title: $title, ')
+          ..write('statusId: $statusId, ')
+          ..write('fieldsJson: $fieldsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceRecordLinksTable extends SpaceRecordLinks
+    with TableInfo<$SpaceRecordLinksTable, SpaceRecordLinkRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceRecordLinksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceRecordIdMeta = const VerificationMeta(
+    'sourceRecordId',
+  );
+  @override
+  late final GeneratedColumn<String> sourceRecordId = GeneratedColumn<String>(
+    'source_record_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES space_records (id)',
+    ),
+  );
+  static const VerificationMeta _targetTypeMeta = const VerificationMeta(
+    'targetType',
+  );
+  @override
+  late final GeneratedColumn<String> targetType = GeneratedColumn<String>(
+    'target_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetIdMeta = const VerificationMeta(
+    'targetId',
+  );
+  @override
+  late final GeneratedColumn<String> targetId = GeneratedColumn<String>(
+    'target_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _relationshipTypeMeta = const VerificationMeta(
+    'relationshipType',
+  );
+  @override
+  late final GeneratedColumn<String> relationshipType = GeneratedColumn<String>(
+    'relationship_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    sourceRecordId,
+    targetType,
+    targetId,
+    relationshipType,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_record_links';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceRecordLinkRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('source_record_id')) {
+      context.handle(
+        _sourceRecordIdMeta,
+        sourceRecordId.isAcceptableOrUnknown(
+          data['source_record_id']!,
+          _sourceRecordIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceRecordIdMeta);
+    }
+    if (data.containsKey('target_type')) {
+      context.handle(
+        _targetTypeMeta,
+        targetType.isAcceptableOrUnknown(data['target_type']!, _targetTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetTypeMeta);
+    }
+    if (data.containsKey('target_id')) {
+      context.handle(
+        _targetIdMeta,
+        targetId.isAcceptableOrUnknown(data['target_id']!, _targetIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetIdMeta);
+    }
+    if (data.containsKey('relationship_type')) {
+      context.handle(
+        _relationshipTypeMeta,
+        relationshipType.isAcceptableOrUnknown(
+          data['relationship_type']!,
+          _relationshipTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_relationshipTypeMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceRecordLinkRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceRecordLinkRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      sourceRecordId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_record_id'],
+      )!,
+      targetType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_type'],
+      )!,
+      targetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_id'],
+      )!,
+      relationshipType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}relationship_type'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SpaceRecordLinksTable createAlias(String alias) {
+    return $SpaceRecordLinksTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceRecordLinkRow extends DataClass
+    implements Insertable<SpaceRecordLinkRow> {
+  final String id;
+  final String sourceRecordId;
+  final String targetType;
+  final String targetId;
+  final String relationshipType;
+  final DateTime createdAt;
+  const SpaceRecordLinkRow({
+    required this.id,
+    required this.sourceRecordId,
+    required this.targetType,
+    required this.targetId,
+    required this.relationshipType,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['source_record_id'] = Variable<String>(sourceRecordId);
+    map['target_type'] = Variable<String>(targetType);
+    map['target_id'] = Variable<String>(targetId);
+    map['relationship_type'] = Variable<String>(relationshipType);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  SpaceRecordLinksCompanion toCompanion(bool nullToAbsent) {
+    return SpaceRecordLinksCompanion(
+      id: Value(id),
+      sourceRecordId: Value(sourceRecordId),
+      targetType: Value(targetType),
+      targetId: Value(targetId),
+      relationshipType: Value(relationshipType),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory SpaceRecordLinkRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceRecordLinkRow(
+      id: serializer.fromJson<String>(json['id']),
+      sourceRecordId: serializer.fromJson<String>(json['sourceRecordId']),
+      targetType: serializer.fromJson<String>(json['targetType']),
+      targetId: serializer.fromJson<String>(json['targetId']),
+      relationshipType: serializer.fromJson<String>(json['relationshipType']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'sourceRecordId': serializer.toJson<String>(sourceRecordId),
+      'targetType': serializer.toJson<String>(targetType),
+      'targetId': serializer.toJson<String>(targetId),
+      'relationshipType': serializer.toJson<String>(relationshipType),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  SpaceRecordLinkRow copyWith({
+    String? id,
+    String? sourceRecordId,
+    String? targetType,
+    String? targetId,
+    String? relationshipType,
+    DateTime? createdAt,
+  }) => SpaceRecordLinkRow(
+    id: id ?? this.id,
+    sourceRecordId: sourceRecordId ?? this.sourceRecordId,
+    targetType: targetType ?? this.targetType,
+    targetId: targetId ?? this.targetId,
+    relationshipType: relationshipType ?? this.relationshipType,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  SpaceRecordLinkRow copyWithCompanion(SpaceRecordLinksCompanion data) {
+    return SpaceRecordLinkRow(
+      id: data.id.present ? data.id.value : this.id,
+      sourceRecordId: data.sourceRecordId.present
+          ? data.sourceRecordId.value
+          : this.sourceRecordId,
+      targetType: data.targetType.present
+          ? data.targetType.value
+          : this.targetType,
+      targetId: data.targetId.present ? data.targetId.value : this.targetId,
+      relationshipType: data.relationshipType.present
+          ? data.relationshipType.value
+          : this.relationshipType,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordLinkRow(')
+          ..write('id: $id, ')
+          ..write('sourceRecordId: $sourceRecordId, ')
+          ..write('targetType: $targetType, ')
+          ..write('targetId: $targetId, ')
+          ..write('relationshipType: $relationshipType, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    sourceRecordId,
+    targetType,
+    targetId,
+    relationshipType,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceRecordLinkRow &&
+          other.id == this.id &&
+          other.sourceRecordId == this.sourceRecordId &&
+          other.targetType == this.targetType &&
+          other.targetId == this.targetId &&
+          other.relationshipType == this.relationshipType &&
+          other.createdAt == this.createdAt);
+}
+
+class SpaceRecordLinksCompanion extends UpdateCompanion<SpaceRecordLinkRow> {
+  final Value<String> id;
+  final Value<String> sourceRecordId;
+  final Value<String> targetType;
+  final Value<String> targetId;
+  final Value<String> relationshipType;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const SpaceRecordLinksCompanion({
+    this.id = const Value.absent(),
+    this.sourceRecordId = const Value.absent(),
+    this.targetType = const Value.absent(),
+    this.targetId = const Value.absent(),
+    this.relationshipType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceRecordLinksCompanion.insert({
+    required String id,
+    required String sourceRecordId,
+    required String targetType,
+    required String targetId,
+    required String relationshipType,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       sourceRecordId = Value(sourceRecordId),
+       targetType = Value(targetType),
+       targetId = Value(targetId),
+       relationshipType = Value(relationshipType),
+       createdAt = Value(createdAt);
+  static Insertable<SpaceRecordLinkRow> custom({
+    Expression<String>? id,
+    Expression<String>? sourceRecordId,
+    Expression<String>? targetType,
+    Expression<String>? targetId,
+    Expression<String>? relationshipType,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sourceRecordId != null) 'source_record_id': sourceRecordId,
+      if (targetType != null) 'target_type': targetType,
+      if (targetId != null) 'target_id': targetId,
+      if (relationshipType != null) 'relationship_type': relationshipType,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceRecordLinksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? sourceRecordId,
+    Value<String>? targetType,
+    Value<String>? targetId,
+    Value<String>? relationshipType,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceRecordLinksCompanion(
+      id: id ?? this.id,
+      sourceRecordId: sourceRecordId ?? this.sourceRecordId,
+      targetType: targetType ?? this.targetType,
+      targetId: targetId ?? this.targetId,
+      relationshipType: relationshipType ?? this.relationshipType,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (sourceRecordId.present) {
+      map['source_record_id'] = Variable<String>(sourceRecordId.value);
+    }
+    if (targetType.present) {
+      map['target_type'] = Variable<String>(targetType.value);
+    }
+    if (targetId.present) {
+      map['target_id'] = Variable<String>(targetId.value);
+    }
+    if (relationshipType.present) {
+      map['relationship_type'] = Variable<String>(relationshipType.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceRecordLinksCompanion(')
+          ..write('id: $id, ')
+          ..write('sourceRecordId: $sourceRecordId, ')
+          ..write('targetType: $targetType, ')
+          ..write('targetId: $targetId, ')
+          ..write('relationshipType: $relationshipType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceSavedFiltersTable extends SpaceSavedFilters
+    with TableInfo<$SpaceSavedFiltersTable, SpaceSavedFilterRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceSavedFiltersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _spaceIdMeta = const VerificationMeta(
+    'spaceId',
+  );
+  @override
+  late final GeneratedColumn<String> spaceId = GeneratedColumn<String>(
+    'space_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES spaces (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _filterJsonMeta = const VerificationMeta(
+    'filterJson',
+  );
+  @override
+  late final GeneratedColumn<String> filterJson = GeneratedColumn<String>(
+    'filter_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    spaceId,
+    name,
+    filterJson,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_saved_filters';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceSavedFilterRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('space_id')) {
+      context.handle(
+        _spaceIdMeta,
+        spaceId.isAcceptableOrUnknown(data['space_id']!, _spaceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_spaceIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('filter_json')) {
+      context.handle(
+        _filterJsonMeta,
+        filterJson.isAcceptableOrUnknown(data['filter_json']!, _filterJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_filterJsonMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceSavedFilterRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceSavedFilterRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      spaceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}space_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      filterJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}filter_json'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SpaceSavedFiltersTable createAlias(String alias) {
+    return $SpaceSavedFiltersTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceSavedFilterRow extends DataClass
+    implements Insertable<SpaceSavedFilterRow> {
+  final String id;
+  final String spaceId;
+  final String name;
+  final String filterJson;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const SpaceSavedFilterRow({
+    required this.id,
+    required this.spaceId,
+    required this.name,
+    required this.filterJson,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['space_id'] = Variable<String>(spaceId);
+    map['name'] = Variable<String>(name);
+    map['filter_json'] = Variable<String>(filterJson);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  SpaceSavedFiltersCompanion toCompanion(bool nullToAbsent) {
+    return SpaceSavedFiltersCompanion(
+      id: Value(id),
+      spaceId: Value(spaceId),
+      name: Value(name),
+      filterJson: Value(filterJson),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory SpaceSavedFilterRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceSavedFilterRow(
+      id: serializer.fromJson<String>(json['id']),
+      spaceId: serializer.fromJson<String>(json['spaceId']),
+      name: serializer.fromJson<String>(json['name']),
+      filterJson: serializer.fromJson<String>(json['filterJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'spaceId': serializer.toJson<String>(spaceId),
+      'name': serializer.toJson<String>(name),
+      'filterJson': serializer.toJson<String>(filterJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  SpaceSavedFilterRow copyWith({
+    String? id,
+    String? spaceId,
+    String? name,
+    String? filterJson,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => SpaceSavedFilterRow(
+    id: id ?? this.id,
+    spaceId: spaceId ?? this.spaceId,
+    name: name ?? this.name,
+    filterJson: filterJson ?? this.filterJson,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  SpaceSavedFilterRow copyWithCompanion(SpaceSavedFiltersCompanion data) {
+    return SpaceSavedFilterRow(
+      id: data.id.present ? data.id.value : this.id,
+      spaceId: data.spaceId.present ? data.spaceId.value : this.spaceId,
+      name: data.name.present ? data.name.value : this.name,
+      filterJson: data.filterJson.present
+          ? data.filterJson.value
+          : this.filterJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceSavedFilterRow(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('filterJson: $filterJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, spaceId, name, filterJson, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceSavedFilterRow &&
+          other.id == this.id &&
+          other.spaceId == this.spaceId &&
+          other.name == this.name &&
+          other.filterJson == this.filterJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class SpaceSavedFiltersCompanion extends UpdateCompanion<SpaceSavedFilterRow> {
+  final Value<String> id;
+  final Value<String> spaceId;
+  final Value<String> name;
+  final Value<String> filterJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const SpaceSavedFiltersCompanion({
+    this.id = const Value.absent(),
+    this.spaceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.filterJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceSavedFiltersCompanion.insert({
+    required String id,
+    required String spaceId,
+    required String name,
+    required String filterJson,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       spaceId = Value(spaceId),
+       name = Value(name),
+       filterJson = Value(filterJson),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceSavedFilterRow> custom({
+    Expression<String>? id,
+    Expression<String>? spaceId,
+    Expression<String>? name,
+    Expression<String>? filterJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (spaceId != null) 'space_id': spaceId,
+      if (name != null) 'name': name,
+      if (filterJson != null) 'filter_json': filterJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceSavedFiltersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? spaceId,
+    Value<String>? name,
+    Value<String>? filterJson,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceSavedFiltersCompanion(
+      id: id ?? this.id,
+      spaceId: spaceId ?? this.spaceId,
+      name: name ?? this.name,
+      filterJson: filterJson ?? this.filterJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (spaceId.present) {
+      map['space_id'] = Variable<String>(spaceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (filterJson.present) {
+      map['filter_json'] = Variable<String>(filterJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceSavedFiltersCompanion(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('filterJson: $filterJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SpaceSavedViewsTable extends SpaceSavedViews
+    with TableInfo<$SpaceSavedViewsTable, SpaceSavedViewRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SpaceSavedViewsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _spaceIdMeta = const VerificationMeta(
+    'spaceId',
+  );
+  @override
+  late final GeneratedColumn<String> spaceId = GeneratedColumn<String>(
+    'space_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES spaces (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _viewTypeMeta = const VerificationMeta(
+    'viewType',
+  );
+  @override
+  late final GeneratedColumn<String> viewType = GeneratedColumn<String>(
+    'view_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _configJsonMeta = const VerificationMeta(
+    'configJson',
+  );
+  @override
+  late final GeneratedColumn<String> configJson = GeneratedColumn<String>(
+    'config_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    spaceId,
+    name,
+    viewType,
+    configJson,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'space_saved_views';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SpaceSavedViewRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('space_id')) {
+      context.handle(
+        _spaceIdMeta,
+        spaceId.isAcceptableOrUnknown(data['space_id']!, _spaceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_spaceIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('view_type')) {
+      context.handle(
+        _viewTypeMeta,
+        viewType.isAcceptableOrUnknown(data['view_type']!, _viewTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_viewTypeMeta);
+    }
+    if (data.containsKey('config_json')) {
+      context.handle(
+        _configJsonMeta,
+        configJson.isAcceptableOrUnknown(data['config_json']!, _configJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_configJsonMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SpaceSavedViewRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SpaceSavedViewRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      spaceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}space_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      viewType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}view_type'],
+      )!,
+      configJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}config_json'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $SpaceSavedViewsTable createAlias(String alias) {
+    return $SpaceSavedViewsTable(attachedDatabase, alias);
+  }
+}
+
+class SpaceSavedViewRow extends DataClass
+    implements Insertable<SpaceSavedViewRow> {
+  final String id;
+  final String spaceId;
+  final String name;
+  final String viewType;
+  final String configJson;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const SpaceSavedViewRow({
+    required this.id,
+    required this.spaceId,
+    required this.name,
+    required this.viewType,
+    required this.configJson,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['space_id'] = Variable<String>(spaceId);
+    map['name'] = Variable<String>(name);
+    map['view_type'] = Variable<String>(viewType);
+    map['config_json'] = Variable<String>(configJson);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  SpaceSavedViewsCompanion toCompanion(bool nullToAbsent) {
+    return SpaceSavedViewsCompanion(
+      id: Value(id),
+      spaceId: Value(spaceId),
+      name: Value(name),
+      viewType: Value(viewType),
+      configJson: Value(configJson),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory SpaceSavedViewRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SpaceSavedViewRow(
+      id: serializer.fromJson<String>(json['id']),
+      spaceId: serializer.fromJson<String>(json['spaceId']),
+      name: serializer.fromJson<String>(json['name']),
+      viewType: serializer.fromJson<String>(json['viewType']),
+      configJson: serializer.fromJson<String>(json['configJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'spaceId': serializer.toJson<String>(spaceId),
+      'name': serializer.toJson<String>(name),
+      'viewType': serializer.toJson<String>(viewType),
+      'configJson': serializer.toJson<String>(configJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  SpaceSavedViewRow copyWith({
+    String? id,
+    String? spaceId,
+    String? name,
+    String? viewType,
+    String? configJson,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => SpaceSavedViewRow(
+    id: id ?? this.id,
+    spaceId: spaceId ?? this.spaceId,
+    name: name ?? this.name,
+    viewType: viewType ?? this.viewType,
+    configJson: configJson ?? this.configJson,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  SpaceSavedViewRow copyWithCompanion(SpaceSavedViewsCompanion data) {
+    return SpaceSavedViewRow(
+      id: data.id.present ? data.id.value : this.id,
+      spaceId: data.spaceId.present ? data.spaceId.value : this.spaceId,
+      name: data.name.present ? data.name.value : this.name,
+      viewType: data.viewType.present ? data.viewType.value : this.viewType,
+      configJson: data.configJson.present
+          ? data.configJson.value
+          : this.configJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceSavedViewRow(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('viewType: $viewType, ')
+          ..write('configJson: $configJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    spaceId,
+    name,
+    viewType,
+    configJson,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SpaceSavedViewRow &&
+          other.id == this.id &&
+          other.spaceId == this.spaceId &&
+          other.name == this.name &&
+          other.viewType == this.viewType &&
+          other.configJson == this.configJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class SpaceSavedViewsCompanion extends UpdateCompanion<SpaceSavedViewRow> {
+  final Value<String> id;
+  final Value<String> spaceId;
+  final Value<String> name;
+  final Value<String> viewType;
+  final Value<String> configJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const SpaceSavedViewsCompanion({
+    this.id = const Value.absent(),
+    this.spaceId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.viewType = const Value.absent(),
+    this.configJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SpaceSavedViewsCompanion.insert({
+    required String id,
+    required String spaceId,
+    required String name,
+    required String viewType,
+    required String configJson,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       spaceId = Value(spaceId),
+       name = Value(name),
+       viewType = Value(viewType),
+       configJson = Value(configJson),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SpaceSavedViewRow> custom({
+    Expression<String>? id,
+    Expression<String>? spaceId,
+    Expression<String>? name,
+    Expression<String>? viewType,
+    Expression<String>? configJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (spaceId != null) 'space_id': spaceId,
+      if (name != null) 'name': name,
+      if (viewType != null) 'view_type': viewType,
+      if (configJson != null) 'config_json': configJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SpaceSavedViewsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? spaceId,
+    Value<String>? name,
+    Value<String>? viewType,
+    Value<String>? configJson,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return SpaceSavedViewsCompanion(
+      id: id ?? this.id,
+      spaceId: spaceId ?? this.spaceId,
+      name: name ?? this.name,
+      viewType: viewType ?? this.viewType,
+      configJson: configJson ?? this.configJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (spaceId.present) {
+      map['space_id'] = Variable<String>(spaceId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (viewType.present) {
+      map['view_type'] = Variable<String>(viewType.value);
+    }
+    if (configJson.present) {
+      map['config_json'] = Variable<String>(configJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SpaceSavedViewsCompanion(')
+          ..write('id: $id, ')
+          ..write('spaceId: $spaceId, ')
+          ..write('name: $name, ')
+          ..write('viewType: $viewType, ')
+          ..write('configJson: $configJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -9293,6 +13478,21 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PlannerEventsTable plannerEvents = $PlannerEventsTable(this);
   late final $TimeBlocksTable timeBlocks = $TimeBlocksTable(this);
   late final $FocusSessionsTable focusSessions = $FocusSessionsTable(this);
+  late final $SpacesTable spaces = $SpacesTable(this);
+  late final $SpaceRecordTypesTable spaceRecordTypes = $SpaceRecordTypesTable(
+    this,
+  );
+  late final $SpaceFieldsTable spaceFields = $SpaceFieldsTable(this);
+  late final $SpaceStatusesTable spaceStatuses = $SpaceStatusesTable(this);
+  late final $SpaceRecordsTable spaceRecords = $SpaceRecordsTable(this);
+  late final $SpaceRecordLinksTable spaceRecordLinks = $SpaceRecordLinksTable(
+    this,
+  );
+  late final $SpaceSavedFiltersTable spaceSavedFilters =
+      $SpaceSavedFiltersTable(this);
+  late final $SpaceSavedViewsTable spaceSavedViews = $SpaceSavedViewsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -9312,6 +13512,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     plannerEvents,
     timeBlocks,
     focusSessions,
+    spaces,
+    spaceRecordTypes,
+    spaceFields,
+    spaceStatuses,
+    spaceRecords,
+    spaceRecordLinks,
+    spaceSavedFilters,
+    spaceSavedViews,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -16746,6 +20954,3861 @@ typedef $$FocusSessionsTableProcessedTableManager =
       FocusSessionRow,
       PrefetchHooks Function({bool taskId})
     >;
+typedef $$SpacesTableCreateCompanionBuilder =
+    SpacesCompanion Function({
+      required String id,
+      required String name,
+      Value<String?> description,
+      Value<String?> iconKey,
+      Value<int?> colorValue,
+      required int sortOrder,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$SpacesTableUpdateCompanionBuilder =
+    SpacesCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String?> description,
+      Value<String?> iconKey,
+      Value<int?> colorValue,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpacesTableReferences
+    extends BaseReferences<_$AppDatabase, $SpacesTable, SpaceRow> {
+  $$SpacesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$SpaceRecordTypesTable, List<SpaceRecordTypeRow>>
+  _spaceRecordTypesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceRecordTypes,
+    aliasName: 'spaces__id__space_record_types__space_id',
+  );
+
+  $$SpaceRecordTypesTableProcessedTableManager get spaceRecordTypesRefs {
+    final manager = $$SpaceRecordTypesTableTableManager(
+      $_db,
+      $_db.spaceRecordTypes,
+    ).filter((f) => f.spaceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _spaceRecordTypesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceSavedFiltersTable, List<SpaceSavedFilterRow>>
+  _spaceSavedFiltersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.spaceSavedFilters,
+        aliasName: 'spaces__id__space_saved_filters__space_id',
+      );
+
+  $$SpaceSavedFiltersTableProcessedTableManager get spaceSavedFiltersRefs {
+    final manager = $$SpaceSavedFiltersTableTableManager(
+      $_db,
+      $_db.spaceSavedFilters,
+    ).filter((f) => f.spaceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _spaceSavedFiltersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceSavedViewsTable, List<SpaceSavedViewRow>>
+  _spaceSavedViewsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceSavedViews,
+    aliasName: 'spaces__id__space_saved_views__space_id',
+  );
+
+  $$SpaceSavedViewsTableProcessedTableManager get spaceSavedViewsRefs {
+    final manager = $$SpaceSavedViewsTableTableManager(
+      $_db,
+      $_db.spaceSavedViews,
+    ).filter((f) => f.spaceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _spaceSavedViewsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SpacesTableFilterComposer
+    extends Composer<_$AppDatabase, $SpacesTable> {
+  $$SpacesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get iconKey => $composableBuilder(
+    column: $table.iconKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> spaceRecordTypesRefs(
+    Expression<bool> Function($$SpaceRecordTypesTableFilterComposer f) f,
+  ) {
+    final $$SpaceRecordTypesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.spaceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> spaceSavedFiltersRefs(
+    Expression<bool> Function($$SpaceSavedFiltersTableFilterComposer f) f,
+  ) {
+    final $$SpaceSavedFiltersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceSavedFilters,
+      getReferencedColumn: (t) => t.spaceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceSavedFiltersTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceSavedFilters,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> spaceSavedViewsRefs(
+    Expression<bool> Function($$SpaceSavedViewsTableFilterComposer f) f,
+  ) {
+    final $$SpaceSavedViewsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceSavedViews,
+      getReferencedColumn: (t) => t.spaceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceSavedViewsTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceSavedViews,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpacesTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpacesTable> {
+  $$SpacesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get iconKey => $composableBuilder(
+    column: $table.iconKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SpacesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpacesTable> {
+  $$SpacesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get iconKey =>
+      $composableBuilder(column: $table.iconKey, builder: (column) => column);
+
+  GeneratedColumn<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  Expression<T> spaceRecordTypesRefs<T extends Object>(
+    Expression<T> Function($$SpaceRecordTypesTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceRecordTypesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.spaceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> spaceSavedFiltersRefs<T extends Object>(
+    Expression<T> Function($$SpaceSavedFiltersTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceSavedFiltersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.spaceSavedFilters,
+          getReferencedColumn: (t) => t.spaceId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SpaceSavedFiltersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.spaceSavedFilters,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> spaceSavedViewsRefs<T extends Object>(
+    Expression<T> Function($$SpaceSavedViewsTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceSavedViewsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceSavedViews,
+      getReferencedColumn: (t) => t.spaceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceSavedViewsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceSavedViews,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpacesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpacesTable,
+          SpaceRow,
+          $$SpacesTableFilterComposer,
+          $$SpacesTableOrderingComposer,
+          $$SpacesTableAnnotationComposer,
+          $$SpacesTableCreateCompanionBuilder,
+          $$SpacesTableUpdateCompanionBuilder,
+          (SpaceRow, $$SpacesTableReferences),
+          SpaceRow,
+          PrefetchHooks Function({
+            bool spaceRecordTypesRefs,
+            bool spaceSavedFiltersRefs,
+            bool spaceSavedViewsRefs,
+          })
+        > {
+  $$SpacesTableTableManager(_$AppDatabase db, $SpacesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpacesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpacesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpacesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> iconKey = const Value.absent(),
+                Value<int?> colorValue = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpacesCompanion(
+                id: id,
+                name: name,
+                description: description,
+                iconKey: iconKey,
+                colorValue: colorValue,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<String?> description = const Value.absent(),
+                Value<String?> iconKey = const Value.absent(),
+                Value<int?> colorValue = const Value.absent(),
+                required int sortOrder,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpacesCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+                iconKey: iconKey,
+                colorValue: colorValue,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) =>
+                    (e.readTable(table), $$SpacesTableReferences(db, table, e)),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                spaceRecordTypesRefs = false,
+                spaceSavedFiltersRefs = false,
+                spaceSavedViewsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (spaceRecordTypesRefs) db.spaceRecordTypes,
+                    if (spaceSavedFiltersRefs) db.spaceSavedFilters,
+                    if (spaceSavedViewsRefs) db.spaceSavedViews,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (spaceRecordTypesRefs)
+                        await $_getPrefetchedData<
+                          SpaceRow,
+                          $SpacesTable,
+                          SpaceRecordTypeRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpacesTableReferences
+                              ._spaceRecordTypesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpacesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceRecordTypesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.spaceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (spaceSavedFiltersRefs)
+                        await $_getPrefetchedData<
+                          SpaceRow,
+                          $SpacesTable,
+                          SpaceSavedFilterRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpacesTableReferences
+                              ._spaceSavedFiltersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpacesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceSavedFiltersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.spaceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (spaceSavedViewsRefs)
+                        await $_getPrefetchedData<
+                          SpaceRow,
+                          $SpacesTable,
+                          SpaceSavedViewRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpacesTableReferences
+                              ._spaceSavedViewsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpacesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceSavedViewsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.spaceId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$SpacesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpacesTable,
+      SpaceRow,
+      $$SpacesTableFilterComposer,
+      $$SpacesTableOrderingComposer,
+      $$SpacesTableAnnotationComposer,
+      $$SpacesTableCreateCompanionBuilder,
+      $$SpacesTableUpdateCompanionBuilder,
+      (SpaceRow, $$SpacesTableReferences),
+      SpaceRow,
+      PrefetchHooks Function({
+        bool spaceRecordTypesRefs,
+        bool spaceSavedFiltersRefs,
+        bool spaceSavedViewsRefs,
+      })
+    >;
+typedef $$SpaceRecordTypesTableCreateCompanionBuilder =
+    SpaceRecordTypesCompanion Function({
+      required String id,
+      required String spaceId,
+      required String name,
+      Value<String?> description,
+      required int sortOrder,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceRecordTypesTableUpdateCompanionBuilder =
+    SpaceRecordTypesCompanion Function({
+      Value<String> id,
+      Value<String> spaceId,
+      Value<String> name,
+      Value<String?> description,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceRecordTypesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SpaceRecordTypesTable,
+          SpaceRecordTypeRow
+        > {
+  $$SpaceRecordTypesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SpacesTable _spaceIdTable(_$AppDatabase db) =>
+      db.spaces.createAlias('space_record_types__space_id__spaces__id');
+
+  $$SpacesTableProcessedTableManager get spaceId {
+    final $_column = $_itemColumn<String>('space_id')!;
+
+    final manager = $$SpacesTableTableManager(
+      $_db,
+      $_db.spaces,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_spaceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceFieldsTable, List<SpaceFieldRow>>
+  _spaceFieldsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceFields,
+    aliasName: 'space_record_types__id__space_fields__record_type_id',
+  );
+
+  $$SpaceFieldsTableProcessedTableManager get spaceFieldsRefs {
+    final manager = $$SpaceFieldsTableTableManager(
+      $_db,
+      $_db.spaceFields,
+    ).filter((f) => f.recordTypeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_spaceFieldsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceStatusesTable, List<SpaceStatusRow>>
+  _spaceStatusesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceStatuses,
+    aliasName: 'space_record_types__id__space_statuses__record_type_id',
+  );
+
+  $$SpaceStatusesTableProcessedTableManager get spaceStatusesRefs {
+    final manager = $$SpaceStatusesTableTableManager(
+      $_db,
+      $_db.spaceStatuses,
+    ).filter((f) => f.recordTypeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_spaceStatusesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceRecordsTable, List<SpaceRecordRow>>
+  _spaceRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceRecords,
+    aliasName: 'space_record_types__id__space_records__record_type_id',
+  );
+
+  $$SpaceRecordsTableProcessedTableManager get spaceRecordsRefs {
+    final manager = $$SpaceRecordsTableTableManager(
+      $_db,
+      $_db.spaceRecords,
+    ).filter((f) => f.recordTypeId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_spaceRecordsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SpaceRecordTypesTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceRecordTypesTable> {
+  $$SpaceRecordTypesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpacesTableFilterComposer get spaceId {
+    final $$SpacesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> spaceFieldsRefs(
+    Expression<bool> Function($$SpaceFieldsTableFilterComposer f) f,
+  ) {
+    final $$SpaceFieldsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceFields,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceFieldsTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceFields,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> spaceStatusesRefs(
+    Expression<bool> Function($$SpaceStatusesTableFilterComposer f) f,
+  ) {
+    final $$SpaceStatusesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceStatuses,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceStatusesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceStatuses,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> spaceRecordsRefs(
+    Expression<bool> Function($$SpaceRecordsTableFilterComposer f) f,
+  ) {
+    final $$SpaceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceRecordTypesTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceRecordTypesTable> {
+  $$SpaceRecordTypesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpacesTableOrderingComposer get spaceId {
+    final $$SpacesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceRecordTypesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceRecordTypesTable> {
+  $$SpaceRecordTypesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$SpacesTableAnnotationComposer get spaceId {
+    final $$SpacesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> spaceFieldsRefs<T extends Object>(
+    Expression<T> Function($$SpaceFieldsTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceFieldsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceFields,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceFieldsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceFields,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> spaceStatusesRefs<T extends Object>(
+    Expression<T> Function($$SpaceStatusesTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceStatusesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceStatuses,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceStatusesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceStatuses,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> spaceRecordsRefs<T extends Object>(
+    Expression<T> Function($$SpaceRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.recordTypeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceRecordTypesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceRecordTypesTable,
+          SpaceRecordTypeRow,
+          $$SpaceRecordTypesTableFilterComposer,
+          $$SpaceRecordTypesTableOrderingComposer,
+          $$SpaceRecordTypesTableAnnotationComposer,
+          $$SpaceRecordTypesTableCreateCompanionBuilder,
+          $$SpaceRecordTypesTableUpdateCompanionBuilder,
+          (SpaceRecordTypeRow, $$SpaceRecordTypesTableReferences),
+          SpaceRecordTypeRow,
+          PrefetchHooks Function({
+            bool spaceId,
+            bool spaceFieldsRefs,
+            bool spaceStatusesRefs,
+            bool spaceRecordsRefs,
+          })
+        > {
+  $$SpaceRecordTypesTableTableManager(
+    _$AppDatabase db,
+    $SpaceRecordTypesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceRecordTypesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceRecordTypesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceRecordTypesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> spaceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordTypesCompanion(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                description: description,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String spaceId,
+                required String name,
+                Value<String?> description = const Value.absent(),
+                required int sortOrder,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordTypesCompanion.insert(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                description: description,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceRecordTypesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                spaceId = false,
+                spaceFieldsRefs = false,
+                spaceStatusesRefs = false,
+                spaceRecordsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (spaceFieldsRefs) db.spaceFields,
+                    if (spaceStatusesRefs) db.spaceStatuses,
+                    if (spaceRecordsRefs) db.spaceRecords,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (spaceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.spaceId,
+                                    referencedTable:
+                                        $$SpaceRecordTypesTableReferences
+                                            ._spaceIdTable(db),
+                                    referencedColumn:
+                                        $$SpaceRecordTypesTableReferences
+                                            ._spaceIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (spaceFieldsRefs)
+                        await $_getPrefetchedData<
+                          SpaceRecordTypeRow,
+                          $SpaceRecordTypesTable,
+                          SpaceFieldRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpaceRecordTypesTableReferences
+                              ._spaceFieldsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpaceRecordTypesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceFieldsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.recordTypeId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (spaceStatusesRefs)
+                        await $_getPrefetchedData<
+                          SpaceRecordTypeRow,
+                          $SpaceRecordTypesTable,
+                          SpaceStatusRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpaceRecordTypesTableReferences
+                              ._spaceStatusesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpaceRecordTypesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceStatusesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.recordTypeId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (spaceRecordsRefs)
+                        await $_getPrefetchedData<
+                          SpaceRecordTypeRow,
+                          $SpaceRecordTypesTable,
+                          SpaceRecordRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpaceRecordTypesTableReferences
+                              ._spaceRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpaceRecordTypesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.recordTypeId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$SpaceRecordTypesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceRecordTypesTable,
+      SpaceRecordTypeRow,
+      $$SpaceRecordTypesTableFilterComposer,
+      $$SpaceRecordTypesTableOrderingComposer,
+      $$SpaceRecordTypesTableAnnotationComposer,
+      $$SpaceRecordTypesTableCreateCompanionBuilder,
+      $$SpaceRecordTypesTableUpdateCompanionBuilder,
+      (SpaceRecordTypeRow, $$SpaceRecordTypesTableReferences),
+      SpaceRecordTypeRow,
+      PrefetchHooks Function({
+        bool spaceId,
+        bool spaceFieldsRefs,
+        bool spaceStatusesRefs,
+        bool spaceRecordsRefs,
+      })
+    >;
+typedef $$SpaceFieldsTableCreateCompanionBuilder =
+    SpaceFieldsCompanion Function({
+      required String id,
+      required String recordTypeId,
+      required String name,
+      required String fieldKey,
+      required String fieldType,
+      required bool isRequired,
+      required int sortOrder,
+      Value<String?> optionsJson,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceFieldsTableUpdateCompanionBuilder =
+    SpaceFieldsCompanion Function({
+      Value<String> id,
+      Value<String> recordTypeId,
+      Value<String> name,
+      Value<String> fieldKey,
+      Value<String> fieldType,
+      Value<bool> isRequired,
+      Value<int> sortOrder,
+      Value<String?> optionsJson,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceFieldsTableReferences
+    extends BaseReferences<_$AppDatabase, $SpaceFieldsTable, SpaceFieldRow> {
+  $$SpaceFieldsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $SpaceRecordTypesTable _recordTypeIdTable(_$AppDatabase db) => db
+      .spaceRecordTypes
+      .createAlias('space_fields__record_type_id__space_record_types__id');
+
+  $$SpaceRecordTypesTableProcessedTableManager get recordTypeId {
+    final $_column = $_itemColumn<String>('record_type_id')!;
+
+    final manager = $$SpaceRecordTypesTableTableManager(
+      $_db,
+      $_db.spaceRecordTypes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_recordTypeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SpaceFieldsTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceFieldsTable> {
+  $$SpaceFieldsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fieldKey => $composableBuilder(
+    column: $table.fieldKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fieldType => $composableBuilder(
+    column: $table.fieldType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isRequired => $composableBuilder(
+    column: $table.isRequired,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get optionsJson => $composableBuilder(
+    column: $table.optionsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpaceRecordTypesTableFilterComposer get recordTypeId {
+    final $$SpaceRecordTypesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceFieldsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceFieldsTable> {
+  $$SpaceFieldsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fieldKey => $composableBuilder(
+    column: $table.fieldKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fieldType => $composableBuilder(
+    column: $table.fieldType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isRequired => $composableBuilder(
+    column: $table.isRequired,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get optionsJson => $composableBuilder(
+    column: $table.optionsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpaceRecordTypesTableOrderingComposer get recordTypeId {
+    final $$SpaceRecordTypesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceFieldsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceFieldsTable> {
+  $$SpaceFieldsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get fieldKey =>
+      $composableBuilder(column: $table.fieldKey, builder: (column) => column);
+
+  GeneratedColumn<String> get fieldType =>
+      $composableBuilder(column: $table.fieldType, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRequired => $composableBuilder(
+    column: $table.isRequired,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<String> get optionsJson => $composableBuilder(
+    column: $table.optionsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$SpaceRecordTypesTableAnnotationComposer get recordTypeId {
+    final $$SpaceRecordTypesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceFieldsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceFieldsTable,
+          SpaceFieldRow,
+          $$SpaceFieldsTableFilterComposer,
+          $$SpaceFieldsTableOrderingComposer,
+          $$SpaceFieldsTableAnnotationComposer,
+          $$SpaceFieldsTableCreateCompanionBuilder,
+          $$SpaceFieldsTableUpdateCompanionBuilder,
+          (SpaceFieldRow, $$SpaceFieldsTableReferences),
+          SpaceFieldRow,
+          PrefetchHooks Function({bool recordTypeId})
+        > {
+  $$SpaceFieldsTableTableManager(_$AppDatabase db, $SpaceFieldsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceFieldsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceFieldsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceFieldsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> recordTypeId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> fieldKey = const Value.absent(),
+                Value<String> fieldType = const Value.absent(),
+                Value<bool> isRequired = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<String?> optionsJson = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceFieldsCompanion(
+                id: id,
+                recordTypeId: recordTypeId,
+                name: name,
+                fieldKey: fieldKey,
+                fieldType: fieldType,
+                isRequired: isRequired,
+                sortOrder: sortOrder,
+                optionsJson: optionsJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String recordTypeId,
+                required String name,
+                required String fieldKey,
+                required String fieldType,
+                required bool isRequired,
+                required int sortOrder,
+                Value<String?> optionsJson = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceFieldsCompanion.insert(
+                id: id,
+                recordTypeId: recordTypeId,
+                name: name,
+                fieldKey: fieldKey,
+                fieldType: fieldType,
+                isRequired: isRequired,
+                sortOrder: sortOrder,
+                optionsJson: optionsJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceFieldsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({recordTypeId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (recordTypeId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.recordTypeId,
+                                referencedTable: $$SpaceFieldsTableReferences
+                                    ._recordTypeIdTable(db),
+                                referencedColumn: $$SpaceFieldsTableReferences
+                                    ._recordTypeIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SpaceFieldsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceFieldsTable,
+      SpaceFieldRow,
+      $$SpaceFieldsTableFilterComposer,
+      $$SpaceFieldsTableOrderingComposer,
+      $$SpaceFieldsTableAnnotationComposer,
+      $$SpaceFieldsTableCreateCompanionBuilder,
+      $$SpaceFieldsTableUpdateCompanionBuilder,
+      (SpaceFieldRow, $$SpaceFieldsTableReferences),
+      SpaceFieldRow,
+      PrefetchHooks Function({bool recordTypeId})
+    >;
+typedef $$SpaceStatusesTableCreateCompanionBuilder =
+    SpaceStatusesCompanion Function({
+      required String id,
+      required String recordTypeId,
+      required String name,
+      Value<int?> colorValue,
+      required int sortOrder,
+      required bool isDefault,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceStatusesTableUpdateCompanionBuilder =
+    SpaceStatusesCompanion Function({
+      Value<String> id,
+      Value<String> recordTypeId,
+      Value<String> name,
+      Value<int?> colorValue,
+      Value<int> sortOrder,
+      Value<bool> isDefault,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceStatusesTableReferences
+    extends BaseReferences<_$AppDatabase, $SpaceStatusesTable, SpaceStatusRow> {
+  $$SpaceStatusesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SpaceRecordTypesTable _recordTypeIdTable(_$AppDatabase db) => db
+      .spaceRecordTypes
+      .createAlias('space_statuses__record_type_id__space_record_types__id');
+
+  $$SpaceRecordTypesTableProcessedTableManager get recordTypeId {
+    final $_column = $_itemColumn<String>('record_type_id')!;
+
+    final manager = $$SpaceRecordTypesTableTableManager(
+      $_db,
+      $_db.spaceRecordTypes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_recordTypeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceRecordsTable, List<SpaceRecordRow>>
+  _spaceRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceRecords,
+    aliasName: 'space_statuses__id__space_records__status_id',
+  );
+
+  $$SpaceRecordsTableProcessedTableManager get spaceRecordsRefs {
+    final manager = $$SpaceRecordsTableTableManager(
+      $_db,
+      $_db.spaceRecords,
+    ).filter((f) => f.statusId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_spaceRecordsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SpaceStatusesTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceStatusesTable> {
+  $$SpaceStatusesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpaceRecordTypesTableFilterComposer get recordTypeId {
+    final $$SpaceRecordTypesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> spaceRecordsRefs(
+    Expression<bool> Function($$SpaceRecordsTableFilterComposer f) f,
+  ) {
+    final $$SpaceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.statusId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceStatusesTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceStatusesTable> {
+  $$SpaceStatusesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpaceRecordTypesTableOrderingComposer get recordTypeId {
+    final $$SpaceRecordTypesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceStatusesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceStatusesTable> {
+  $$SpaceStatusesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get colorValue => $composableBuilder(
+    column: $table.colorValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$SpaceRecordTypesTableAnnotationComposer get recordTypeId {
+    final $$SpaceRecordTypesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> spaceRecordsRefs<T extends Object>(
+    Expression<T> Function($$SpaceRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.statusId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceStatusesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceStatusesTable,
+          SpaceStatusRow,
+          $$SpaceStatusesTableFilterComposer,
+          $$SpaceStatusesTableOrderingComposer,
+          $$SpaceStatusesTableAnnotationComposer,
+          $$SpaceStatusesTableCreateCompanionBuilder,
+          $$SpaceStatusesTableUpdateCompanionBuilder,
+          (SpaceStatusRow, $$SpaceStatusesTableReferences),
+          SpaceStatusRow,
+          PrefetchHooks Function({bool recordTypeId, bool spaceRecordsRefs})
+        > {
+  $$SpaceStatusesTableTableManager(_$AppDatabase db, $SpaceStatusesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceStatusesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceStatusesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceStatusesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> recordTypeId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<int?> colorValue = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceStatusesCompanion(
+                id: id,
+                recordTypeId: recordTypeId,
+                name: name,
+                colorValue: colorValue,
+                sortOrder: sortOrder,
+                isDefault: isDefault,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String recordTypeId,
+                required String name,
+                Value<int?> colorValue = const Value.absent(),
+                required int sortOrder,
+                required bool isDefault,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceStatusesCompanion.insert(
+                id: id,
+                recordTypeId: recordTypeId,
+                name: name,
+                colorValue: colorValue,
+                sortOrder: sortOrder,
+                isDefault: isDefault,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceStatusesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({recordTypeId = false, spaceRecordsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (spaceRecordsRefs) db.spaceRecords,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (recordTypeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.recordTypeId,
+                                    referencedTable:
+                                        $$SpaceStatusesTableReferences
+                                            ._recordTypeIdTable(db),
+                                    referencedColumn:
+                                        $$SpaceStatusesTableReferences
+                                            ._recordTypeIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (spaceRecordsRefs)
+                        await $_getPrefetchedData<
+                          SpaceStatusRow,
+                          $SpaceStatusesTable,
+                          SpaceRecordRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpaceStatusesTableReferences
+                              ._spaceRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpaceStatusesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.statusId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$SpaceStatusesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceStatusesTable,
+      SpaceStatusRow,
+      $$SpaceStatusesTableFilterComposer,
+      $$SpaceStatusesTableOrderingComposer,
+      $$SpaceStatusesTableAnnotationComposer,
+      $$SpaceStatusesTableCreateCompanionBuilder,
+      $$SpaceStatusesTableUpdateCompanionBuilder,
+      (SpaceStatusRow, $$SpaceStatusesTableReferences),
+      SpaceStatusRow,
+      PrefetchHooks Function({bool recordTypeId, bool spaceRecordsRefs})
+    >;
+typedef $$SpaceRecordsTableCreateCompanionBuilder =
+    SpaceRecordsCompanion Function({
+      required String id,
+      required String recordTypeId,
+      required String title,
+      Value<String?> statusId,
+      required String fieldsJson,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceRecordsTableUpdateCompanionBuilder =
+    SpaceRecordsCompanion Function({
+      Value<String> id,
+      Value<String> recordTypeId,
+      Value<String> title,
+      Value<String?> statusId,
+      Value<String> fieldsJson,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceRecordsTableReferences
+    extends BaseReferences<_$AppDatabase, $SpaceRecordsTable, SpaceRecordRow> {
+  $$SpaceRecordsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $SpaceRecordTypesTable _recordTypeIdTable(_$AppDatabase db) => db
+      .spaceRecordTypes
+      .createAlias('space_records__record_type_id__space_record_types__id');
+
+  $$SpaceRecordTypesTableProcessedTableManager get recordTypeId {
+    final $_column = $_itemColumn<String>('record_type_id')!;
+
+    final manager = $$SpaceRecordTypesTableTableManager(
+      $_db,
+      $_db.spaceRecordTypes,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_recordTypeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $SpaceStatusesTable _statusIdTable(_$AppDatabase db) => db
+      .spaceStatuses
+      .createAlias('space_records__status_id__space_statuses__id');
+
+  $$SpaceStatusesTableProcessedTableManager? get statusId {
+    final $_column = $_itemColumn<String>('status_id');
+    if ($_column == null) return null;
+    final manager = $$SpaceStatusesTableTableManager(
+      $_db,
+      $_db.spaceStatuses,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_statusIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$SpaceRecordLinksTable, List<SpaceRecordLinkRow>>
+  _spaceRecordLinksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.spaceRecordLinks,
+    aliasName: 'space_records__id__space_record_links__source_record_id',
+  );
+
+  $$SpaceRecordLinksTableProcessedTableManager get spaceRecordLinksRefs {
+    final manager = $$SpaceRecordLinksTableTableManager(
+      $_db,
+      $_db.spaceRecordLinks,
+    ).filter((f) => f.sourceRecordId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _spaceRecordLinksRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$SpaceRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceRecordsTable> {
+  $$SpaceRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fieldsJson => $composableBuilder(
+    column: $table.fieldsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpaceRecordTypesTableFilterComposer get recordTypeId {
+    final $$SpaceRecordTypesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$SpaceStatusesTableFilterComposer get statusId {
+    final $$SpaceStatusesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statusId,
+      referencedTable: $db.spaceStatuses,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceStatusesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceStatuses,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> spaceRecordLinksRefs(
+    Expression<bool> Function($$SpaceRecordLinksTableFilterComposer f) f,
+  ) {
+    final $$SpaceRecordLinksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecordLinks,
+      getReferencedColumn: (t) => t.sourceRecordId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordLinksTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecordLinks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceRecordsTable> {
+  $$SpaceRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fieldsJson => $composableBuilder(
+    column: $table.fieldsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpaceRecordTypesTableOrderingComposer get recordTypeId {
+    final $$SpaceRecordTypesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$SpaceStatusesTableOrderingComposer get statusId {
+    final $$SpaceStatusesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statusId,
+      referencedTable: $db.spaceStatuses,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceStatusesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaceStatuses,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceRecordsTable> {
+  $$SpaceRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get fieldsJson => $composableBuilder(
+    column: $table.fieldsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$SpaceRecordTypesTableAnnotationComposer get recordTypeId {
+    final $$SpaceRecordTypesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordTypeId,
+      referencedTable: $db.spaceRecordTypes,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordTypesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecordTypes,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$SpaceStatusesTableAnnotationComposer get statusId {
+    final $$SpaceStatusesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statusId,
+      referencedTable: $db.spaceStatuses,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceStatusesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceStatuses,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> spaceRecordLinksRefs<T extends Object>(
+    Expression<T> Function($$SpaceRecordLinksTableAnnotationComposer a) f,
+  ) {
+    final $$SpaceRecordLinksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.spaceRecordLinks,
+      getReferencedColumn: (t) => t.sourceRecordId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordLinksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecordLinks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$SpaceRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceRecordsTable,
+          SpaceRecordRow,
+          $$SpaceRecordsTableFilterComposer,
+          $$SpaceRecordsTableOrderingComposer,
+          $$SpaceRecordsTableAnnotationComposer,
+          $$SpaceRecordsTableCreateCompanionBuilder,
+          $$SpaceRecordsTableUpdateCompanionBuilder,
+          (SpaceRecordRow, $$SpaceRecordsTableReferences),
+          SpaceRecordRow,
+          PrefetchHooks Function({
+            bool recordTypeId,
+            bool statusId,
+            bool spaceRecordLinksRefs,
+          })
+        > {
+  $$SpaceRecordsTableTableManager(_$AppDatabase db, $SpaceRecordsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceRecordsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> recordTypeId = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> statusId = const Value.absent(),
+                Value<String> fieldsJson = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordsCompanion(
+                id: id,
+                recordTypeId: recordTypeId,
+                title: title,
+                statusId: statusId,
+                fieldsJson: fieldsJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String recordTypeId,
+                required String title,
+                Value<String?> statusId = const Value.absent(),
+                required String fieldsJson,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordsCompanion.insert(
+                id: id,
+                recordTypeId: recordTypeId,
+                title: title,
+                statusId: statusId,
+                fieldsJson: fieldsJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                recordTypeId = false,
+                statusId = false,
+                spaceRecordLinksRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (spaceRecordLinksRefs) db.spaceRecordLinks,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (recordTypeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.recordTypeId,
+                                    referencedTable:
+                                        $$SpaceRecordsTableReferences
+                                            ._recordTypeIdTable(db),
+                                    referencedColumn:
+                                        $$SpaceRecordsTableReferences
+                                            ._recordTypeIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (statusId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.statusId,
+                                    referencedTable:
+                                        $$SpaceRecordsTableReferences
+                                            ._statusIdTable(db),
+                                    referencedColumn:
+                                        $$SpaceRecordsTableReferences
+                                            ._statusIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (spaceRecordLinksRefs)
+                        await $_getPrefetchedData<
+                          SpaceRecordRow,
+                          $SpaceRecordsTable,
+                          SpaceRecordLinkRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SpaceRecordsTableReferences
+                              ._spaceRecordLinksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SpaceRecordsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).spaceRecordLinksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.sourceRecordId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$SpaceRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceRecordsTable,
+      SpaceRecordRow,
+      $$SpaceRecordsTableFilterComposer,
+      $$SpaceRecordsTableOrderingComposer,
+      $$SpaceRecordsTableAnnotationComposer,
+      $$SpaceRecordsTableCreateCompanionBuilder,
+      $$SpaceRecordsTableUpdateCompanionBuilder,
+      (SpaceRecordRow, $$SpaceRecordsTableReferences),
+      SpaceRecordRow,
+      PrefetchHooks Function({
+        bool recordTypeId,
+        bool statusId,
+        bool spaceRecordLinksRefs,
+      })
+    >;
+typedef $$SpaceRecordLinksTableCreateCompanionBuilder =
+    SpaceRecordLinksCompanion Function({
+      required String id,
+      required String sourceRecordId,
+      required String targetType,
+      required String targetId,
+      required String relationshipType,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceRecordLinksTableUpdateCompanionBuilder =
+    SpaceRecordLinksCompanion Function({
+      Value<String> id,
+      Value<String> sourceRecordId,
+      Value<String> targetType,
+      Value<String> targetId,
+      Value<String> relationshipType,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceRecordLinksTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SpaceRecordLinksTable,
+          SpaceRecordLinkRow
+        > {
+  $$SpaceRecordLinksTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SpaceRecordsTable _sourceRecordIdTable(_$AppDatabase db) => db
+      .spaceRecords
+      .createAlias('space_record_links__source_record_id__space_records__id');
+
+  $$SpaceRecordsTableProcessedTableManager get sourceRecordId {
+    final $_column = $_itemColumn<String>('source_record_id')!;
+
+    final manager = $$SpaceRecordsTableTableManager(
+      $_db,
+      $_db.spaceRecords,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_sourceRecordIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SpaceRecordLinksTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceRecordLinksTable> {
+  $$SpaceRecordLinksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get targetType => $composableBuilder(
+    column: $table.targetType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get targetId => $composableBuilder(
+    column: $table.targetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get relationshipType => $composableBuilder(
+    column: $table.relationshipType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpaceRecordsTableFilterComposer get sourceRecordId {
+    final $$SpaceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceRecordId,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceRecordLinksTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceRecordLinksTable> {
+  $$SpaceRecordLinksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get targetType => $composableBuilder(
+    column: $table.targetType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get targetId => $composableBuilder(
+    column: $table.targetId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get relationshipType => $composableBuilder(
+    column: $table.relationshipType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpaceRecordsTableOrderingComposer get sourceRecordId {
+    final $$SpaceRecordsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceRecordId,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceRecordLinksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceRecordLinksTable> {
+  $$SpaceRecordLinksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get targetType => $composableBuilder(
+    column: $table.targetType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get targetId =>
+      $composableBuilder(column: $table.targetId, builder: (column) => column);
+
+  GeneratedColumn<String> get relationshipType => $composableBuilder(
+    column: $table.relationshipType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$SpaceRecordsTableAnnotationComposer get sourceRecordId {
+    final $$SpaceRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceRecordId,
+      referencedTable: $db.spaceRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpaceRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceRecordLinksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceRecordLinksTable,
+          SpaceRecordLinkRow,
+          $$SpaceRecordLinksTableFilterComposer,
+          $$SpaceRecordLinksTableOrderingComposer,
+          $$SpaceRecordLinksTableAnnotationComposer,
+          $$SpaceRecordLinksTableCreateCompanionBuilder,
+          $$SpaceRecordLinksTableUpdateCompanionBuilder,
+          (SpaceRecordLinkRow, $$SpaceRecordLinksTableReferences),
+          SpaceRecordLinkRow,
+          PrefetchHooks Function({bool sourceRecordId})
+        > {
+  $$SpaceRecordLinksTableTableManager(
+    _$AppDatabase db,
+    $SpaceRecordLinksTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceRecordLinksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceRecordLinksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceRecordLinksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> sourceRecordId = const Value.absent(),
+                Value<String> targetType = const Value.absent(),
+                Value<String> targetId = const Value.absent(),
+                Value<String> relationshipType = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordLinksCompanion(
+                id: id,
+                sourceRecordId: sourceRecordId,
+                targetType: targetType,
+                targetId: targetId,
+                relationshipType: relationshipType,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String sourceRecordId,
+                required String targetType,
+                required String targetId,
+                required String relationshipType,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceRecordLinksCompanion.insert(
+                id: id,
+                sourceRecordId: sourceRecordId,
+                targetType: targetType,
+                targetId: targetId,
+                relationshipType: relationshipType,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceRecordLinksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({sourceRecordId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (sourceRecordId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.sourceRecordId,
+                                referencedTable:
+                                    $$SpaceRecordLinksTableReferences
+                                        ._sourceRecordIdTable(db),
+                                referencedColumn:
+                                    $$SpaceRecordLinksTableReferences
+                                        ._sourceRecordIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SpaceRecordLinksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceRecordLinksTable,
+      SpaceRecordLinkRow,
+      $$SpaceRecordLinksTableFilterComposer,
+      $$SpaceRecordLinksTableOrderingComposer,
+      $$SpaceRecordLinksTableAnnotationComposer,
+      $$SpaceRecordLinksTableCreateCompanionBuilder,
+      $$SpaceRecordLinksTableUpdateCompanionBuilder,
+      (SpaceRecordLinkRow, $$SpaceRecordLinksTableReferences),
+      SpaceRecordLinkRow,
+      PrefetchHooks Function({bool sourceRecordId})
+    >;
+typedef $$SpaceSavedFiltersTableCreateCompanionBuilder =
+    SpaceSavedFiltersCompanion Function({
+      required String id,
+      required String spaceId,
+      required String name,
+      required String filterJson,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceSavedFiltersTableUpdateCompanionBuilder =
+    SpaceSavedFiltersCompanion Function({
+      Value<String> id,
+      Value<String> spaceId,
+      Value<String> name,
+      Value<String> filterJson,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceSavedFiltersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SpaceSavedFiltersTable,
+          SpaceSavedFilterRow
+        > {
+  $$SpaceSavedFiltersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SpacesTable _spaceIdTable(_$AppDatabase db) =>
+      db.spaces.createAlias('space_saved_filters__space_id__spaces__id');
+
+  $$SpacesTableProcessedTableManager get spaceId {
+    final $_column = $_itemColumn<String>('space_id')!;
+
+    final manager = $$SpacesTableTableManager(
+      $_db,
+      $_db.spaces,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_spaceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SpaceSavedFiltersTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceSavedFiltersTable> {
+  $$SpaceSavedFiltersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get filterJson => $composableBuilder(
+    column: $table.filterJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpacesTableFilterComposer get spaceId {
+    final $$SpacesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedFiltersTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceSavedFiltersTable> {
+  $$SpaceSavedFiltersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get filterJson => $composableBuilder(
+    column: $table.filterJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpacesTableOrderingComposer get spaceId {
+    final $$SpacesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedFiltersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceSavedFiltersTable> {
+  $$SpaceSavedFiltersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get filterJson => $composableBuilder(
+    column: $table.filterJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$SpacesTableAnnotationComposer get spaceId {
+    final $$SpacesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedFiltersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceSavedFiltersTable,
+          SpaceSavedFilterRow,
+          $$SpaceSavedFiltersTableFilterComposer,
+          $$SpaceSavedFiltersTableOrderingComposer,
+          $$SpaceSavedFiltersTableAnnotationComposer,
+          $$SpaceSavedFiltersTableCreateCompanionBuilder,
+          $$SpaceSavedFiltersTableUpdateCompanionBuilder,
+          (SpaceSavedFilterRow, $$SpaceSavedFiltersTableReferences),
+          SpaceSavedFilterRow,
+          PrefetchHooks Function({bool spaceId})
+        > {
+  $$SpaceSavedFiltersTableTableManager(
+    _$AppDatabase db,
+    $SpaceSavedFiltersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceSavedFiltersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceSavedFiltersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceSavedFiltersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> spaceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> filterJson = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceSavedFiltersCompanion(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                filterJson: filterJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String spaceId,
+                required String name,
+                required String filterJson,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceSavedFiltersCompanion.insert(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                filterJson: filterJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceSavedFiltersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({spaceId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (spaceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.spaceId,
+                                referencedTable:
+                                    $$SpaceSavedFiltersTableReferences
+                                        ._spaceIdTable(db),
+                                referencedColumn:
+                                    $$SpaceSavedFiltersTableReferences
+                                        ._spaceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SpaceSavedFiltersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceSavedFiltersTable,
+      SpaceSavedFilterRow,
+      $$SpaceSavedFiltersTableFilterComposer,
+      $$SpaceSavedFiltersTableOrderingComposer,
+      $$SpaceSavedFiltersTableAnnotationComposer,
+      $$SpaceSavedFiltersTableCreateCompanionBuilder,
+      $$SpaceSavedFiltersTableUpdateCompanionBuilder,
+      (SpaceSavedFilterRow, $$SpaceSavedFiltersTableReferences),
+      SpaceSavedFilterRow,
+      PrefetchHooks Function({bool spaceId})
+    >;
+typedef $$SpaceSavedViewsTableCreateCompanionBuilder =
+    SpaceSavedViewsCompanion Function({
+      required String id,
+      required String spaceId,
+      required String name,
+      required String viewType,
+      required String configJson,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$SpaceSavedViewsTableUpdateCompanionBuilder =
+    SpaceSavedViewsCompanion Function({
+      Value<String> id,
+      Value<String> spaceId,
+      Value<String> name,
+      Value<String> viewType,
+      Value<String> configJson,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$SpaceSavedViewsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $SpaceSavedViewsTable,
+          SpaceSavedViewRow
+        > {
+  $$SpaceSavedViewsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SpacesTable _spaceIdTable(_$AppDatabase db) =>
+      db.spaces.createAlias('space_saved_views__space_id__spaces__id');
+
+  $$SpacesTableProcessedTableManager get spaceId {
+    final $_column = $_itemColumn<String>('space_id')!;
+
+    final manager = $$SpacesTableTableManager(
+      $_db,
+      $_db.spaces,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_spaceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SpaceSavedViewsTableFilterComposer
+    extends Composer<_$AppDatabase, $SpaceSavedViewsTable> {
+  $$SpaceSavedViewsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get viewType => $composableBuilder(
+    column: $table.viewType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get configJson => $composableBuilder(
+    column: $table.configJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SpacesTableFilterComposer get spaceId {
+    final $$SpacesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableFilterComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedViewsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SpaceSavedViewsTable> {
+  $$SpaceSavedViewsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get viewType => $composableBuilder(
+    column: $table.viewType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get configJson => $composableBuilder(
+    column: $table.configJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SpacesTableOrderingComposer get spaceId {
+    final $$SpacesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableOrderingComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedViewsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SpaceSavedViewsTable> {
+  $$SpaceSavedViewsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get viewType =>
+      $composableBuilder(column: $table.viewType, builder: (column) => column);
+
+  GeneratedColumn<String> get configJson => $composableBuilder(
+    column: $table.configJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$SpacesTableAnnotationComposer get spaceId {
+    final $$SpacesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.spaceId,
+      referencedTable: $db.spaces,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SpacesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.spaces,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SpaceSavedViewsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SpaceSavedViewsTable,
+          SpaceSavedViewRow,
+          $$SpaceSavedViewsTableFilterComposer,
+          $$SpaceSavedViewsTableOrderingComposer,
+          $$SpaceSavedViewsTableAnnotationComposer,
+          $$SpaceSavedViewsTableCreateCompanionBuilder,
+          $$SpaceSavedViewsTableUpdateCompanionBuilder,
+          (SpaceSavedViewRow, $$SpaceSavedViewsTableReferences),
+          SpaceSavedViewRow,
+          PrefetchHooks Function({bool spaceId})
+        > {
+  $$SpaceSavedViewsTableTableManager(
+    _$AppDatabase db,
+    $SpaceSavedViewsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SpaceSavedViewsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SpaceSavedViewsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SpaceSavedViewsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> spaceId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> viewType = const Value.absent(),
+                Value<String> configJson = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceSavedViewsCompanion(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                viewType: viewType,
+                configJson: configJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String spaceId,
+                required String name,
+                required String viewType,
+                required String configJson,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => SpaceSavedViewsCompanion.insert(
+                id: id,
+                spaceId: spaceId,
+                name: name,
+                viewType: viewType,
+                configJson: configJson,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SpaceSavedViewsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({spaceId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (spaceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.spaceId,
+                                referencedTable:
+                                    $$SpaceSavedViewsTableReferences
+                                        ._spaceIdTable(db),
+                                referencedColumn:
+                                    $$SpaceSavedViewsTableReferences
+                                        ._spaceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SpaceSavedViewsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SpaceSavedViewsTable,
+      SpaceSavedViewRow,
+      $$SpaceSavedViewsTableFilterComposer,
+      $$SpaceSavedViewsTableOrderingComposer,
+      $$SpaceSavedViewsTableAnnotationComposer,
+      $$SpaceSavedViewsTableCreateCompanionBuilder,
+      $$SpaceSavedViewsTableUpdateCompanionBuilder,
+      (SpaceSavedViewRow, $$SpaceSavedViewsTableReferences),
+      SpaceSavedViewRow,
+      PrefetchHooks Function({bool spaceId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -16777,4 +24840,20 @@ class $AppDatabaseManager {
       $$TimeBlocksTableTableManager(_db, _db.timeBlocks);
   $$FocusSessionsTableTableManager get focusSessions =>
       $$FocusSessionsTableTableManager(_db, _db.focusSessions);
+  $$SpacesTableTableManager get spaces =>
+      $$SpacesTableTableManager(_db, _db.spaces);
+  $$SpaceRecordTypesTableTableManager get spaceRecordTypes =>
+      $$SpaceRecordTypesTableTableManager(_db, _db.spaceRecordTypes);
+  $$SpaceFieldsTableTableManager get spaceFields =>
+      $$SpaceFieldsTableTableManager(_db, _db.spaceFields);
+  $$SpaceStatusesTableTableManager get spaceStatuses =>
+      $$SpaceStatusesTableTableManager(_db, _db.spaceStatuses);
+  $$SpaceRecordsTableTableManager get spaceRecords =>
+      $$SpaceRecordsTableTableManager(_db, _db.spaceRecords);
+  $$SpaceRecordLinksTableTableManager get spaceRecordLinks =>
+      $$SpaceRecordLinksTableTableManager(_db, _db.spaceRecordLinks);
+  $$SpaceSavedFiltersTableTableManager get spaceSavedFilters =>
+      $$SpaceSavedFiltersTableTableManager(_db, _db.spaceSavedFilters);
+  $$SpaceSavedViewsTableTableManager get spaceSavedViews =>
+      $$SpaceSavedViewsTableTableManager(_db, _db.spaceSavedViews);
 }

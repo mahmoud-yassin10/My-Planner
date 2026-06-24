@@ -46,7 +46,10 @@ The project follows a phase-based development process. Version numbers will be i
 - Planner Day, Week, Month, and Agenda foundation views for events, time blocks, and scheduled tasks
 - Schema version 5 with focus sessions
 - Planner recurrence expansion, reminder contract validation, task scheduling, actual-duration, and focus-session completion behavior
-- Drift schema version 3 snapshot and migration verification tests
+- Schema version 6 with Space definitions, record types, fields, statuses, records, record links, saved filters, and saved views
+- Drift-backed Spaces repository with validation, watch updates, failure translation, and Riverpod providers
+- Spaces destination now renders the Phase 5A Spaces foundation with loading, empty, content, and error states
+- Drift schema snapshots and migration verification tests through version 6
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`

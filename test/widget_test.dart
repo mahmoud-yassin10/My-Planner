@@ -13,6 +13,8 @@ import 'package:momentum_os/features/goals/application/hierarchy_controller.dart
 import 'package:momentum_os/features/goals/domain/hierarchy_models.dart';
 import 'package:momentum_os/features/planner/application/planner_controller.dart';
 import 'package:momentum_os/features/planner/domain/planner_models.dart';
+import 'package:momentum_os/features/spaces/application/spaces_controller.dart';
+import 'package:momentum_os/features/spaces/domain/spaces_models.dart';
 import 'package:momentum_os/features/tasks/application/task_core_controller.dart';
 import 'package:momentum_os/features/tasks/domain/task_core_models.dart';
 
@@ -472,6 +474,9 @@ Future<void> _pumpApp(WidgetTester tester, {required Size size}) async {
         ),
         plannerSnapshotProvider.overrideWith(
           (ref) => Stream.value(const PlannerSnapshot()),
+        ),
+        spacesSnapshotProvider.overrideWith(
+          (ref) => Stream.value(const SpacesSnapshot()),
         ),
       ],
       child: const MomentumApp(),

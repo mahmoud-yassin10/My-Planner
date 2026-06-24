@@ -17,7 +17,7 @@ void main() {
   });
 
   test(
-    'fresh database creation includes foundation, productivity-core, and planner tables',
+    'fresh database creation includes foundation, productivity-core, planner, and spaces tables',
     () async {
       final database = AppDatabase.inMemory();
       addTearDown(database.close);
@@ -45,6 +45,26 @@ void main() {
       expect(tables.map((row) => row.data['name']), contains('planner_events'));
       expect(tables.map((row) => row.data['name']), contains('time_blocks'));
       expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
+      expect(tables.map((row) => row.data['name']), contains('spaces'));
+      expect(
+        tables.map((row) => row.data['name']),
+        contains('space_record_types'),
+      );
+      expect(tables.map((row) => row.data['name']), contains('space_fields'));
+      expect(tables.map((row) => row.data['name']), contains('space_statuses'));
+      expect(tables.map((row) => row.data['name']), contains('space_records'));
+      expect(
+        tables.map((row) => row.data['name']),
+        contains('space_record_links'),
+      );
+      expect(
+        tables.map((row) => row.data['name']),
+        contains('space_saved_filters'),
+      );
+      expect(
+        tables.map((row) => row.data['name']),
+        contains('space_saved_views'),
+      );
     },
   );
 
@@ -68,7 +88,7 @@ void main() {
     expect(row.updatedAt.isUtc, isTrue);
   });
 
-  test('migration from version 1 creates planner foundation tables', () async {
+  test('migration from version 1 creates spaces foundation tables', () async {
     final tempDirectory = await Directory.systemTemp.createTemp(
       'momentum_os_migration_test_',
     );
@@ -107,6 +127,26 @@ void main() {
     expect(tables.map((row) => row.data['name']), contains('planner_events'));
     expect(tables.map((row) => row.data['name']), contains('time_blocks'));
     expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
+    expect(tables.map((row) => row.data['name']), contains('spaces'));
+    expect(
+      tables.map((row) => row.data['name']),
+      contains('space_record_types'),
+    );
+    expect(tables.map((row) => row.data['name']), contains('space_fields'));
+    expect(tables.map((row) => row.data['name']), contains('space_statuses'));
+    expect(tables.map((row) => row.data['name']), contains('space_records'));
+    expect(
+      tables.map((row) => row.data['name']),
+      contains('space_record_links'),
+    );
+    expect(
+      tables.map((row) => row.data['name']),
+      contains('space_saved_filters'),
+    );
+    expect(
+      tables.map((row) => row.data['name']),
+      contains('space_saved_views'),
+    );
   });
 
   test(
@@ -143,6 +183,14 @@ void main() {
       expect(schema.toString(), contains('planner_events'));
       expect(schema.toString(), contains('time_blocks'));
       expect(schema.toString(), contains('focus_sessions'));
+      expect(schema.toString(), contains('spaces'));
+      expect(schema.toString(), contains('space_record_types'));
+      expect(schema.toString(), contains('space_fields'));
+      expect(schema.toString(), contains('space_statuses'));
+      expect(schema.toString(), contains('space_records'));
+      expect(schema.toString(), contains('space_record_links'));
+      expect(schema.toString(), contains('space_saved_filters'));
+      expect(schema.toString(), contains('space_saved_views'));
     },
   );
 }

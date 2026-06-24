@@ -210,6 +210,8 @@ Schema version 3 adds the Phase 3B task-core tables for Tasks, Tags, entity tags
 
 Schema version 4 adds Planner events and time blocks. Schema version 5 adds focus sessions. Planner widgets access this slice through `PlannerController` and `PlannerRepository`; Drift remains behind `DriftPlannerRepository`.
 
+Schema version 6 adds the initial configurable Spaces foundation: Spaces, record types, field definitions, status definitions, records, record links, saved filters, and saved views. Spaces widgets access this slice through `SpacesController` and `SpacesRepository`; Drift remains behind `DriftSpacesRepository`.
+
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 
 Repository contracts live outside Drift implementations. The Phase 2 settings contract is `SettingsRepository`; `DriftSettingsRepository` is the local implementation.

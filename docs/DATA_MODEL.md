@@ -42,6 +42,8 @@ Phase 4A implements Planner events and time blocks in schema version 4. Archive 
 
 Phase 4B implements focus sessions in schema version 5. Recurrence expansion is local and deterministic for supported event rules. Reminder policies are validated contracts only; platform notification scheduling remains deferred to Phase 7.
 
+Phase 5A implements the initial configurable Spaces foundation in schema version 6. Space definitions, record types, field definitions, status definitions, records, record links, saved filters, and saved views are persisted behind `SpacesRepository`. Record field values are stored as a JSON object in `space_records.fieldsJson` for this foundation slice; repository validation enforces supported field types before writes. Templates, search indexing, analytics, backup files, restore flows, and cloud synchronization remain deferred.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -237,7 +239,6 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `iconKey`
 - `colorValue`
 - `sortOrder`
-- `isTemplateManaged`
 - common timestamps
 
 ### `space_record_types`
@@ -245,9 +246,7 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `id`
 - `spaceId`
 - `name`
-- `singularName`
 - `description`
-- `iconKey`
 - `sortOrder`
 - common timestamps
 
@@ -259,10 +258,8 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `fieldKey`
 - `fieldType`
 - `isRequired`
-- `isUnique`
-- `defaultValueJson`
-- `configurationJson`
 - `sortOrder`
+- `optionsJson`
 - common timestamps
 
 ### `space_statuses`
@@ -272,7 +269,7 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `name`
 - `colorValue`
 - `sortOrder`
-- `isTerminal`
+- `isDefault`
 - common timestamps
 
 ### `space_records`
@@ -281,50 +278,38 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `recordTypeId`
 - `title`
 - `statusId`
+- `fieldsJson`
 - common timestamps
 
-### `space_record_values`
+`fieldsJson` must be a JSON object. Supported Phase 5A field types are text, number, checkbox, date, URL, and select. Repository validation enforces type consistency before insert.
 
-- `id`
-- `recordId`
-- `fieldId`
-- typed value columns where practical:
-  - `textValue`
-  - `integerValue`
-  - `decimalValue`
-  - `booleanValue`
-  - `dateTimeValue`
-  - `jsonValue`
-
-Only the column appropriate to the field type should be populated. Repository validation enforces type consistency.
-
-### `space_record_relationships`
+### `space_record_links`
 
 - `id`
 - `sourceRecordId`
-- `targetRecordId`
-- `fieldId`
-- common timestamps
+- `targetType`
+- `targetId`
+- `relationshipType`
+- `createdAt`
 
-### `space_views`
+### `space_saved_views`
 
 - `id`
 - `spaceId`
-- `recordTypeId`
 - `name`
 - `viewType`
-- `configurationJson`
-- `sortOrder`
-- common timestamps
+- `configJson`
+- `createdAt`
+- `updatedAt`
 
-### `space_filters`
+### `space_saved_filters`
 
 - `id`
-- `viewId`
 - `name`
-- `filterDefinitionJson`
-- `sortDefinitionJson`
-- common timestamps
+- `spaceId`
+- `filterJson`
+- `createdAt`
+- `updatedAt`
 
 ## 6. Templates
 
@@ -523,6 +508,8 @@ Schema version 3 adds Tasks/subtasks, Tags, entity-tag relationships, Notes, and
 Schema version 4 adds Planner events and time blocks. `planner_events.linkedTaskId` and `time_blocks.linkedTaskId` reference `tasks.id`. Recurrence and reminder text fields are contract placeholders and do not schedule platform notifications.
 
 Schema version 5 adds focus sessions. `focus_sessions.taskId` references `tasks.id`; focus sessions store planned and actual duration for Phase 4 Planner behavior without adding analytics dashboards.
+
+Schema version 6 adds the Phase 5A Spaces foundation tables. `space_record_types.spaceId`, `space_saved_filters.spaceId`, and `space_saved_views.spaceId` reference `spaces.id`; field, status, and record rows reference `space_record_types.id`; record links reference `space_records.id` for their source record and store generic target references for supported core entities. Repository validation handles dynamic field-value typing where SQLite cannot model configurable fields directly in Phase 5A.
 
 ## 13. Backup and export
 

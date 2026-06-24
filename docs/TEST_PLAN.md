@@ -59,6 +59,8 @@ Phase 4A adds focused tests for schema version 4, generated Drift migration veri
 
 Phase 4B adds focused tests for schema version 5, focus session persistence, recurrence expansion, reminder contract validation, Planner task scheduling and actual-duration actions, and completed Planner widget coverage.
 
+Phase 5A adds focused tests for schema version 6, generated Drift migration verification from earlier snapshots, Space definition/record type/field/status/record/link/filter/view repository behavior, field-key and field-value validation, repository-boundary failure translation, Spaces provider boundaries, Spaces watch updates, and Spaces screen loading/empty/content/error rendering.
+
 ### Widget tests
 
 Cover:

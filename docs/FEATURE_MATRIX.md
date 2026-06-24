@@ -26,8 +26,8 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Complete | Schema version 5 with settings metadata, productivity-core tables, and planner tables |
-| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 5 |
+| Drift database | 2 | Complete | Schema version 6 with settings metadata, productivity-core, planner, and Spaces foundation tables |
+| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 6 |
 | UUID service | 2 | Complete | Replaceable UUID v4 service |
 | Typed settings | 2 | Complete | Drift-backed typed settings repository |
 | Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
@@ -67,18 +67,19 @@ Status values:
 
 | Feature | Phase | Status |
 |---|---:|---|
-| Space definitions | 5 | Not started |
-| Record types | 5 | Not started |
-| Custom fields | 5 | Not started |
-| Editable statuses | 5 | Not started |
-| Custom records | 5 | Not started |
-| Relationships | 5 | Not started |
-| Saved filters | 5 | Not started |
-| List view | 5 | Not started |
-| Table view | 5 | Not started |
-| Board view | 5 | Not started |
+| Space definitions | 5 | Complete |
+| Record types | 5 | Complete |
+| Custom fields | 5 | Complete |
+| Editable statuses | 5 | Complete |
+| Custom records | 5 | Complete |
+| Relationships | 5 | Complete |
+| Saved filters | 5 | Complete |
+| Saved views contract | 5 | Complete |
+| List view | 5 | Planned |
+| Table view | 5 | Planned |
+| Board view | 5 | Planned |
 | Calendar view | 5 | Not started |
-| Card view | 5 | Not started |
+| Card view | 5 | Planned |
 | Template installer/uninstaller | 5 | Not started |
 
 ## Templates

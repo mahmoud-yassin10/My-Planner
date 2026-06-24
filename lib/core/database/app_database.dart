@@ -11,7 +11,7 @@ import 'app_database.steps.dart';
 
 part 'app_database.g.dart';
 
-const appDatabaseSchemaVersion = 5;
+const appDatabaseSchemaVersion = 6;
 
 @DataClassName('AppSettingRow')
 class AppSettings extends Table {
@@ -261,6 +261,126 @@ class FocusSessions extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('SpaceRow')
+class Spaces extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get iconKey => text().nullable()();
+  IntColumn get colorValue => integer().nullable()();
+  IntColumn get sortOrder => integer()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceRecordTypeRow')
+class SpaceRecordTypes extends Table {
+  TextColumn get id => text()();
+  TextColumn get spaceId => text().references(Spaces, #id)();
+  TextColumn get name => text()();
+  TextColumn get description => text().nullable()();
+  IntColumn get sortOrder => integer()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceFieldRow')
+class SpaceFields extends Table {
+  TextColumn get id => text()();
+  TextColumn get recordTypeId => text().references(SpaceRecordTypes, #id)();
+  TextColumn get name => text()();
+  TextColumn get fieldKey => text()();
+  TextColumn get fieldType => text()();
+  BoolColumn get isRequired => boolean()();
+  IntColumn get sortOrder => integer()();
+  TextColumn get optionsJson => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceStatusRow')
+class SpaceStatuses extends Table {
+  TextColumn get id => text()();
+  TextColumn get recordTypeId => text().references(SpaceRecordTypes, #id)();
+  TextColumn get name => text()();
+  IntColumn get colorValue => integer().nullable()();
+  IntColumn get sortOrder => integer()();
+  BoolColumn get isDefault => boolean()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceRecordRow')
+class SpaceRecords extends Table {
+  TextColumn get id => text()();
+  TextColumn get recordTypeId => text().references(SpaceRecordTypes, #id)();
+  TextColumn get title => text()();
+  TextColumn get statusId => text().nullable().references(SpaceStatuses, #id)();
+  TextColumn get fieldsJson => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceRecordLinkRow')
+class SpaceRecordLinks extends Table {
+  TextColumn get id => text()();
+  TextColumn get sourceRecordId => text().references(SpaceRecords, #id)();
+  TextColumn get targetType => text()();
+  TextColumn get targetId => text()();
+  TextColumn get relationshipType => text()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceSavedFilterRow')
+class SpaceSavedFilters extends Table {
+  TextColumn get id => text()();
+  TextColumn get spaceId => text().references(Spaces, #id)();
+  TextColumn get name => text()();
+  TextColumn get filterJson => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('SpaceSavedViewRow')
+class SpaceSavedViews extends Table {
+  TextColumn get id => text()();
+  TextColumn get spaceId => text().references(Spaces, #id)();
+  TextColumn get name => text()();
+  TextColumn get viewType => text()();
+  TextColumn get configJson => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -277,12 +397,20 @@ class FocusSessions extends Table {
     PlannerEvents,
     TimeBlocks,
     FocusSessions,
+    Spaces,
+    SpaceRecordTypes,
+    SpaceFields,
+    SpaceStatuses,
+    SpaceRecords,
+    SpaceRecordLinks,
+    SpaceSavedFilters,
+    SpaceSavedViews,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 5;
+  static const latestSchemaVersion = 6;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -317,6 +445,16 @@ class AppDatabase extends _$AppDatabase {
           },
           from4To5: (migrator, schema) async {
             await migrator.createTable(schema.focusSessions);
+          },
+          from5To6: (migrator, schema) async {
+            await migrator.createTable(schema.spaces);
+            await migrator.createTable(schema.spaceRecordTypes);
+            await migrator.createTable(schema.spaceFields);
+            await migrator.createTable(schema.spaceStatuses);
+            await migrator.createTable(schema.spaceRecords);
+            await migrator.createTable(schema.spaceRecordLinks);
+            await migrator.createTable(schema.spaceSavedFilters);
+            await migrator.createTable(schema.spaceSavedViews);
           },
         )(migrator, from, to);
       },
