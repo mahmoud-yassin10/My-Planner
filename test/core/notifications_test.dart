@@ -178,6 +178,33 @@ void main() {
     expect(records.single.metadata['status'], 'denied');
   });
 
+  test('unavailable platform fails safely before adapter calls', () async {
+    final adapter = _FakeNotificationPlatformAdapter();
+
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.unavailable(),
+    );
+
+    await expectLater(
+      service.scheduleIntent(_scheduledIntent(DateTime.utc(2026, 6, 24, 9))),
+      throwsA(
+        isA<NotificationPermissionFailure>().having(
+          (failure) => failure.message,
+          'safe message',
+          'Notifications are unavailable.',
+        ),
+      ),
+    );
+
+    expect(adapter.scheduled, isEmpty);
+    expect(adapter.canceled, isEmpty);
+    expect(records.single.operation, 'scheduleIntent');
+    expect(records.single.metadata['status'], 'unavailable');
+    expect(records.single.error, isA<NotificationPermissionFailure>());
+  });
+
   test(
     'adapter failures are translated and preserve debug diagnostics',
     () async {

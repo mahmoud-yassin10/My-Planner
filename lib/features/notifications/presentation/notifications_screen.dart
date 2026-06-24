@@ -61,7 +61,7 @@ class _NotificationFoundationContent extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(
-          'Notification contracts are available for future reminders. Platform scheduling is not active yet.',
+          'Scheduling, cancellation, and rescheduling are available through a replaceable notification adapter. The default adapter does not yet schedule operating-system notifications.',
           style: theme.textTheme.bodyLarge?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -111,14 +111,11 @@ class _NotificationFoundationContent extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
-        const SizedBox(
-          height: 336,
-          child: FoundationEmptyState(
-            title: 'No notification inbox yet',
-            message:
-                'Notification inbox persistence and platform reminders are planned for later Phase 7 work.',
-            icon: Icons.mark_email_unread_outlined,
-          ),
+        const FoundationEmptyState(
+          title: 'No notification inbox yet',
+          message:
+              'Notification inbox persistence and the production operating-system notification adapter remain planned for later Phase 7 work.',
+          icon: Icons.mark_email_unread_outlined,
         ),
       ],
     );

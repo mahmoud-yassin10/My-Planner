@@ -139,7 +139,9 @@ class LocalPlaceholderNotificationService implements NotificationService {
   }
 
   @override
-  Future<ScheduledNotification> scheduleIntent(NotificationIntent intent) async {
+  Future<ScheduledNotification> scheduleIntent(
+    NotificationIntent intent,
+  ) async {
     try {
       final normalized = _validateSchedulableIntent(intent);
       _ensureSchedulingPermission('scheduleIntent');
@@ -336,9 +338,7 @@ class LocalPlaceholderNotificationService implements NotificationService {
       error: error,
       stackTrace: StackTrace.current,
     );
-    throw const NotificationPermissionFailure(
-      'Notification permission is required.',
-    );
+    throw error;
   }
 
   void _logValidationFailure(
