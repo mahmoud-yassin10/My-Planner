@@ -16,9 +16,9 @@ Status values:
 | Clean Flutter Android project | 0 | Complete | Starter project created |
 | Repository documentation | 0 | Complete | Initial specification package |
 | Git/GitHub setup | 0 | Complete | Initial repository published |
-| Riverpod foundation | 1 | Not started | |
-| GoRouter shell | 1 | Not started | |
-| Theme system | 1 | Not started | |
+| Riverpod foundation | 1 | Complete | Root `ProviderScope` added |
+| GoRouter shell | 1 | Complete | Five primary destinations with adaptive shell |
+| Theme system | 1 | Complete | Centralized light and dark Material 3 themes |
 | Reusable UI states | 1 | Not started | |
 | Logging and error boundary | 1 | Not started | |
 

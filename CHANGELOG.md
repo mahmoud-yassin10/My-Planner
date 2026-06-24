@@ -8,6 +8,13 @@ The project follows a phase-based development process. Version numbers will be i
 
 ### Added
 
+- Riverpod app foundation with a root `ProviderScope`
+- GoRouter routing with centralized route names and paths
+- Deterministic `/` to `/home` redirect
+- Adaptive primary shell with compact bottom navigation and wider navigation rail
+- Placeholder screens for Home, Planner, Spaces, Goals, and Insights
+- Centralized light and dark Material 3 themes
+- Widget tests for initial destination, primary navigation, and adaptive shell layout
 - Clean Flutter Android project using project name `momentum_os`
 - Android namespace `com.mahmoudyassin.momentum_os`
 - Git repository and GitHub remote
@@ -25,5 +32,5 @@ The project follows a phase-based development process. Version numbers will be i
 
 ### Notes
 
-- No Momentum OS product features have been implemented.
-- The default Flutter starter application is intentionally retained until Phase 1.
+- Phase 1A intentionally adds only app-shell foundation behavior.
+- Persistence, productivity CRUD, Quick Add, AI, Search, Notifications, Settings, analytics, and templates remain unimplemented.
