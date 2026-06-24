@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 5A — Spaces foundation complete
+**Current phase:** Phase 5B — Spaces views foundation complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -177,6 +177,18 @@ Initial validation completed successfully before documentation population:
 | Spaces screen loading, empty, content, and error states | Complete |
 | Repository, database, migration, provider, and widget tests | Complete |
 
+## Phase 5B Spaces views foundation completion status
+
+| Deliverable | Status |
+|---|---|
+| Archive and restore operations for Space definitions, record types, fields, statuses, and records | Complete |
+| Explicit permanent delete operations for Phase 5A Spaces entities | Complete |
+| Foreign-key-protected delete behavior translated through the repository boundary | Complete |
+| Deterministic saved-view configuration validation | Complete |
+| Saved list, table, board, and card view rendering | Complete |
+| Spaces screen saved-view selection state | Complete |
+| Focused repository and widget tests for lifecycle and view rendering | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -209,6 +221,8 @@ Implemented foundation behavior:
 - Schema version 6 adds the Phase 5A configurable Spaces foundation.
 - The Planner destination supports local recurrence expansion, validated reminder contracts, task scheduling/actual-time actions, and focus-session display.
 - The Spaces destination renders Space definitions, record types, fields, statuses, records, links, saved filters, and saved views with loading, empty, content, and error states.
+- Saved Spaces views render generic records as list, table, board, and card previews without templates or hard-coded examples.
+- Spaces repositories expose explicit archive, restore, and permanent delete operations for implemented entities.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
@@ -219,7 +233,7 @@ Implemented foundation behavior:
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 5A Spaces foundation.
+- Debug APK verification has passed for the Phase 5B Spaces views foundation.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -231,7 +245,7 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 - `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v6.json` and updated migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 108 tests passed.
+- `flutter test` — Passed; 112 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -247,8 +261,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3 productivity core, Phase 4 Planner, and the Phase 5A Spaces foundation are in place. Platform notifications and later modules have not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3 productivity core, Phase 4 Planner, and the Phase 5 Spaces foundation/view layer are in place. Platform notifications and later modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-5B-SPACES-VIEWS-FOUNDATION`: add configured Space view rendering and lifecycle polish only.
+Complete Task `PHASE-6A-TEMPLATE-INFRASTRUCTURE`: add removable template infrastructure only.

@@ -75,12 +75,12 @@ Status values:
 | Relationships | 5 | Complete |
 | Saved filters | 5 | Complete |
 | Saved views contract | 5 | Complete |
-| List view | 5 | Planned |
-| Table view | 5 | Planned |
-| Board view | 5 | Planned |
+| List view | 5 | Complete |
+| Table view | 5 | Complete |
+| Board view | 5 | Complete |
 | Calendar view | 5 | Not started |
-| Card view | 5 | Planned |
-| Template installer/uninstaller | 5 | Not started |
+| Card view | 5 | Complete |
+| Template installer/uninstaller | 6 | Planned |
 
 ## Templates
 

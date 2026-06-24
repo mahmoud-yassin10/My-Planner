@@ -49,6 +49,8 @@ The project follows a phase-based development process. Version numbers will be i
 - Schema version 6 with Space definitions, record types, fields, statuses, records, record links, saved filters, and saved views
 - Drift-backed Spaces repository with validation, watch updates, failure translation, and Riverpod providers
 - Spaces destination now renders the Phase 5A Spaces foundation with loading, empty, content, and error states
+- Spaces archive, restore, and explicit delete operations for implemented Spaces entities
+- Saved Spaces list, table, board, and card view rendering with deterministic saved-view configuration validation
 - Drift schema snapshots and migration verification tests through version 6
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors

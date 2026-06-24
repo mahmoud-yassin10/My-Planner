@@ -2,32 +2,35 @@
 
 ## Task ID
 
-`PHASE-5B-SPACES-VIEWS-FOUNDATION`
+`PHASE-6A-TEMPLATE-INFRASTRUCTURE`
 
 ## Goal
 
-Add configured Space view rendering and lifecycle polish on top of the Phase 5A Spaces foundation without implementing templates, AI, analytics dashboards, backup/restore, or cloud synchronization.
+Add removable template infrastructure without installing real template packs, creating example records, or hard-coding personal workflows.
 
-Focus on rendering saved view configurations for existing Space records and adding safe archive/restore/delete lifecycle operations for implemented Spaces entities.
+Focus on a generic template registry contract, installation metadata, uninstall choices, repository boundaries, and tests.
 
 ## Scope
 
 Included:
 
-- Repository/controller lifecycle operations for implemented Spaces entities
-- Archive and restore support where Phase 5A tables include reversible archive metadata
-- Explicit permanent delete behavior with foreign-key protection tests
-- Basic saved-view rendering for list, table, board, and card view types using existing saved view configuration
-- Deterministic validation for saved view configuration JSON
-- Spaces screen view-selection state and accessible empty/error/loading states
-- Focused repository, database, controller, widget, and migration-regression tests
+- Template definition domain model for bundled configuration descriptors
+- Template installation metadata model
+- Drift table and migration only if required for installation tracking
+- Repository/controller boundary for listing template definitions and installation state
+- Install/uninstall foundation that records metadata but does not create productivity or Space records
+- Uninstall-choice contract for preserve, archive, export, and delete outcomes without implementing export files
+- Safe validation that templates remain generic and removable
+- Settings or Spaces screen entry point only if needed to reach the foundation state
+- Loading, empty, content, and error states for any new template UI
+- Focused repository, database, migration, provider, domain, and widget tests
 - Documentation updates
 
 Excluded:
 
-- Template installer/uninstaller behavior
-- Template packs or example records
-- Calendar view implementation
+- Real template packs for freelancing, finance, opportunities, learning, competitive programming, machine learning, university, fitness, reading, or content creation
+- Example records or demo data
+- Template-created Areas, Goals, Projects, Tasks, Notes, Events, or Space records
 - AI persistence or real AI provider
 - Search indexing
 - Analytics dashboards or charts
@@ -38,24 +41,25 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, and Phase 5A Spaces foundation behavior.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, and Phase 5 Spaces behavior.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
-- Use repository/controller boundaries for Spaces persistence and validation behavior.
-- Do not add templates, AI, search indexing, analytics, backup/restore, platform notifications, or cloud features.
-- Do not change schema version unless the Phase 5B implementation truly requires a schema contract change.
+- Use repository/controller boundaries for template installation metadata.
+- Templates must be optional, editable later, removable, and safe when zero templates are installed.
+- Do not add AI, search indexing, analytics, backup/restore, platform notifications, or cloud features.
 
 ## Files likely affected
 
-- `lib/features/spaces/`
-- `test/features/spaces/`
-- `test/repositories/spaces_repository_test.dart`
-- `test/database/app_database_test.dart`
+- `lib/features/templates/`
+- `lib/core/database/`
+- `test/features/templates/`
+- `test/repositories/`
+- `test/database/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
 - `docs/FEATURE_MATRIX.md`
 - `docs/TEST_PLAN.md`
-- `docs/DATA_MODEL.md` only if contracts change
+- `docs/DATA_MODEL.md`
 - `docs/ARCHITECTURE.md` only if contracts change
 - `CHANGELOG.md`
 
@@ -75,12 +79,11 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Existing Phase 5A Spaces records remain available through repository/controller boundaries.
-- Saved list, table, board, and card views render generic records without hard-coded personal examples.
-- Space lifecycle operations are deterministic and tested.
-- Delete behavior is explicit and foreign-key protected where relevant.
-- No template installer/uninstaller behavior is implemented.
-- Generated code and schema snapshots remain current if schema generation is touched.
+- Template definitions and installation metadata remain behind repository/controller boundaries.
+- Installing a template records metadata only and does not create fake records.
+- Uninstall choices are modeled and validated without implementing export files.
+- Zero installed templates remains a supported state.
+- Generated code and schema snapshots are current if schema generation is touched.
 - `flutter analyze` reports no issues.
 - All tests pass.
 - Debug APK builds.
@@ -88,6 +91,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 5B Spaces view foundation passes validation and documentation is current.
+Stop after Phase 6A template infrastructure passes validation and documentation is current.
 
-Do not implement Templates, AI, Search indexing, Analytics, Backup/Restore, platform Notifications, or Cloud functionality.
+Do not implement real template packs, example records, AI, Search indexing, Analytics, Backup/Restore, platform Notifications, or Cloud functionality.

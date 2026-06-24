@@ -61,6 +61,8 @@ Phase 4B adds focused tests for schema version 5, focus session persistence, rec
 
 Phase 5A adds focused tests for schema version 6, generated Drift migration verification from earlier snapshots, Space definition/record type/field/status/record/link/filter/view repository behavior, field-key and field-value validation, repository-boundary failure translation, Spaces provider boundaries, Spaces watch updates, and Spaces screen loading/empty/content/error rendering.
 
+Phase 5B adds focused tests for Spaces archive/restore/delete lifecycle operations, foreign-key-protected delete translation, saved-view configuration validation, and saved list/table/board/card view rendering.
+
 ### Widget tests
 
 Cover:

@@ -44,6 +44,8 @@ Phase 4B implements focus sessions in schema version 5. Recurrence expansion is 
 
 Phase 5A implements the initial configurable Spaces foundation in schema version 6. Space definitions, record types, field definitions, status definitions, records, record links, saved filters, and saved views are persisted behind `SpacesRepository`. Record field values are stored as a JSON object in `space_records.fieldsJson` for this foundation slice; repository validation enforces supported field types before writes. Templates, search indexing, analytics, backup files, restore flows, and cloud synchronization remain deferred.
 
+Phase 5B keeps schema version 6 and adds repository lifecycle behavior plus saved-view rendering contracts. Space definitions, record types, fields, statuses, and records use reversible `archivedAt`; all Phase 5A entities have explicit permanent delete operations with foreign-key protection. Saved view `configJson` is validated as a JSON object with supported keys `recordTypeId`, `visibleFieldKeys`, `groupByStatus`, and `sortFieldKey`.
+
 ## 3. Core productivity tables
 
 ### `areas`

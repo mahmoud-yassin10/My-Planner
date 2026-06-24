@@ -91,6 +91,31 @@ class DriftSpacesRepository implements SpacesRepository {
   }
 
   @override
+  Future<void> archiveSpace(String id) => _setArchive(
+    operation: 'archiveSpace',
+    tableName: 'spaces',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreSpace(String id) => _setArchive(
+    operation: 'restoreSpace',
+    tableName: 'spaces',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteSpace(String id) => _delete(
+    operation: 'deleteSpace',
+    tableName: 'spaces',
+    delete: () => (_database.delete(
+      _database.spaces,
+    )..where((table) => table.id.equals(id))).go(),
+  );
+
+  @override
   Future<SpaceRecordType> createRecordType(SpaceRecordTypeDraft draft) async {
     final now = _clock.now();
     final recordType = SpaceRecordType(
@@ -113,6 +138,31 @@ class DriftSpacesRepository implements SpacesRepository {
       throw const PersistenceWriteFailure('Unable to create record type.');
     }
   }
+
+  @override
+  Future<void> archiveRecordType(String id) => _setArchive(
+    operation: 'archiveRecordType',
+    tableName: 'space_record_types',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreRecordType(String id) => _setArchive(
+    operation: 'restoreRecordType',
+    tableName: 'space_record_types',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteRecordType(String id) => _delete(
+    operation: 'deleteRecordType',
+    tableName: 'space_record_types',
+    delete: () => (_database.delete(
+      _database.spaceRecordTypes,
+    )..where((table) => table.id.equals(id))).go(),
+  );
 
   @override
   Future<SpaceFieldDefinition> createField(SpaceFieldDraft draft) async {
@@ -142,6 +192,31 @@ class DriftSpacesRepository implements SpacesRepository {
   }
 
   @override
+  Future<void> archiveField(String id) => _setArchive(
+    operation: 'archiveField',
+    tableName: 'space_fields',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreField(String id) => _setArchive(
+    operation: 'restoreField',
+    tableName: 'space_fields',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteField(String id) => _delete(
+    operation: 'deleteField',
+    tableName: 'space_fields',
+    delete: () => (_database.delete(
+      _database.spaceFields,
+    )..where((table) => table.id.equals(id))).go(),
+  );
+
+  @override
   Future<SpaceStatusDefinition> createStatus(SpaceStatusDraft draft) async {
     final now = _clock.now();
     final status = SpaceStatusDefinition(
@@ -165,6 +240,31 @@ class DriftSpacesRepository implements SpacesRepository {
       throw const PersistenceWriteFailure('Unable to create status.');
     }
   }
+
+  @override
+  Future<void> archiveStatus(String id) => _setArchive(
+    operation: 'archiveStatus',
+    tableName: 'space_statuses',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreStatus(String id) => _setArchive(
+    operation: 'restoreStatus',
+    tableName: 'space_statuses',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteStatus(String id) => _delete(
+    operation: 'deleteStatus',
+    tableName: 'space_statuses',
+    delete: () => (_database.delete(
+      _database.spaceStatuses,
+    )..where((table) => table.id.equals(id))).go(),
+  );
 
   @override
   Future<SpaceRecord> createRecord(SpaceRecordDraft draft) async {
@@ -195,6 +295,31 @@ class DriftSpacesRepository implements SpacesRepository {
   }
 
   @override
+  Future<void> archiveRecord(String id) => _setArchive(
+    operation: 'archiveRecord',
+    tableName: 'space_records',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreRecord(String id) => _setArchive(
+    operation: 'restoreRecord',
+    tableName: 'space_records',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteRecord(String id) => _delete(
+    operation: 'deleteRecord',
+    tableName: 'space_records',
+    delete: () => (_database.delete(
+      _database.spaceRecords,
+    )..where((table) => table.id.equals(id))).go(),
+  );
+
+  @override
   Future<SpaceRecordLink> linkRecord(SpaceRecordLinkDraft draft) async {
     final now = _clock.now();
     final link = SpaceRecordLink(
@@ -219,6 +344,15 @@ class DriftSpacesRepository implements SpacesRepository {
       throw const PersistenceWriteFailure('Unable to link Space record.');
     }
   }
+
+  @override
+  Future<void> deleteRecordLink(String id) => _delete(
+    operation: 'deleteRecordLink',
+    tableName: 'space_record_links',
+    delete: () => (_database.delete(
+      _database.spaceRecordLinks,
+    )..where((table) => table.id.equals(id))).go(),
+  );
 
   @override
   Future<SpaceSavedFilter> createSavedFilter(
@@ -246,6 +380,15 @@ class DriftSpacesRepository implements SpacesRepository {
   }
 
   @override
+  Future<void> deleteSavedFilter(String id) => _delete(
+    operation: 'deleteSavedFilter',
+    tableName: 'space_saved_filters',
+    delete: () => (_database.delete(
+      _database.spaceSavedFilters,
+    )..where((table) => table.id.equals(id))).go(),
+  );
+
+  @override
   Future<SpaceSavedView> createSavedView(SpaceSavedViewDraft draft) async {
     final now = _clock.now();
     final view = SpaceSavedView(
@@ -253,7 +396,7 @@ class DriftSpacesRepository implements SpacesRepository {
       spaceId: _requiredText(draft.spaceId, 'Space id'),
       name: _requiredText(draft.name, 'View name'),
       viewType: draft.viewType,
-      configJson: _jsonObject(draft.configJson, 'View config'),
+      configJson: _viewConfig(draft.configJson),
       createdAt: now,
       updatedAt: now,
     );
@@ -268,6 +411,15 @@ class DriftSpacesRepository implements SpacesRepository {
       throw const PersistenceWriteFailure('Unable to create saved view.');
     }
   }
+
+  @override
+  Future<void> deleteSavedView(String id) => _delete(
+    operation: 'deleteSavedView',
+    tableName: 'space_saved_views',
+    delete: () => (_database.delete(
+      _database.spaceSavedViews,
+    )..where((table) => table.id.equals(id))).go(),
+  );
 
   Future<SpacesSnapshot> _snapshot() async {
     final rows = await Future.wait([
@@ -337,6 +489,63 @@ class DriftSpacesRepository implements SpacesRepository {
       throw PersistenceValidationFailure(
         '${field.name} has an invalid ${field.fieldType.name} value.',
       );
+    }
+  }
+
+  Future<void> _setArchive({
+    required String operation,
+    required String tableName,
+    required String id,
+    required DateTime? archivedAt,
+  }) async {
+    try {
+      final updatedAt = _clock.now();
+      final sql = archivedAt == null
+          ? 'UPDATE $tableName SET archived_at = NULL, updated_at = ? WHERE id = ?'
+          : 'UPDATE $tableName SET archived_at = ?, updated_at = ? WHERE id = ?';
+      final variables = archivedAt == null
+          ? [Variable<DateTime>(updatedAt), Variable<String>(id)]
+          : [
+              Variable<DateTime>(archivedAt),
+              Variable<DateTime>(updatedAt),
+              Variable<String>(id),
+            ];
+      final count = await _database.customUpdate(
+        sql,
+        variables: variables,
+        updates: {
+          switch (tableName) {
+            'spaces' => _database.spaces,
+            'space_record_types' => _database.spaceRecordTypes,
+            'space_fields' => _database.spaceFields,
+            'space_statuses' => _database.spaceStatuses,
+            'space_records' => _database.spaceRecords,
+            _ => throw ArgumentError.value(tableName, 'tableName'),
+          },
+        },
+      );
+      if (count == 0) {
+        throw const PersistenceWriteFailure('Record was not found.');
+      }
+    } catch (error, stackTrace) {
+      _logFailure(operation, error, stackTrace);
+      throw const PersistenceWriteFailure('Unable to update archive state.');
+    }
+  }
+
+  Future<void> _delete({
+    required String operation,
+    required String tableName,
+    required Future<int> Function() delete,
+  }) async {
+    try {
+      final count = await delete();
+      if (count == 0) {
+        throw const PersistenceWriteFailure('Record was not found.');
+      }
+    } catch (error, stackTrace) {
+      _logFailure(operation, error, stackTrace);
+      throw PersistenceWriteFailure('Unable to delete $tableName record.');
     }
   }
 
@@ -558,6 +767,52 @@ class DriftSpacesRepository implements SpacesRepository {
       throw PersistenceValidationFailure('$label must be a JSON object.');
     }
     return jsonEncode(decoded);
+  }
+
+  String _viewConfig(String value) {
+    final decoded = jsonDecode(_jsonObject(value, 'View config'));
+    final config = decoded as Map<String, Object?>;
+    const supportedKeys = {
+      'recordTypeId',
+      'visibleFieldKeys',
+      'groupByStatus',
+      'sortFieldKey',
+    };
+    final unsupportedKeys = config.keys.where(
+      (key) => !supportedKeys.contains(key),
+    );
+    if (unsupportedKeys.isNotEmpty) {
+      throw const PersistenceValidationFailure(
+        'View config contains unsupported keys.',
+      );
+    }
+    final recordTypeId = config['recordTypeId'];
+    if (recordTypeId != null && recordTypeId is! String) {
+      throw const PersistenceValidationFailure(
+        'View config recordTypeId must be a string.',
+      );
+    }
+    final visibleFieldKeys = config['visibleFieldKeys'];
+    if (visibleFieldKeys != null &&
+        (visibleFieldKeys is! List ||
+            visibleFieldKeys.any((value) => value is! String))) {
+      throw const PersistenceValidationFailure(
+        'View config visibleFieldKeys must be a list of strings.',
+      );
+    }
+    final groupByStatus = config['groupByStatus'];
+    if (groupByStatus != null && groupByStatus is! bool) {
+      throw const PersistenceValidationFailure(
+        'View config groupByStatus must be a boolean.',
+      );
+    }
+    final sortFieldKey = config['sortFieldKey'];
+    if (sortFieldKey != null && sortFieldKey is! String) {
+      throw const PersistenceValidationFailure(
+        'View config sortFieldKey must be a string.',
+      );
+    }
+    return jsonEncode(config);
   }
 
   String? _jsonObjectOrArray(String? value, String label) {

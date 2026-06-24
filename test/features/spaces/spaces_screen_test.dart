@@ -58,15 +58,19 @@ void main() {
     );
 
     expect(find.text('Spaces'), findsWidgets);
-    expect(find.text('Space A'), findsOneWidget);
-    expect(find.text('Record Type A'), findsOneWidget);
     expect(find.text('New Space'), findsOneWidget);
     expect(find.text('Record Type'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('selectedSpaceViewTitle')),
+      findsOneWidget,
+    );
 
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -500));
     await tester.pumpAndSettle();
+    expect(find.text('Space A'), findsOneWidget);
+    expect(find.text('Record Type A'), findsOneWidget);
     expect(find.text('Field A'), findsOneWidget);
-    expect(find.text('Status A'), findsOneWidget);
+    expect(find.text('Status A'), findsWidgets);
 
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -500));
     await tester.pumpAndSettle();
@@ -77,6 +81,39 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Filter A'), findsOneWidget);
     expect(find.text('View A'), findsOneWidget);
+  });
+
+  testWidgets('Spaces screen switches between saved view renderers', (
+    tester,
+  ) async {
+    await _pumpSpaces(
+      tester,
+      override: spacesSnapshotProvider.overrideWith(
+        (ref) => Stream.value(_contentSnapshot),
+      ),
+    );
+
+    expect(
+      find.byKey(const ValueKey('selectedSpaceViewTitle')),
+      findsOneWidget,
+    );
+    expect(find.text('View A'), findsWidgets);
+
+    await tester.tap(find.text('Table View'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DataTable), findsOneWidget);
+
+    await tester.tap(find.text('Board View'));
+    await tester.pumpAndSettle();
+    expect(find.text('Status A'), findsWidgets);
+
+    await tester.tap(find.text('Card View'));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('selectedSpaceViewTitle')),
+      findsOneWidget,
+    );
+    expect(find.text('Card View'), findsWidgets);
   });
 }
 
@@ -148,6 +185,7 @@ final _contentSnapshot = SpacesSnapshot(
       id: 'record-1',
       recordTypeId: 'record-type-1',
       title: 'Record A',
+      statusId: 'status-1',
       fieldsJson: '{"field_a":"Value A"}',
       createdAt: _now,
       updatedAt: _now,
@@ -179,6 +217,33 @@ final _contentSnapshot = SpacesSnapshot(
       spaceId: 'space-1',
       name: 'View A',
       viewType: SpaceViewType.list,
+      configJson: '{}',
+      createdAt: _now,
+      updatedAt: _now,
+    ),
+    SpaceSavedView(
+      id: 'view-2',
+      spaceId: 'space-1',
+      name: 'Table View',
+      viewType: SpaceViewType.table,
+      configJson: '{"visibleFieldKeys":["field_a"]}',
+      createdAt: _now,
+      updatedAt: _now,
+    ),
+    SpaceSavedView(
+      id: 'view-3',
+      spaceId: 'space-1',
+      name: 'Board View',
+      viewType: SpaceViewType.board,
+      configJson: '{}',
+      createdAt: _now,
+      updatedAt: _now,
+    ),
+    SpaceSavedView(
+      id: 'view-4',
+      spaceId: 'space-1',
+      name: 'Card View',
+      viewType: SpaceViewType.cards,
       configJson: '{}',
       createdAt: _now,
       updatedAt: _now,

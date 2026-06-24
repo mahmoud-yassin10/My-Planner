@@ -212,6 +212,8 @@ Schema version 4 adds Planner events and time blocks. Schema version 5 adds focu
 
 Schema version 6 adds the initial configurable Spaces foundation: Spaces, record types, field definitions, status definitions, records, record links, saved filters, and saved views. Spaces widgets access this slice through `SpacesController` and `SpacesRepository`; Drift remains behind `DriftSpacesRepository`.
 
+Phase 5B saved view rendering and Spaces lifecycle operations continue through the same controller/repository boundary; presentation parses saved view configuration from domain models and does not query Drift directly.
+
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 
 Repository contracts live outside Drift implementations. The Phase 2 settings contract is `SettingsRepository`; `DriftSettingsRepository` is the local implementation.
