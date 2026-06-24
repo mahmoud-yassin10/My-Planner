@@ -17,7 +17,7 @@ void main() {
   });
 
   test(
-    'fresh database creation includes foundation and hierarchy tables',
+    'fresh database creation includes foundation and productivity-core tables',
     () async {
       final database = AppDatabase.inMemory();
       addTearDown(database.close);
@@ -37,6 +37,11 @@ void main() {
       expect(tables.map((row) => row.data['name']), contains('goals'));
       expect(tables.map((row) => row.data['name']), contains('projects'));
       expect(tables.map((row) => row.data['name']), contains('milestones'));
+      expect(tables.map((row) => row.data['name']), contains('tasks'));
+      expect(tables.map((row) => row.data['name']), contains('tags'));
+      expect(tables.map((row) => row.data['name']), contains('entity_tags'));
+      expect(tables.map((row) => row.data['name']), contains('notes'));
+      expect(tables.map((row) => row.data['name']), contains('note_links'));
     },
   );
 
@@ -60,7 +65,7 @@ void main() {
     expect(row.updatedAt.isUtc, isTrue);
   });
 
-  test('migration from version 1 creates Phase 3A hierarchy tables', () async {
+  test('migration from version 1 creates productivity-core tables', () async {
     final tempDirectory = await Directory.systemTemp.createTemp(
       'momentum_os_migration_test_',
     );
@@ -91,6 +96,11 @@ void main() {
     expect(tables.map((row) => row.data['name']), contains('goals'));
     expect(tables.map((row) => row.data['name']), contains('projects'));
     expect(tables.map((row) => row.data['name']), contains('milestones'));
+    expect(tables.map((row) => row.data['name']), contains('tasks'));
+    expect(tables.map((row) => row.data['name']), contains('tags'));
+    expect(tables.map((row) => row.data['name']), contains('entity_tags'));
+    expect(tables.map((row) => row.data['name']), contains('notes'));
+    expect(tables.map((row) => row.data['name']), contains('note_links'));
   });
 
   test(
@@ -119,6 +129,11 @@ void main() {
       expect(schema.toString(), contains('goals'));
       expect(schema.toString(), contains('projects'));
       expect(schema.toString(), contains('milestones'));
+      expect(schema.toString(), contains('tasks'));
+      expect(schema.toString(), contains('tags'));
+      expect(schema.toString(), contains('entity_tags'));
+      expect(schema.toString(), contains('notes'));
+      expect(schema.toString(), contains('note_links'));
     },
   );
 }

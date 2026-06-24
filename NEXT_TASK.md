@@ -2,38 +2,32 @@
 
 ## Task ID
 
-`PHASE-3B-TASK-CORE`
+`PHASE-3C-PRODUCTIVITY-CORE-COMPLETE`
 
 ## Goal
 
-Extend the productivity core using the Phase 3A hierarchy foundation.
+Complete the Phase 3 productivity-core foundation without adding Planner events or later-phase systems.
 
-Implement Tasks, subtasks, tags, and notes only, with domain models, Drift tables, repositories, controllers where useful, validation, archive/delete behavior, focused UI updates, migrations, and tests.
+Focus on integration, edit flows, relationship visibility, accessibility polish, and test coverage for the already implemented Phase 3A and Phase 3B entities.
 
 ## Scope
 
 Included:
 
-- Tasks linked optionally to Areas, Goals, Projects, and Milestones
-- Subtasks through `parentTaskId`
-- Task status, priority, energy requirement, estimates, due dates, scheduled windows, completion metadata, archive metadata, and notes field
-- Task dependency table only if needed for documented dependency behavior in this phase
-- Tags
-- Entity-tag relationships for Phase 3A/3B entities
-- Notes with generic entity links where needed
-- UUID v4 identifiers generated before insert
-- UTC `createdAt` and `updatedAt`
-- Explicit archive, restore, completion, and delete semantics
-- Drift schema version 3 migration from version 2
-- Repository contracts and Drift-backed implementations
-- Riverpod providers exposing interfaces
-- Loading, empty, content, and error states for implemented screens
-- Focused unit, repository, database, migration, widget, and integration-style tests
+- Area, Goal, Project, Milestone, Task, Tag, and Note integration polish
+- Edit flows for implemented entities where missing
+- Restore flows where archive is already supported
+- Clear relationship visibility between hierarchy records, tasks, tags, and notes
+- Empty, loading, content, and error state consistency across Goals and Planner
+- Validation-message polish for implemented forms
+- Repository query helpers needed by the implemented UI only
+- Focused tests for edit, restore, relationship visibility, and validation UX
 - Documentation updates
 
 Excluded:
 
-- Planner calendar events
+- Calendar events
+- Planner day/week/month views
 - Recurrence engine
 - Reminders and notifications
 - Focus sessions
@@ -48,30 +42,24 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Use the existing Drift database and increment schema version to 3.
+- Preserve schema version 3 unless a documented bug requires a schema change.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
-- Use typed repositories and Riverpod providers.
-- Preserve Phase 1 navigation, Phase 2 settings behavior, and Phase 3A hierarchy behavior.
-- Do not implement planner events, Spaces, templates, AI, search indexing, notifications, analytics, backup/restore, or cloud features.
+- Preserve Phase 1 navigation, Phase 2 settings behavior, Phase 3A hierarchy behavior, and Phase 3B task-core behavior.
+- Do not implement Planner events, Spaces, templates, AI, search indexing, notifications, analytics, backup/restore, or cloud features.
 
 ## Files likely affected
 
-- `lib/core/database/`
 - `lib/features/goals/`
 - `lib/features/planner/`
 - `lib/features/tasks/`
-- `lib/features/tags/`
-- `lib/features/notes/`
 - `test/`
-- `drift_schemas/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
-- `docs/ARCHITECTURE.md`
-- `docs/DATA_MODEL.md`
 - `docs/FEATURE_MATRIX.md`
 - `docs/TEST_PLAN.md`
 - `CHANGELOG.md`
+- Architecture and data-model documents only if contracts change
 
 ## Required validation
 
@@ -89,14 +77,11 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Tasks, subtasks, tags, and notes are implemented only.
-- Drift schema version 3 and migration from version 2 are tested.
-- Repository boundaries prevent UI access to Drift.
-- UUID and UTC timestamp conventions are followed.
-- Archive/delete/complete semantics are explicit and tested.
-- Screens include relevant loading, empty, content, and error states.
+- Phase 3 productivity-core screens expose usable create, edit, archive, restore, complete, tag, and note-link behavior where supported by existing repositories.
+- Relationship visibility is clear and generic.
+- Repository boundaries remain intact.
 - No excluded Phase 4+ feature is implemented.
-- Generated code and schema snapshots are current.
+- Generated code and schema snapshots remain current.
 - `flutter analyze` reports no issues.
 - All tests pass.
 - Debug APK builds.
@@ -104,6 +89,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 3B task core passes validation and documentation is current.
+Stop after Phase 3C productivity-core completion passes validation and documentation is current.
 
 Do not implement Planner events, recurrence, reminders, Spaces, Templates, AI, Search indexing, Notifications, Analytics, Backup/Restore, or Cloud functionality.

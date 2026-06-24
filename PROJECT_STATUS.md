@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 3A — Hierarchy core complete
+**Current phase:** Phase 3B — Task core complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -104,6 +104,25 @@ Initial validation completed successfully before documentation population:
 | Goals screen loading, empty, content, and error states | Complete |
 | Repository, database, migration, provider, and widget tests | Complete |
 
+## Phase 3B task core completion status
+
+| Deliverable | Status |
+|---|---|
+| Tasks domain, Drift table, repository operations, and UI rendering | Complete |
+| Subtasks through `parentTaskId` with cycle validation | Complete |
+| Tags and entity-tag relationships | Complete |
+| Notes and generic note links | Complete |
+| UUID v4 identifier generation through repository boundaries | Complete |
+| UTC `createdAt` and `updatedAt` conventions | Complete |
+| Completion metadata for tasks | Complete |
+| Reversible archive metadata | Complete |
+| Explicit permanent delete semantics with foreign-key protection | Complete |
+| Drift schema version 3 migration from version 2 | Complete |
+| Schema v3 snapshot and generated migration helper | Complete |
+| Task-core repository provider boundary | Complete |
+| Planner screen loading, empty, content, and error states | Complete |
+| Repository, database, migration, provider, and widget tests | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -126,17 +145,20 @@ Implemented foundation behavior:
 - Schema version 2 adds Areas, Goals, Projects, and Milestones only.
 - The Goals destination renders the Phase 3A hierarchy and supports simple creation and archive actions through a controller.
 - Hierarchy persistence is exposed through a typed repository interface rather than Drift access from widgets.
+- Schema version 3 adds Tasks, subtasks, Tags, entity-tag relationships, Notes, and note links only.
+- The Planner destination renders the Phase 3B task core and supports simple task, tag, and note creation plus task completion.
+- Task-core persistence is exposed through a typed repository interface rather than Drift access from widgets.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
 - Backup and seed/template contracts exist without implementing backup files, restore, templates, or example records.
 - Placeholder screens remain generic and do not include persistence or productivity CRUD.
-- Tasks, planner events, notes, tags, Spaces records, templates, notifications, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
+- Planner events, Spaces records, templates, notifications, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
 
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 3A hierarchy core.
+- Debug APK verification has passed for the Phase 3B task core.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -145,10 +167,10 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 
 - `flutter pub get` — Passed; 12 packages reported newer versions incompatible with current constraints.
 - `dart run build_runner build --delete-conflicting-outputs` — Passed; generated Drift code. Current `build_runner` reports that `--delete-conflicting-outputs` is ignored.
-- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v2.json`, `lib\core\database\app_database.steps.dart`, and migration verification tests.
+- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v3.json` and updated migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 64 tests passed.
+- `flutter test` — Passed; 73 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -164,8 +186,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, and the Phase 3A hierarchy core are in place. Tasks and later productivity modules have not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3A hierarchy core, and Phase 3B task core are in place. Planner events and later modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-3B-TASK-CORE`: implement Tasks, subtasks, tags, and notes only.
+Complete Task `PHASE-3C-PRODUCTIVITY-CORE-COMPLETE`: finish productivity-core integration and polish only.

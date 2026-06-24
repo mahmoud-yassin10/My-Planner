@@ -11,6 +11,8 @@ import 'package:momentum_os/core/logging/app_logger.dart';
 import 'package:momentum_os/core/widgets/foundation_states.dart';
 import 'package:momentum_os/features/goals/application/hierarchy_controller.dart';
 import 'package:momentum_os/features/goals/domain/hierarchy_models.dart';
+import 'package:momentum_os/features/tasks/application/task_core_controller.dart';
+import 'package:momentum_os/features/tasks/domain/task_core_models.dart';
 
 void main() {
   group('app shell navigation', () {
@@ -462,6 +464,9 @@ Future<void> _pumpApp(WidgetTester tester, {required Size size}) async {
         appDatabaseProvider.overrideWithValue(database),
         hierarchySnapshotProvider.overrideWith(
           (ref) => Stream.value(const HierarchySnapshot()),
+        ),
+        taskCoreSnapshotProvider.overrideWith(
+          (ref) => Stream.value(const TaskCoreSnapshot()),
         ),
       ],
       child: const MomentumApp(),

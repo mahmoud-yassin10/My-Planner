@@ -514,6 +514,8 @@ Phase 2 procedure for future schema version 2:
 
 Schema version 2 is now checked in with `drift_schemas/app_database/drift_schema_v2.json`, generated `app_database.steps.dart`, and generated migration verification tests.
 
+Schema version 3 adds Tasks/subtasks, Tags, entity-tag relationships, Notes, and note links. Subtasks use `tasks.parentTaskId`; note and tag links use generic entity references validated at the repository boundary where SQLite cannot enforce polymorphic targets directly.
+
 ## 13. Backup and export
 
 JSON backup must include:

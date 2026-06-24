@@ -122,13 +122,107 @@ class Milestones extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('TaskRow')
+class Tasks extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get areaId => text().nullable().references(Areas, #id)();
+  TextColumn get goalId => text().nullable().references(Goals, #id)();
+  TextColumn get projectId => text().nullable().references(Projects, #id)();
+  TextColumn get milestoneId => text().nullable().references(Milestones, #id)();
+  TextColumn get parentTaskId => text().nullable().references(Tasks, #id)();
+  TextColumn get status => text()();
+  TextColumn get priority => text()();
+  TextColumn get energyRequirement => text()();
+  IntColumn get estimatedDurationMinutes => integer().nullable()();
+  IntColumn get actualDurationMinutes => integer().nullable()();
+  DateTimeColumn get dueAt => dateTime().nullable()();
+  DateTimeColumn get scheduledStartAt => dateTime().nullable()();
+  DateTimeColumn get scheduledEndAt => dateTime().nullable()();
+  TextColumn get preferredTimeOfDay => text().nullable()();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('TagRow')
+class Tags extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  IntColumn get colorValue => integer().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('EntityTagRow')
+class EntityTags extends Table {
+  TextColumn get id => text()();
+  TextColumn get entityType => text()();
+  TextColumn get entityId => text()();
+  TextColumn get tagId => text().references(Tags, #id)();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('NoteRow')
+class Notes extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get content => text()();
+  TextColumn get contentFormat => text()();
+  BoolColumn get isPinned => boolean()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('NoteLinkRow')
+class NoteLinks extends Table {
+  TextColumn get id => text()();
+  TextColumn get noteId => text().references(Notes, #id)();
+  TextColumn get entityType => text()();
+  TextColumn get entityId => text()();
+  TextColumn get relationshipType => text()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
-  tables: [AppSettings, SchemaMetadata, Areas, Goals, Projects, Milestones],
+  tables: [
+    AppSettings,
+    SchemaMetadata,
+    Areas,
+    Goals,
+    Projects,
+    Milestones,
+    Tasks,
+    Tags,
+    EntityTags,
+    Notes,
+    NoteLinks,
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 2;
+  static const latestSchemaVersion = 3;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -149,6 +243,13 @@ class AppDatabase extends _$AppDatabase {
             await migrator.createTable(schema.goals);
             await migrator.createTable(schema.projects);
             await migrator.createTable(schema.milestones);
+          },
+          from2To3: (migrator, schema) async {
+            await migrator.createTable(schema.tasks);
+            await migrator.createTable(schema.tags);
+            await migrator.createTable(schema.entityTags);
+            await migrator.createTable(schema.notes);
+            await migrator.createTable(schema.noteLinks);
           },
         )(migrator, from, to);
       },

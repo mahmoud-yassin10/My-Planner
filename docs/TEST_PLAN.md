@@ -51,6 +51,8 @@ Phase 2 adds focused tests for database open/close, schema version 1, foreign-ke
 
 Phase 3A adds focused tests for schema version 2, migration from version 1, generated Drift migration verification, hierarchy repository create/watch/archive/restore/delete behavior, validation of milestone ownership and goal hierarchy cycles, repository-boundary failure translation, hierarchy provider boundaries, and Goals screen hierarchy rendering.
 
+Phase 3B adds focused tests for schema version 3, generated Drift migration verification from version 2, task/subtask/tag/note repository behavior, task completion/archive/restore/delete semantics, task hierarchy cycle validation, repository-boundary failure translation, task-core provider boundaries, and Planner task-core rendering.
+
 ### Widget tests
 
 Cover:

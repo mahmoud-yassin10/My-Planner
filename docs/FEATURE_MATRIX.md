@@ -26,8 +26,8 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Complete | Schema version 2 with settings metadata and Phase 3A hierarchy tables |
-| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 2 |
+| Drift database | 2 | Complete | Schema version 3 with settings metadata and productivity-core tables |
+| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 3 |
 | UUID service | 2 | Complete | Replaceable UUID v4 service |
 | Typed settings | 2 | Complete | Drift-backed typed settings repository |
 | Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
@@ -42,9 +42,9 @@ Status values:
 | Goals and hierarchy | 3 | Complete |
 | Projects | 3 | Complete |
 | Milestones | 3 | Complete |
-| Tasks and subtasks | 3 | Not started |
-| Tags and relationships | 3 | Not started |
-| Notes | 3 | Not started |
+| Tasks and subtasks | 3 | Complete |
+| Tags and relationships | 3 | Complete |
+| Notes | 3 | Complete |
 
 ## Planner
 

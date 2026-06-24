@@ -206,6 +206,8 @@ The database provides production SQLite opening through `path_provider` and Drif
 
 Schema version 2 adds the Phase 3A hierarchy tables for Areas, Goals, Projects, and Milestones. Widgets access these records through Riverpod controllers and repository interfaces; Drift remains behind `DriftHierarchyRepository`.
 
+Schema version 3 adds the Phase 3B task-core tables for Tasks, Tags, entity tags, Notes, and note links. Planner widgets access this slice through `TaskCoreController` and `TaskCoreRepository`; Drift remains behind `DriftTaskCoreRepository`.
+
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 
 Repository contracts live outside Drift implementations. The Phase 2 settings contract is `SettingsRepository`; `DriftSettingsRepository` is the local implementation.

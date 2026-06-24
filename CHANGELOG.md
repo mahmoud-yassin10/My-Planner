@@ -37,6 +37,10 @@ The project follows a phase-based development process. Version numbers will be i
 - Drift-backed hierarchy repository with validation, archive/restore/delete behavior, and Riverpod providers
 - Goals destination now renders the Phase 3A hierarchy with loading, empty, content, and error states
 - Drift schema version 2 snapshot, generated migration helper, and migration verification tests
+- Schema version 3 with Tasks, subtasks, Tags, entity-tag relationships, Notes, and note links
+- Drift-backed task-core repository with validation, completion, archive/restore/delete behavior, and Riverpod providers
+- Planner destination now renders the Phase 3B task core with loading, empty, content, and error states
+- Drift schema version 3 snapshot and migration verification tests
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`
