@@ -19,8 +19,8 @@ Status values:
 | Riverpod foundation | 1 | Complete | Root `ProviderScope` added |
 | GoRouter shell | 1 | Complete | Five primary destinations with adaptive shell |
 | Theme system | 1 | Complete | Centralized light and dark Material 3 themes |
-| Reusable UI states | 1 | Not started | |
-| Logging and error boundary | 1 | Not started | |
+| Reusable UI states | 1 | Complete | Loading, empty, and error foundation widgets |
+| Logging and error boundary | 1 | Complete | Structured logger, route errors, and startup recovery |
 
 ## Persistence
 

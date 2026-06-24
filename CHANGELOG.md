@@ -13,8 +13,14 @@ The project follows a phase-based development process. Version numbers will be i
 - Deterministic `/` to `/home` redirect
 - Adaptive primary shell with compact bottom navigation and wider navigation rail
 - Placeholder screens for Home, Planner, Spaces, Goals, and Insights
+- Global Quick Add placeholder sheet with generic creation choices
+- Placeholder routes for AI Copilot, Global Search, Notification Inbox, and Settings
+- Reusable loading, empty, and error foundation widgets
+- Structured logging abstraction with Riverpod provider and injectable sink
+- Recoverable startup initialization handling with retry screen
+- Route-level error screen for unavailable routes
 - Centralized light and dark Material 3 themes
-- Widget tests for initial destination, primary navigation, and adaptive shell layout
+- Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`
 - Android namespace `com.mahmoudyassin.momentum_os`
 - Git repository and GitHub remote
@@ -32,5 +38,5 @@ The project follows a phase-based development process. Version numbers will be i
 
 ### Notes
 
-- Phase 1A intentionally adds only app-shell foundation behavior.
-- Persistence, productivity CRUD, Quick Add, AI, Search, Notifications, Settings, analytics, and templates remain unimplemented.
+- Phase 1 foundation intentionally uses placeholders for creation, AI, Search, Notifications, and Settings.
+- Persistence, productivity CRUD, real AI, real Search, notification scheduling, settings persistence, analytics, and templates remain unimplemented.

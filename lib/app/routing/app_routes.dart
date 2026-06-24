@@ -5,6 +5,10 @@ abstract final class AppRouteNames {
   static const spaces = 'spaces';
   static const goals = 'goals';
   static const insights = 'insights';
+  static const ai = 'ai';
+  static const search = 'search';
+  static const notifications = 'notifications';
+  static const settings = 'settings';
 }
 
 abstract final class AppRoutePaths {
@@ -14,4 +18,8 @@ abstract final class AppRoutePaths {
   static const spaces = '/spaces';
   static const goals = '/goals';
   static const insights = '/insights';
+  static const ai = '/ai';
+  static const search = '/search';
+  static const notifications = '/notifications';
+  static const settings = '/settings';
 }
