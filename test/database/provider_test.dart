@@ -7,6 +7,8 @@ import 'package:momentum_os/core/services/id_service.dart';
 import 'package:momentum_os/core/services/utc_clock.dart';
 import 'package:momentum_os/features/goals/data/drift_hierarchy_repository.dart';
 import 'package:momentum_os/features/goals/domain/hierarchy_repository.dart';
+import 'package:momentum_os/features/planner/data/drift_planner_repository.dart';
+import 'package:momentum_os/features/planner/domain/planner_repository.dart';
 import 'package:momentum_os/features/tasks/data/drift_task_core_repository.dart';
 import 'package:momentum_os/features/tasks/domain/task_core_repository.dart';
 import 'package:momentum_os/shared/repositories/settings_repository.dart';
@@ -85,4 +87,27 @@ void main() {
       expect((await repository.current()).isEmpty, isTrue);
     },
   );
+
+  test('planner repository provider exposes the interface boundary', () async {
+    final database = AppDatabase.inMemory();
+    addTearDown(database.close);
+
+    final container = ProviderContainer(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(database),
+        idServiceProvider.overrideWithValue(FixedIdService(['event-1'])),
+        utcClockProvider.overrideWithValue(
+          FixedUtcClock(DateTime.utc(2026, 6, 24)),
+        ),
+        appLoggerProvider.overrideWithValue(AppLogger(sink: (_) {})),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final repository = container.read(plannerRepositoryProvider);
+
+    expect(repository, isA<PlannerRepository>());
+    expect(repository, isA<DriftPlannerRepository>());
+    expect((await repository.current()).isEmpty, isTrue);
+  });
 }

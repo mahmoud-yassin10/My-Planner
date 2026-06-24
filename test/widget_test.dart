@@ -11,6 +11,8 @@ import 'package:momentum_os/core/logging/app_logger.dart';
 import 'package:momentum_os/core/widgets/foundation_states.dart';
 import 'package:momentum_os/features/goals/application/hierarchy_controller.dart';
 import 'package:momentum_os/features/goals/domain/hierarchy_models.dart';
+import 'package:momentum_os/features/planner/application/planner_controller.dart';
+import 'package:momentum_os/features/planner/domain/planner_models.dart';
 import 'package:momentum_os/features/tasks/application/task_core_controller.dart';
 import 'package:momentum_os/features/tasks/domain/task_core_models.dart';
 
@@ -468,6 +470,9 @@ Future<void> _pumpApp(WidgetTester tester, {required Size size}) async {
         taskCoreSnapshotProvider.overrideWith(
           (ref) => Stream.value(const TaskCoreSnapshot()),
         ),
+        plannerSnapshotProvider.overrideWith(
+          (ref) => Stream.value(const PlannerSnapshot()),
+        ),
       ],
       child: const MomentumApp(),
     ),
@@ -508,6 +513,5 @@ Future<void> _pumpWithSize(
 
 Future<void> _tapDestination(WidgetTester tester, String label) async {
   await tester.tap(find.text(label).last);
-  await tester.pump();
-  await tester.pump(const Duration(milliseconds: 300));
+  await tester.pumpAndSettle();
 }

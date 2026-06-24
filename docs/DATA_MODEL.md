@@ -38,6 +38,8 @@ Phase 2 establishes these conventions before productivity tables are added. Phas
 
 Phase 3A implements Areas, Goals, Projects, and Milestones in schema version 2. Archive is represented by nullable `archivedAt` and is reversible. Delete is a permanent repository operation; SQLite foreign keys reject deletion while dependent hierarchy records still reference the row. Repository methods translate raw persistence failures into safe `PersistenceFailure` types.
 
+Phase 4A implements Planner events and time blocks in schema version 4. Archive is represented by nullable `archivedAt` and is reversible. Delete is a permanent repository operation; SQLite foreign keys reject deletion when linked tasks require protection. Recurrence and reminder fields are inert contracts only until Phase 4B and Phase 7 add the relevant behavior.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -140,33 +142,34 @@ Subtasks initially use the same `tasks` table through `parentTaskId` unless late
 
 Composite uniqueness prevents duplicate edges. Cycles must be rejected at the domain layer.
 
-### `events`
+### `planner_events`
 
 - `id`
 - `title`
 - `description`
-- `startAt`
-- `endAt`
+- `kind`
+- `startsAt`
+- `endsAt`
 - `isAllDay`
 - `location`
-- `onlineUrl`
-- `areaId`
-- `projectId`
-- `contactRecordId` or generic entity link
-- `preparationNotes`
-- `meetingNotes`
-- `outcome`
-- `followUpTaskId`
+- `meetingUrl`
+- `linkedTaskId`
+- `recurrenceRule`
+- `reminderPolicy`
 - common timestamps
 
-### `event_participants`
+Event participants, preparation notes, meeting outcomes, and follow-up tasks remain planned fields for later Planner work.
+
+### `time_blocks`
 
 - `id`
-- `eventId`
-- `displayName`
-- `email`
-- `phone`
-- `responseStatus`
+- `title`
+- `kind`
+- `startsAt`
+- `endsAt`
+- `linkedTaskId`
+- `notes`
+- common timestamps
 
 ### `focus_sessions`
 
@@ -515,6 +518,8 @@ Phase 2 procedure for future schema version 2:
 Schema version 2 is now checked in with `drift_schemas/app_database/drift_schema_v2.json`, generated `app_database.steps.dart`, and generated migration verification tests.
 
 Schema version 3 adds Tasks/subtasks, Tags, entity-tag relationships, Notes, and note links. Subtasks use `tasks.parentTaskId`; note and tag links use generic entity references validated at the repository boundary where SQLite cannot enforce polymorphic targets directly.
+
+Schema version 4 adds Planner events and time blocks. `planner_events.linkedTaskId` and `time_blocks.linkedTaskId` reference `tasks.id`. Recurrence and reminder text fields are contract placeholders and do not schedule platform notifications.
 
 ## 13. Backup and export
 

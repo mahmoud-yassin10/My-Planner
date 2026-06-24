@@ -2,34 +2,34 @@
 
 ## Task ID
 
-`PHASE-4A-PLANNER-FOUNDATION`
+`PHASE-4B-PLANNER-COMPLETE`
 
 ## Goal
 
-Add the initial Planner scheduling foundation without implementing later Spaces, Templates, AI, Analytics, Backup, or Cloud systems.
+Finish Phase 4 Planner scheduling behavior without implementing later Spaces, Templates, AI, Analytics, Backup, or Cloud systems.
 
-Focus on event and time-block persistence boundaries, basic day/week/month/agenda surfaces, and scheduling relationships with existing tasks.
+Focus on completing the Planner vertical slice around already implemented events, time blocks, tasks, recurrence logic, reminders contracts, focus sessions, free-time/conflict behavior, and estimated versus actual effort.
 
 ## Scope
 
 Included:
 
-- Event and meeting domain models, repository contract, Drift tables, and migration
-- Time-block domain model, repository contract, Drift tables, and migration
-- Basic day, week, month, and agenda Planner views using implemented records only
-- Task scheduling fields surfaced through repository/controller boundaries where already present
-- Initial conflict and free-window helpers needed by the basic Planner UI
-- Recurrence and reminder contracts only, without platform notification scheduling
-- Focus-session contract only if needed to preserve Phase 4 architecture boundaries
-- Loading, empty, content, and error states for Planner views
-- Focused database, repository, migration, controller, and widget tests
+- Event and time-block edit, archive, restore, and delete flows where supported
+- Task scheduling and rescheduling controls using existing task scheduling fields
+- Recurrence rule evaluation for local schedule expansion only
+- Reminder contract persistence and validation without platform notification scheduling
+- Focus session domain model, repository contract, Drift tables, and UI surface
+- Planned versus actual duration updates through task and focus-session boundaries
+- Conflict detection and free-window behavior surfaced clearly in Planner views
+- Loading, empty, content, and error state consistency across Planner views
+- Focused database, repository, migration, controller, domain, and widget tests
 - Documentation updates
 
 Excluded:
 
 - Local notification scheduling
 - Background jobs
-- Full recurrence engine
+- Platform notification scheduling
 - Spaces engine
 - Templates
 - AI persistence or real AI provider
@@ -41,7 +41,7 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, and Phase 3 productivity-core behavior.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, and Phase 4A Planner foundation behavior.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
 - Use repository/controller boundaries for Planner persistence and scheduling behavior.
@@ -76,9 +76,12 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Planner events and time blocks are persisted through repository boundaries.
-- Basic day, week, month, and agenda views render implemented records with accessible empty/error/loading states.
-- Existing tasks can be displayed in scheduling context without breaking Phase 3 task-core behavior.
+- Planner events, time blocks, focus sessions, and scheduled tasks remain behind repository/controller boundaries.
+- Day, week, month, and agenda views support implemented scheduling behavior with accessible empty/error/loading states.
+- Recurrence expansion is deterministic and local-only.
+- Reminder contracts are validated but do not schedule platform notifications.
+- Conflict and free-window behavior is covered by tests.
+- Planned versus actual effort can be recorded through implemented Phase 4 boundaries.
 - Generated code and schema snapshots are current.
 - `flutter analyze` reports no issues.
 - All tests pass.
@@ -87,6 +90,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 4A Planner foundation passes validation and documentation is current.
+Stop after Phase 4B Planner completion passes validation and documentation is current.
 
 Do not implement full recurrence, platform notifications, Spaces, Templates, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.

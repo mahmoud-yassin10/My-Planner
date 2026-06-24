@@ -55,6 +55,8 @@ Phase 3B adds focused tests for schema version 3, generated Drift migration veri
 
 Phase 3C adds focused tests for hierarchy and task-core edit flows, restore actions, relationship visibility in Goals and Planner screens, and preservation of links while keeping schema version 3 unchanged.
 
+Phase 4A adds focused tests for schema version 4, generated Drift migration verification from earlier snapshots, Planner event and time-block repository behavior, provider boundaries, conflict and free-window helpers, task scheduling visibility, and Planner Day/Week/Month/Agenda rendering.
+
 ### Widget tests
 
 Cover:

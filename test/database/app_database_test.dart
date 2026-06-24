@@ -17,7 +17,7 @@ void main() {
   });
 
   test(
-    'fresh database creation includes foundation and productivity-core tables',
+    'fresh database creation includes foundation, productivity-core, and planner tables',
     () async {
       final database = AppDatabase.inMemory();
       addTearDown(database.close);
@@ -42,6 +42,8 @@ void main() {
       expect(tables.map((row) => row.data['name']), contains('entity_tags'));
       expect(tables.map((row) => row.data['name']), contains('notes'));
       expect(tables.map((row) => row.data['name']), contains('note_links'));
+      expect(tables.map((row) => row.data['name']), contains('planner_events'));
+      expect(tables.map((row) => row.data['name']), contains('time_blocks'));
     },
   );
 
@@ -65,7 +67,7 @@ void main() {
     expect(row.updatedAt.isUtc, isTrue);
   });
 
-  test('migration from version 1 creates productivity-core tables', () async {
+  test('migration from version 1 creates planner foundation tables', () async {
     final tempDirectory = await Directory.systemTemp.createTemp(
       'momentum_os_migration_test_',
     );
@@ -101,6 +103,8 @@ void main() {
     expect(tables.map((row) => row.data['name']), contains('entity_tags'));
     expect(tables.map((row) => row.data['name']), contains('notes'));
     expect(tables.map((row) => row.data['name']), contains('note_links'));
+    expect(tables.map((row) => row.data['name']), contains('planner_events'));
+    expect(tables.map((row) => row.data['name']), contains('time_blocks'));
   });
 
   test(
@@ -134,6 +138,8 @@ void main() {
       expect(schema.toString(), contains('entity_tags'));
       expect(schema.toString(), contains('notes'));
       expect(schema.toString(), contains('note_links'));
+      expect(schema.toString(), contains('planner_events'));
+      expect(schema.toString(), contains('time_blocks'));
     },
   );
 }

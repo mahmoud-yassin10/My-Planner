@@ -26,8 +26,8 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Complete | Schema version 3 with settings metadata and productivity-core tables |
-| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 3 |
+| Drift database | 2 | Complete | Schema version 4 with settings metadata, productivity-core tables, and planner foundation tables |
+| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 4 |
 | UUID service | 2 | Complete | Replaceable UUID v4 service |
 | Typed settings | 2 | Complete | Drift-backed typed settings repository |
 | Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
@@ -51,17 +51,17 @@ Status values:
 
 | Feature | Phase | Status |
 |---|---:|---|
-| Day view | 4 | Not started |
-| Week view | 4 | Not started |
-| Month view | 4 | Not started |
-| Agenda | 4 | Not started |
-| Events and meetings | 4 | Not started |
-| Time blocks | 4 | Not started |
-| Recurrence | 4 | Not started |
-| Reminders | 4 | Not started |
+| Day view | 4 | Complete |
+| Week view | 4 | Complete |
+| Month view | 4 | Complete |
+| Agenda | 4 | Complete |
+| Events and meetings | 4 | Complete |
+| Time blocks | 4 | Complete |
+| Recurrence | 4 | Planned |
+| Reminders | 4 | Planned |
 | Focus sessions | 4 | Not started |
-| Free-time detection | 4 | Not started |
-| Planned vs actual time | 4 | Not started |
+| Free-time detection | 4 | Complete |
+| Planned vs actual time | 4 | Planned |
 
 ## Spaces engine
 

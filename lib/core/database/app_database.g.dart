@@ -7097,6 +7097,1502 @@ class NoteLinksCompanion extends UpdateCompanion<NoteLinkRow> {
   }
 }
 
+class $PlannerEventsTable extends PlannerEvents
+    with TableInfo<$PlannerEventsTable, PlannerEventRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PlannerEventsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startsAtMeta = const VerificationMeta(
+    'startsAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startsAt = GeneratedColumn<DateTime>(
+    'starts_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endsAtMeta = const VerificationMeta('endsAt');
+  @override
+  late final GeneratedColumn<DateTime> endsAt = GeneratedColumn<DateTime>(
+    'ends_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isAllDayMeta = const VerificationMeta(
+    'isAllDay',
+  );
+  @override
+  late final GeneratedColumn<bool> isAllDay = GeneratedColumn<bool>(
+    'is_all_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_all_day" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _locationMeta = const VerificationMeta(
+    'location',
+  );
+  @override
+  late final GeneratedColumn<String> location = GeneratedColumn<String>(
+    'location',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _meetingUrlMeta = const VerificationMeta(
+    'meetingUrl',
+  );
+  @override
+  late final GeneratedColumn<String> meetingUrl = GeneratedColumn<String>(
+    'meeting_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _linkedTaskIdMeta = const VerificationMeta(
+    'linkedTaskId',
+  );
+  @override
+  late final GeneratedColumn<String> linkedTaskId = GeneratedColumn<String>(
+    'linked_task_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tasks (id)',
+    ),
+  );
+  static const VerificationMeta _recurrenceRuleMeta = const VerificationMeta(
+    'recurrenceRule',
+  );
+  @override
+  late final GeneratedColumn<String> recurrenceRule = GeneratedColumn<String>(
+    'recurrence_rule',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _reminderPolicyMeta = const VerificationMeta(
+    'reminderPolicy',
+  );
+  @override
+  late final GeneratedColumn<String> reminderPolicy = GeneratedColumn<String>(
+    'reminder_policy',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    description,
+    kind,
+    startsAt,
+    endsAt,
+    isAllDay,
+    location,
+    meetingUrl,
+    linkedTaskId,
+    recurrenceRule,
+    reminderPolicy,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'planner_events';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PlannerEventRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('starts_at')) {
+      context.handle(
+        _startsAtMeta,
+        startsAt.isAcceptableOrUnknown(data['starts_at']!, _startsAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startsAtMeta);
+    }
+    if (data.containsKey('ends_at')) {
+      context.handle(
+        _endsAtMeta,
+        endsAt.isAcceptableOrUnknown(data['ends_at']!, _endsAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_endsAtMeta);
+    }
+    if (data.containsKey('is_all_day')) {
+      context.handle(
+        _isAllDayMeta,
+        isAllDay.isAcceptableOrUnknown(data['is_all_day']!, _isAllDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isAllDayMeta);
+    }
+    if (data.containsKey('location')) {
+      context.handle(
+        _locationMeta,
+        location.isAcceptableOrUnknown(data['location']!, _locationMeta),
+      );
+    }
+    if (data.containsKey('meeting_url')) {
+      context.handle(
+        _meetingUrlMeta,
+        meetingUrl.isAcceptableOrUnknown(data['meeting_url']!, _meetingUrlMeta),
+      );
+    }
+    if (data.containsKey('linked_task_id')) {
+      context.handle(
+        _linkedTaskIdMeta,
+        linkedTaskId.isAcceptableOrUnknown(
+          data['linked_task_id']!,
+          _linkedTaskIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('recurrence_rule')) {
+      context.handle(
+        _recurrenceRuleMeta,
+        recurrenceRule.isAcceptableOrUnknown(
+          data['recurrence_rule']!,
+          _recurrenceRuleMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reminder_policy')) {
+      context.handle(
+        _reminderPolicyMeta,
+        reminderPolicy.isAcceptableOrUnknown(
+          data['reminder_policy']!,
+          _reminderPolicyMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PlannerEventRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PlannerEventRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      startsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}starts_at'],
+      )!,
+      endsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ends_at'],
+      )!,
+      isAllDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_all_day'],
+      )!,
+      location: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location'],
+      ),
+      meetingUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}meeting_url'],
+      ),
+      linkedTaskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}linked_task_id'],
+      ),
+      recurrenceRule: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recurrence_rule'],
+      ),
+      reminderPolicy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reminder_policy'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $PlannerEventsTable createAlias(String alias) {
+    return $PlannerEventsTable(attachedDatabase, alias);
+  }
+}
+
+class PlannerEventRow extends DataClass implements Insertable<PlannerEventRow> {
+  final String id;
+  final String title;
+  final String? description;
+  final String kind;
+  final DateTime startsAt;
+  final DateTime endsAt;
+  final bool isAllDay;
+  final String? location;
+  final String? meetingUrl;
+  final String? linkedTaskId;
+  final String? recurrenceRule;
+  final String? reminderPolicy;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const PlannerEventRow({
+    required this.id,
+    required this.title,
+    this.description,
+    required this.kind,
+    required this.startsAt,
+    required this.endsAt,
+    required this.isAllDay,
+    this.location,
+    this.meetingUrl,
+    this.linkedTaskId,
+    this.recurrenceRule,
+    this.reminderPolicy,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['kind'] = Variable<String>(kind);
+    map['starts_at'] = Variable<DateTime>(startsAt);
+    map['ends_at'] = Variable<DateTime>(endsAt);
+    map['is_all_day'] = Variable<bool>(isAllDay);
+    if (!nullToAbsent || location != null) {
+      map['location'] = Variable<String>(location);
+    }
+    if (!nullToAbsent || meetingUrl != null) {
+      map['meeting_url'] = Variable<String>(meetingUrl);
+    }
+    if (!nullToAbsent || linkedTaskId != null) {
+      map['linked_task_id'] = Variable<String>(linkedTaskId);
+    }
+    if (!nullToAbsent || recurrenceRule != null) {
+      map['recurrence_rule'] = Variable<String>(recurrenceRule);
+    }
+    if (!nullToAbsent || reminderPolicy != null) {
+      map['reminder_policy'] = Variable<String>(reminderPolicy);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  PlannerEventsCompanion toCompanion(bool nullToAbsent) {
+    return PlannerEventsCompanion(
+      id: Value(id),
+      title: Value(title),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      kind: Value(kind),
+      startsAt: Value(startsAt),
+      endsAt: Value(endsAt),
+      isAllDay: Value(isAllDay),
+      location: location == null && nullToAbsent
+          ? const Value.absent()
+          : Value(location),
+      meetingUrl: meetingUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(meetingUrl),
+      linkedTaskId: linkedTaskId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(linkedTaskId),
+      recurrenceRule: recurrenceRule == null && nullToAbsent
+          ? const Value.absent()
+          : Value(recurrenceRule),
+      reminderPolicy: reminderPolicy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminderPolicy),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory PlannerEventRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PlannerEventRow(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      description: serializer.fromJson<String?>(json['description']),
+      kind: serializer.fromJson<String>(json['kind']),
+      startsAt: serializer.fromJson<DateTime>(json['startsAt']),
+      endsAt: serializer.fromJson<DateTime>(json['endsAt']),
+      isAllDay: serializer.fromJson<bool>(json['isAllDay']),
+      location: serializer.fromJson<String?>(json['location']),
+      meetingUrl: serializer.fromJson<String?>(json['meetingUrl']),
+      linkedTaskId: serializer.fromJson<String?>(json['linkedTaskId']),
+      recurrenceRule: serializer.fromJson<String?>(json['recurrenceRule']),
+      reminderPolicy: serializer.fromJson<String?>(json['reminderPolicy']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'description': serializer.toJson<String?>(description),
+      'kind': serializer.toJson<String>(kind),
+      'startsAt': serializer.toJson<DateTime>(startsAt),
+      'endsAt': serializer.toJson<DateTime>(endsAt),
+      'isAllDay': serializer.toJson<bool>(isAllDay),
+      'location': serializer.toJson<String?>(location),
+      'meetingUrl': serializer.toJson<String?>(meetingUrl),
+      'linkedTaskId': serializer.toJson<String?>(linkedTaskId),
+      'recurrenceRule': serializer.toJson<String?>(recurrenceRule),
+      'reminderPolicy': serializer.toJson<String?>(reminderPolicy),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  PlannerEventRow copyWith({
+    String? id,
+    String? title,
+    Value<String?> description = const Value.absent(),
+    String? kind,
+    DateTime? startsAt,
+    DateTime? endsAt,
+    bool? isAllDay,
+    Value<String?> location = const Value.absent(),
+    Value<String?> meetingUrl = const Value.absent(),
+    Value<String?> linkedTaskId = const Value.absent(),
+    Value<String?> recurrenceRule = const Value.absent(),
+    Value<String?> reminderPolicy = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => PlannerEventRow(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    description: description.present ? description.value : this.description,
+    kind: kind ?? this.kind,
+    startsAt: startsAt ?? this.startsAt,
+    endsAt: endsAt ?? this.endsAt,
+    isAllDay: isAllDay ?? this.isAllDay,
+    location: location.present ? location.value : this.location,
+    meetingUrl: meetingUrl.present ? meetingUrl.value : this.meetingUrl,
+    linkedTaskId: linkedTaskId.present ? linkedTaskId.value : this.linkedTaskId,
+    recurrenceRule: recurrenceRule.present
+        ? recurrenceRule.value
+        : this.recurrenceRule,
+    reminderPolicy: reminderPolicy.present
+        ? reminderPolicy.value
+        : this.reminderPolicy,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  PlannerEventRow copyWithCompanion(PlannerEventsCompanion data) {
+    return PlannerEventRow(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      startsAt: data.startsAt.present ? data.startsAt.value : this.startsAt,
+      endsAt: data.endsAt.present ? data.endsAt.value : this.endsAt,
+      isAllDay: data.isAllDay.present ? data.isAllDay.value : this.isAllDay,
+      location: data.location.present ? data.location.value : this.location,
+      meetingUrl: data.meetingUrl.present
+          ? data.meetingUrl.value
+          : this.meetingUrl,
+      linkedTaskId: data.linkedTaskId.present
+          ? data.linkedTaskId.value
+          : this.linkedTaskId,
+      recurrenceRule: data.recurrenceRule.present
+          ? data.recurrenceRule.value
+          : this.recurrenceRule,
+      reminderPolicy: data.reminderPolicy.present
+          ? data.reminderPolicy.value
+          : this.reminderPolicy,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlannerEventRow(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('kind: $kind, ')
+          ..write('startsAt: $startsAt, ')
+          ..write('endsAt: $endsAt, ')
+          ..write('isAllDay: $isAllDay, ')
+          ..write('location: $location, ')
+          ..write('meetingUrl: $meetingUrl, ')
+          ..write('linkedTaskId: $linkedTaskId, ')
+          ..write('recurrenceRule: $recurrenceRule, ')
+          ..write('reminderPolicy: $reminderPolicy, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    description,
+    kind,
+    startsAt,
+    endsAt,
+    isAllDay,
+    location,
+    meetingUrl,
+    linkedTaskId,
+    recurrenceRule,
+    reminderPolicy,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PlannerEventRow &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.description == this.description &&
+          other.kind == this.kind &&
+          other.startsAt == this.startsAt &&
+          other.endsAt == this.endsAt &&
+          other.isAllDay == this.isAllDay &&
+          other.location == this.location &&
+          other.meetingUrl == this.meetingUrl &&
+          other.linkedTaskId == this.linkedTaskId &&
+          other.recurrenceRule == this.recurrenceRule &&
+          other.reminderPolicy == this.reminderPolicy &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class PlannerEventsCompanion extends UpdateCompanion<PlannerEventRow> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<String?> description;
+  final Value<String> kind;
+  final Value<DateTime> startsAt;
+  final Value<DateTime> endsAt;
+  final Value<bool> isAllDay;
+  final Value<String?> location;
+  final Value<String?> meetingUrl;
+  final Value<String?> linkedTaskId;
+  final Value<String?> recurrenceRule;
+  final Value<String?> reminderPolicy;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const PlannerEventsCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.startsAt = const Value.absent(),
+    this.endsAt = const Value.absent(),
+    this.isAllDay = const Value.absent(),
+    this.location = const Value.absent(),
+    this.meetingUrl = const Value.absent(),
+    this.linkedTaskId = const Value.absent(),
+    this.recurrenceRule = const Value.absent(),
+    this.reminderPolicy = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PlannerEventsCompanion.insert({
+    required String id,
+    required String title,
+    this.description = const Value.absent(),
+    required String kind,
+    required DateTime startsAt,
+    required DateTime endsAt,
+    required bool isAllDay,
+    this.location = const Value.absent(),
+    this.meetingUrl = const Value.absent(),
+    this.linkedTaskId = const Value.absent(),
+    this.recurrenceRule = const Value.absent(),
+    this.reminderPolicy = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       kind = Value(kind),
+       startsAt = Value(startsAt),
+       endsAt = Value(endsAt),
+       isAllDay = Value(isAllDay),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<PlannerEventRow> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<String>? description,
+    Expression<String>? kind,
+    Expression<DateTime>? startsAt,
+    Expression<DateTime>? endsAt,
+    Expression<bool>? isAllDay,
+    Expression<String>? location,
+    Expression<String>? meetingUrl,
+    Expression<String>? linkedTaskId,
+    Expression<String>? recurrenceRule,
+    Expression<String>? reminderPolicy,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (description != null) 'description': description,
+      if (kind != null) 'kind': kind,
+      if (startsAt != null) 'starts_at': startsAt,
+      if (endsAt != null) 'ends_at': endsAt,
+      if (isAllDay != null) 'is_all_day': isAllDay,
+      if (location != null) 'location': location,
+      if (meetingUrl != null) 'meeting_url': meetingUrl,
+      if (linkedTaskId != null) 'linked_task_id': linkedTaskId,
+      if (recurrenceRule != null) 'recurrence_rule': recurrenceRule,
+      if (reminderPolicy != null) 'reminder_policy': reminderPolicy,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PlannerEventsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String?>? description,
+    Value<String>? kind,
+    Value<DateTime>? startsAt,
+    Value<DateTime>? endsAt,
+    Value<bool>? isAllDay,
+    Value<String?>? location,
+    Value<String?>? meetingUrl,
+    Value<String?>? linkedTaskId,
+    Value<String?>? recurrenceRule,
+    Value<String?>? reminderPolicy,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return PlannerEventsCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      kind: kind ?? this.kind,
+      startsAt: startsAt ?? this.startsAt,
+      endsAt: endsAt ?? this.endsAt,
+      isAllDay: isAllDay ?? this.isAllDay,
+      location: location ?? this.location,
+      meetingUrl: meetingUrl ?? this.meetingUrl,
+      linkedTaskId: linkedTaskId ?? this.linkedTaskId,
+      recurrenceRule: recurrenceRule ?? this.recurrenceRule,
+      reminderPolicy: reminderPolicy ?? this.reminderPolicy,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (startsAt.present) {
+      map['starts_at'] = Variable<DateTime>(startsAt.value);
+    }
+    if (endsAt.present) {
+      map['ends_at'] = Variable<DateTime>(endsAt.value);
+    }
+    if (isAllDay.present) {
+      map['is_all_day'] = Variable<bool>(isAllDay.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (meetingUrl.present) {
+      map['meeting_url'] = Variable<String>(meetingUrl.value);
+    }
+    if (linkedTaskId.present) {
+      map['linked_task_id'] = Variable<String>(linkedTaskId.value);
+    }
+    if (recurrenceRule.present) {
+      map['recurrence_rule'] = Variable<String>(recurrenceRule.value);
+    }
+    if (reminderPolicy.present) {
+      map['reminder_policy'] = Variable<String>(reminderPolicy.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlannerEventsCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('kind: $kind, ')
+          ..write('startsAt: $startsAt, ')
+          ..write('endsAt: $endsAt, ')
+          ..write('isAllDay: $isAllDay, ')
+          ..write('location: $location, ')
+          ..write('meetingUrl: $meetingUrl, ')
+          ..write('linkedTaskId: $linkedTaskId, ')
+          ..write('recurrenceRule: $recurrenceRule, ')
+          ..write('reminderPolicy: $reminderPolicy, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TimeBlocksTable extends TimeBlocks
+    with TableInfo<$TimeBlocksTable, TimeBlockRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimeBlocksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startsAtMeta = const VerificationMeta(
+    'startsAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startsAt = GeneratedColumn<DateTime>(
+    'starts_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endsAtMeta = const VerificationMeta('endsAt');
+  @override
+  late final GeneratedColumn<DateTime> endsAt = GeneratedColumn<DateTime>(
+    'ends_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _linkedTaskIdMeta = const VerificationMeta(
+    'linkedTaskId',
+  );
+  @override
+  late final GeneratedColumn<String> linkedTaskId = GeneratedColumn<String>(
+    'linked_task_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tasks (id)',
+    ),
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    kind,
+    startsAt,
+    endsAt,
+    linkedTaskId,
+    notes,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'time_blocks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TimeBlockRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('starts_at')) {
+      context.handle(
+        _startsAtMeta,
+        startsAt.isAcceptableOrUnknown(data['starts_at']!, _startsAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startsAtMeta);
+    }
+    if (data.containsKey('ends_at')) {
+      context.handle(
+        _endsAtMeta,
+        endsAt.isAcceptableOrUnknown(data['ends_at']!, _endsAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_endsAtMeta);
+    }
+    if (data.containsKey('linked_task_id')) {
+      context.handle(
+        _linkedTaskIdMeta,
+        linkedTaskId.isAcceptableOrUnknown(
+          data['linked_task_id']!,
+          _linkedTaskIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimeBlockRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimeBlockRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      startsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}starts_at'],
+      )!,
+      endsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ends_at'],
+      )!,
+      linkedTaskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}linked_task_id'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
+  }
+
+  @override
+  $TimeBlocksTable createAlias(String alias) {
+    return $TimeBlocksTable(attachedDatabase, alias);
+  }
+}
+
+class TimeBlockRow extends DataClass implements Insertable<TimeBlockRow> {
+  final String id;
+  final String title;
+  final String kind;
+  final DateTime startsAt;
+  final DateTime endsAt;
+  final String? linkedTaskId;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+  const TimeBlockRow({
+    required this.id,
+    required this.title,
+    required this.kind,
+    required this.startsAt,
+    required this.endsAt,
+    this.linkedTaskId,
+    this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    map['kind'] = Variable<String>(kind);
+    map['starts_at'] = Variable<DateTime>(startsAt);
+    map['ends_at'] = Variable<DateTime>(endsAt);
+    if (!nullToAbsent || linkedTaskId != null) {
+      map['linked_task_id'] = Variable<String>(linkedTaskId);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    return map;
+  }
+
+  TimeBlocksCompanion toCompanion(bool nullToAbsent) {
+    return TimeBlocksCompanion(
+      id: Value(id),
+      title: Value(title),
+      kind: Value(kind),
+      startsAt: Value(startsAt),
+      endsAt: Value(endsAt),
+      linkedTaskId: linkedTaskId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(linkedTaskId),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory TimeBlockRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimeBlockRow(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      kind: serializer.fromJson<String>(json['kind']),
+      startsAt: serializer.fromJson<DateTime>(json['startsAt']),
+      endsAt: serializer.fromJson<DateTime>(json['endsAt']),
+      linkedTaskId: serializer.fromJson<String?>(json['linkedTaskId']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'kind': serializer.toJson<String>(kind),
+      'startsAt': serializer.toJson<DateTime>(startsAt),
+      'endsAt': serializer.toJson<DateTime>(endsAt),
+      'linkedTaskId': serializer.toJson<String?>(linkedTaskId),
+      'notes': serializer.toJson<String?>(notes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+    };
+  }
+
+  TimeBlockRow copyWith({
+    String? id,
+    String? title,
+    String? kind,
+    DateTime? startsAt,
+    DateTime? endsAt,
+    Value<String?> linkedTaskId = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> archivedAt = const Value.absent(),
+  }) => TimeBlockRow(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    kind: kind ?? this.kind,
+    startsAt: startsAt ?? this.startsAt,
+    endsAt: endsAt ?? this.endsAt,
+    linkedTaskId: linkedTaskId.present ? linkedTaskId.value : this.linkedTaskId,
+    notes: notes.present ? notes.value : this.notes,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  TimeBlockRow copyWithCompanion(TimeBlocksCompanion data) {
+    return TimeBlockRow(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      startsAt: data.startsAt.present ? data.startsAt.value : this.startsAt,
+      endsAt: data.endsAt.present ? data.endsAt.value : this.endsAt,
+      linkedTaskId: data.linkedTaskId.present
+          ? data.linkedTaskId.value
+          : this.linkedTaskId,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeBlockRow(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('kind: $kind, ')
+          ..write('startsAt: $startsAt, ')
+          ..write('endsAt: $endsAt, ')
+          ..write('linkedTaskId: $linkedTaskId, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    kind,
+    startsAt,
+    endsAt,
+    linkedTaskId,
+    notes,
+    createdAt,
+    updatedAt,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimeBlockRow &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.kind == this.kind &&
+          other.startsAt == this.startsAt &&
+          other.endsAt == this.endsAt &&
+          other.linkedTaskId == this.linkedTaskId &&
+          other.notes == this.notes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.archivedAt == this.archivedAt);
+}
+
+class TimeBlocksCompanion extends UpdateCompanion<TimeBlockRow> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<String> kind;
+  final Value<DateTime> startsAt;
+  final Value<DateTime> endsAt;
+  final Value<String?> linkedTaskId;
+  final Value<String?> notes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> archivedAt;
+  final Value<int> rowid;
+  const TimeBlocksCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.startsAt = const Value.absent(),
+    this.endsAt = const Value.absent(),
+    this.linkedTaskId = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TimeBlocksCompanion.insert({
+    required String id,
+    required String title,
+    required String kind,
+    required DateTime startsAt,
+    required DateTime endsAt,
+    this.linkedTaskId = const Value.absent(),
+    this.notes = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       kind = Value(kind),
+       startsAt = Value(startsAt),
+       endsAt = Value(endsAt),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<TimeBlockRow> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<String>? kind,
+    Expression<DateTime>? startsAt,
+    Expression<DateTime>? endsAt,
+    Expression<String>? linkedTaskId,
+    Expression<String>? notes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (kind != null) 'kind': kind,
+      if (startsAt != null) 'starts_at': startsAt,
+      if (endsAt != null) 'ends_at': endsAt,
+      if (linkedTaskId != null) 'linked_task_id': linkedTaskId,
+      if (notes != null) 'notes': notes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TimeBlocksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String>? kind,
+    Value<DateTime>? startsAt,
+    Value<DateTime>? endsAt,
+    Value<String?>? linkedTaskId,
+    Value<String?>? notes,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return TimeBlocksCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      kind: kind ?? this.kind,
+      startsAt: startsAt ?? this.startsAt,
+      endsAt: endsAt ?? this.endsAt,
+      linkedTaskId: linkedTaskId ?? this.linkedTaskId,
+      notes: notes ?? this.notes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (startsAt.present) {
+      map['starts_at'] = Variable<DateTime>(startsAt.value);
+    }
+    if (endsAt.present) {
+      map['ends_at'] = Variable<DateTime>(endsAt.value);
+    }
+    if (linkedTaskId.present) {
+      map['linked_task_id'] = Variable<String>(linkedTaskId.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeBlocksCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('kind: $kind, ')
+          ..write('startsAt: $startsAt, ')
+          ..write('endsAt: $endsAt, ')
+          ..write('linkedTaskId: $linkedTaskId, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7111,6 +8607,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $EntityTagsTable entityTags = $EntityTagsTable(this);
   late final $NotesTable notes = $NotesTable(this);
   late final $NoteLinksTable noteLinks = $NoteLinksTable(this);
+  late final $PlannerEventsTable plannerEvents = $PlannerEventsTable(this);
+  late final $TimeBlocksTable timeBlocks = $TimeBlocksTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7127,6 +8625,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     entityTags,
     notes,
     noteLinks,
+    plannerEvents,
+    timeBlocks,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -10699,6 +12199,42 @@ final class $$TasksTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static MultiTypedResultKey<$PlannerEventsTable, List<PlannerEventRow>>
+  _plannerEventsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.plannerEvents,
+    aliasName: 'tasks__id__planner_events__linked_task_id',
+  );
+
+  $$PlannerEventsTableProcessedTableManager get plannerEventsRefs {
+    final manager = $$PlannerEventsTableTableManager(
+      $_db,
+      $_db.plannerEvents,
+    ).filter((f) => f.linkedTaskId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_plannerEventsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TimeBlocksTable, List<TimeBlockRow>>
+  _timeBlocksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.timeBlocks,
+    aliasName: 'tasks__id__time_blocks__linked_task_id',
+  );
+
+  $$TimeBlocksTableProcessedTableManager get timeBlocksRefs {
+    final manager = $$TimeBlocksTableTableManager(
+      $_db,
+      $_db.timeBlocks,
+    ).filter((f) => f.linkedTaskId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_timeBlocksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
@@ -10907,6 +12443,56 @@ class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
           ),
     );
     return composer;
+  }
+
+  Expression<bool> plannerEventsRefs(
+    Expression<bool> Function($$PlannerEventsTableFilterComposer f) f,
+  ) {
+    final $$PlannerEventsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.plannerEvents,
+      getReferencedColumn: (t) => t.linkedTaskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PlannerEventsTableFilterComposer(
+            $db: $db,
+            $table: $db.plannerEvents,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> timeBlocksRefs(
+    Expression<bool> Function($$TimeBlocksTableFilterComposer f) f,
+  ) {
+    final $$TimeBlocksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timeBlocks,
+      getReferencedColumn: (t) => t.linkedTaskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimeBlocksTableFilterComposer(
+            $db: $db,
+            $table: $db.timeBlocks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
   }
 }
 
@@ -11312,6 +12898,56 @@ class $$TasksTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> plannerEventsRefs<T extends Object>(
+    Expression<T> Function($$PlannerEventsTableAnnotationComposer a) f,
+  ) {
+    final $$PlannerEventsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.plannerEvents,
+      getReferencedColumn: (t) => t.linkedTaskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PlannerEventsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.plannerEvents,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> timeBlocksRefs<T extends Object>(
+    Expression<T> Function($$TimeBlocksTableAnnotationComposer a) f,
+  ) {
+    final $$TimeBlocksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timeBlocks,
+      getReferencedColumn: (t) => t.linkedTaskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimeBlocksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.timeBlocks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TasksTableTableManager
@@ -11333,6 +12969,8 @@ class $$TasksTableTableManager
             bool projectId,
             bool milestoneId,
             bool parentTaskId,
+            bool plannerEventsRefs,
+            bool timeBlocksRefs,
           })
         > {
   $$TasksTableTableManager(_$AppDatabase db, $TasksTable table)
@@ -11459,10 +13097,15 @@ class $$TasksTableTableManager
                 projectId = false,
                 milestoneId = false,
                 parentTaskId = false,
+                plannerEventsRefs = false,
+                timeBlocksRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
-                  explicitlyWatchedTables: [],
+                  explicitlyWatchedTables: [
+                    if (plannerEventsRefs) db.plannerEvents,
+                    if (timeBlocksRefs) db.timeBlocks,
+                  ],
                   addJoins:
                       <
                         T extends TableManagerState<
@@ -11548,7 +13191,50 @@ class $$TasksTableTableManager
                         return state;
                       },
                   getPrefetchedDataCallback: (items) async {
-                    return [];
+                    return [
+                      if (plannerEventsRefs)
+                        await $_getPrefetchedData<
+                          TaskRow,
+                          $TasksTable,
+                          PlannerEventRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TasksTableReferences
+                              ._plannerEventsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TasksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).plannerEventsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.linkedTaskId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (timeBlocksRefs)
+                        await $_getPrefetchedData<
+                          TaskRow,
+                          $TasksTable,
+                          TimeBlockRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TasksTableReferences
+                              ._timeBlocksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TasksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).timeBlocksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.linkedTaskId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
                 );
               },
@@ -11574,6 +13260,8 @@ typedef $$TasksTableProcessedTableManager =
         bool projectId,
         bool milestoneId,
         bool parentTaskId,
+        bool plannerEventsRefs,
+        bool timeBlocksRefs,
       })
     >;
 typedef $$TagsTableCreateCompanionBuilder =
@@ -12902,6 +14590,942 @@ typedef $$NoteLinksTableProcessedTableManager =
       NoteLinkRow,
       PrefetchHooks Function({bool noteId})
     >;
+typedef $$PlannerEventsTableCreateCompanionBuilder =
+    PlannerEventsCompanion Function({
+      required String id,
+      required String title,
+      Value<String?> description,
+      required String kind,
+      required DateTime startsAt,
+      required DateTime endsAt,
+      required bool isAllDay,
+      Value<String?> location,
+      Value<String?> meetingUrl,
+      Value<String?> linkedTaskId,
+      Value<String?> recurrenceRule,
+      Value<String?> reminderPolicy,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$PlannerEventsTableUpdateCompanionBuilder =
+    PlannerEventsCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String?> description,
+      Value<String> kind,
+      Value<DateTime> startsAt,
+      Value<DateTime> endsAt,
+      Value<bool> isAllDay,
+      Value<String?> location,
+      Value<String?> meetingUrl,
+      Value<String?> linkedTaskId,
+      Value<String?> recurrenceRule,
+      Value<String?> reminderPolicy,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$PlannerEventsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $PlannerEventsTable, PlannerEventRow> {
+  $$PlannerEventsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TasksTable _linkedTaskIdTable(_$AppDatabase db) =>
+      db.tasks.createAlias('planner_events__linked_task_id__tasks__id');
+
+  $$TasksTableProcessedTableManager? get linkedTaskId {
+    final $_column = $_itemColumn<String>('linked_task_id');
+    if ($_column == null) return null;
+    final manager = $$TasksTableTableManager(
+      $_db,
+      $_db.tasks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_linkedTaskIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PlannerEventsTableFilterComposer
+    extends Composer<_$AppDatabase, $PlannerEventsTable> {
+  $$PlannerEventsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startsAt => $composableBuilder(
+    column: $table.startsAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endsAt => $composableBuilder(
+    column: $table.endsAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isAllDay => $composableBuilder(
+    column: $table.isAllDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get meetingUrl => $composableBuilder(
+    column: $table.meetingUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recurrenceRule => $composableBuilder(
+    column: $table.recurrenceRule,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reminderPolicy => $composableBuilder(
+    column: $table.reminderPolicy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TasksTableFilterComposer get linkedTaskId {
+    final $$TasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableFilterComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PlannerEventsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PlannerEventsTable> {
+  $$PlannerEventsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startsAt => $composableBuilder(
+    column: $table.startsAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endsAt => $composableBuilder(
+    column: $table.endsAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isAllDay => $composableBuilder(
+    column: $table.isAllDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get meetingUrl => $composableBuilder(
+    column: $table.meetingUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recurrenceRule => $composableBuilder(
+    column: $table.recurrenceRule,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reminderPolicy => $composableBuilder(
+    column: $table.reminderPolicy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TasksTableOrderingComposer get linkedTaskId {
+    final $$TasksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableOrderingComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PlannerEventsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PlannerEventsTable> {
+  $$PlannerEventsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startsAt =>
+      $composableBuilder(column: $table.startsAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endsAt =>
+      $composableBuilder(column: $table.endsAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isAllDay =>
+      $composableBuilder(column: $table.isAllDay, builder: (column) => column);
+
+  GeneratedColumn<String> get location =>
+      $composableBuilder(column: $table.location, builder: (column) => column);
+
+  GeneratedColumn<String> get meetingUrl => $composableBuilder(
+    column: $table.meetingUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recurrenceRule => $composableBuilder(
+    column: $table.recurrenceRule,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reminderPolicy => $composableBuilder(
+    column: $table.reminderPolicy,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$TasksTableAnnotationComposer get linkedTaskId {
+    final $$TasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PlannerEventsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PlannerEventsTable,
+          PlannerEventRow,
+          $$PlannerEventsTableFilterComposer,
+          $$PlannerEventsTableOrderingComposer,
+          $$PlannerEventsTableAnnotationComposer,
+          $$PlannerEventsTableCreateCompanionBuilder,
+          $$PlannerEventsTableUpdateCompanionBuilder,
+          (PlannerEventRow, $$PlannerEventsTableReferences),
+          PlannerEventRow,
+          PrefetchHooks Function({bool linkedTaskId})
+        > {
+  $$PlannerEventsTableTableManager(_$AppDatabase db, $PlannerEventsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PlannerEventsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PlannerEventsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PlannerEventsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<DateTime> startsAt = const Value.absent(),
+                Value<DateTime> endsAt = const Value.absent(),
+                Value<bool> isAllDay = const Value.absent(),
+                Value<String?> location = const Value.absent(),
+                Value<String?> meetingUrl = const Value.absent(),
+                Value<String?> linkedTaskId = const Value.absent(),
+                Value<String?> recurrenceRule = const Value.absent(),
+                Value<String?> reminderPolicy = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PlannerEventsCompanion(
+                id: id,
+                title: title,
+                description: description,
+                kind: kind,
+                startsAt: startsAt,
+                endsAt: endsAt,
+                isAllDay: isAllDay,
+                location: location,
+                meetingUrl: meetingUrl,
+                linkedTaskId: linkedTaskId,
+                recurrenceRule: recurrenceRule,
+                reminderPolicy: reminderPolicy,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                Value<String?> description = const Value.absent(),
+                required String kind,
+                required DateTime startsAt,
+                required DateTime endsAt,
+                required bool isAllDay,
+                Value<String?> location = const Value.absent(),
+                Value<String?> meetingUrl = const Value.absent(),
+                Value<String?> linkedTaskId = const Value.absent(),
+                Value<String?> recurrenceRule = const Value.absent(),
+                Value<String?> reminderPolicy = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PlannerEventsCompanion.insert(
+                id: id,
+                title: title,
+                description: description,
+                kind: kind,
+                startsAt: startsAt,
+                endsAt: endsAt,
+                isAllDay: isAllDay,
+                location: location,
+                meetingUrl: meetingUrl,
+                linkedTaskId: linkedTaskId,
+                recurrenceRule: recurrenceRule,
+                reminderPolicy: reminderPolicy,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PlannerEventsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({linkedTaskId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (linkedTaskId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.linkedTaskId,
+                                referencedTable: $$PlannerEventsTableReferences
+                                    ._linkedTaskIdTable(db),
+                                referencedColumn: $$PlannerEventsTableReferences
+                                    ._linkedTaskIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PlannerEventsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PlannerEventsTable,
+      PlannerEventRow,
+      $$PlannerEventsTableFilterComposer,
+      $$PlannerEventsTableOrderingComposer,
+      $$PlannerEventsTableAnnotationComposer,
+      $$PlannerEventsTableCreateCompanionBuilder,
+      $$PlannerEventsTableUpdateCompanionBuilder,
+      (PlannerEventRow, $$PlannerEventsTableReferences),
+      PlannerEventRow,
+      PrefetchHooks Function({bool linkedTaskId})
+    >;
+typedef $$TimeBlocksTableCreateCompanionBuilder =
+    TimeBlocksCompanion Function({
+      required String id,
+      required String title,
+      required String kind,
+      required DateTime startsAt,
+      required DateTime endsAt,
+      Value<String?> linkedTaskId,
+      Value<String?> notes,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+typedef $$TimeBlocksTableUpdateCompanionBuilder =
+    TimeBlocksCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String> kind,
+      Value<DateTime> startsAt,
+      Value<DateTime> endsAt,
+      Value<String?> linkedTaskId,
+      Value<String?> notes,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> archivedAt,
+      Value<int> rowid,
+    });
+
+final class $$TimeBlocksTableReferences
+    extends BaseReferences<_$AppDatabase, $TimeBlocksTable, TimeBlockRow> {
+  $$TimeBlocksTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $TasksTable _linkedTaskIdTable(_$AppDatabase db) =>
+      db.tasks.createAlias('time_blocks__linked_task_id__tasks__id');
+
+  $$TasksTableProcessedTableManager? get linkedTaskId {
+    final $_column = $_itemColumn<String>('linked_task_id');
+    if ($_column == null) return null;
+    final manager = $$TasksTableTableManager(
+      $_db,
+      $_db.tasks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_linkedTaskIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TimeBlocksTableFilterComposer
+    extends Composer<_$AppDatabase, $TimeBlocksTable> {
+  $$TimeBlocksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startsAt => $composableBuilder(
+    column: $table.startsAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endsAt => $composableBuilder(
+    column: $table.endsAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TasksTableFilterComposer get linkedTaskId {
+    final $$TasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableFilterComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimeBlocksTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimeBlocksTable> {
+  $$TimeBlocksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startsAt => $composableBuilder(
+    column: $table.startsAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endsAt => $composableBuilder(
+    column: $table.endsAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TasksTableOrderingComposer get linkedTaskId {
+    final $$TasksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableOrderingComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimeBlocksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimeBlocksTable> {
+  $$TimeBlocksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startsAt =>
+      $composableBuilder(column: $table.startsAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endsAt =>
+      $composableBuilder(column: $table.endsAt, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  $$TasksTableAnnotationComposer get linkedTaskId {
+    final $$TasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.linkedTaskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimeBlocksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TimeBlocksTable,
+          TimeBlockRow,
+          $$TimeBlocksTableFilterComposer,
+          $$TimeBlocksTableOrderingComposer,
+          $$TimeBlocksTableAnnotationComposer,
+          $$TimeBlocksTableCreateCompanionBuilder,
+          $$TimeBlocksTableUpdateCompanionBuilder,
+          (TimeBlockRow, $$TimeBlocksTableReferences),
+          TimeBlockRow,
+          PrefetchHooks Function({bool linkedTaskId})
+        > {
+  $$TimeBlocksTableTableManager(_$AppDatabase db, $TimeBlocksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimeBlocksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimeBlocksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimeBlocksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<DateTime> startsAt = const Value.absent(),
+                Value<DateTime> endsAt = const Value.absent(),
+                Value<String?> linkedTaskId = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TimeBlocksCompanion(
+                id: id,
+                title: title,
+                kind: kind,
+                startsAt: startsAt,
+                endsAt: endsAt,
+                linkedTaskId: linkedTaskId,
+                notes: notes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required String kind,
+                required DateTime startsAt,
+                required DateTime endsAt,
+                Value<String?> linkedTaskId = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TimeBlocksCompanion.insert(
+                id: id,
+                title: title,
+                kind: kind,
+                startsAt: startsAt,
+                endsAt: endsAt,
+                linkedTaskId: linkedTaskId,
+                notes: notes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                archivedAt: archivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TimeBlocksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({linkedTaskId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (linkedTaskId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.linkedTaskId,
+                                referencedTable: $$TimeBlocksTableReferences
+                                    ._linkedTaskIdTable(db),
+                                referencedColumn: $$TimeBlocksTableReferences
+                                    ._linkedTaskIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TimeBlocksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TimeBlocksTable,
+      TimeBlockRow,
+      $$TimeBlocksTableFilterComposer,
+      $$TimeBlocksTableOrderingComposer,
+      $$TimeBlocksTableAnnotationComposer,
+      $$TimeBlocksTableCreateCompanionBuilder,
+      $$TimeBlocksTableUpdateCompanionBuilder,
+      (TimeBlockRow, $$TimeBlocksTableReferences),
+      TimeBlockRow,
+      PrefetchHooks Function({bool linkedTaskId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -12927,4 +15551,8 @@ class $AppDatabaseManager {
       $$NotesTableTableManager(_db, _db.notes);
   $$NoteLinksTableTableManager get noteLinks =>
       $$NoteLinksTableTableManager(_db, _db.noteLinks);
+  $$PlannerEventsTableTableManager get plannerEvents =>
+      $$PlannerEventsTableTableManager(_db, _db.plannerEvents);
+  $$TimeBlocksTableTableManager get timeBlocks =>
+      $$TimeBlocksTableTableManager(_db, _db.timeBlocks);
 }

@@ -11,7 +11,7 @@ import 'app_database.steps.dart';
 
 part 'app_database.g.dart';
 
-const appDatabaseSchemaVersion = AppDatabase.latestSchemaVersion;
+const appDatabaseSchemaVersion = 4;
 
 @DataClassName('AppSettingRow')
 class AppSettings extends Table {
@@ -204,6 +204,45 @@ class NoteLinks extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('PlannerEventRow')
+class PlannerEvents extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get kind => text()();
+  DateTimeColumn get startsAt => dateTime()();
+  DateTimeColumn get endsAt => dateTime()();
+  BoolColumn get isAllDay => boolean()();
+  TextColumn get location => text().nullable()();
+  TextColumn get meetingUrl => text().nullable()();
+  TextColumn get linkedTaskId => text().nullable().references(Tasks, #id)();
+  TextColumn get recurrenceRule => text().nullable()();
+  TextColumn get reminderPolicy => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('TimeBlockRow')
+class TimeBlocks extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get kind => text()();
+  DateTimeColumn get startsAt => dateTime()();
+  DateTimeColumn get endsAt => dateTime()();
+  TextColumn get linkedTaskId => text().nullable().references(Tasks, #id)();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -217,12 +256,14 @@ class NoteLinks extends Table {
     EntityTags,
     Notes,
     NoteLinks,
+    PlannerEvents,
+    TimeBlocks,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 3;
+  static const latestSchemaVersion = 4;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -250,6 +291,10 @@ class AppDatabase extends _$AppDatabase {
             await migrator.createTable(schema.entityTags);
             await migrator.createTable(schema.notes);
             await migrator.createTable(schema.noteLinks);
+          },
+          from3To4: (migrator, schema) async {
+            await migrator.createTable(schema.plannerEvents);
+            await migrator.createTable(schema.timeBlocks);
           },
         )(migrator, from, to);
       },

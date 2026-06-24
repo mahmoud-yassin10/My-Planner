@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/widgets/foundation_states.dart';
+import '../application/planner_controller.dart';
+import '../domain/planner_models.dart';
 import '../../tasks/application/task_core_controller.dart';
 import '../../tasks/domain/task_core_models.dart';
 
@@ -11,9 +13,9 @@ class PlannerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(taskCoreSnapshotProvider);
+    final taskSnapshot = ref.watch(taskCoreSnapshotProvider);
 
-    return snapshot.when(
+    return taskSnapshot.when(
       loading: () =>
           const FoundationLoadingState(message: 'Loading planner tasks'),
       error: (error, stackTrace) => FoundationErrorState(
@@ -22,252 +24,157 @@ class PlannerScreen extends ConsumerWidget {
         actionLabel: 'Try again',
         onRetry: () => ref.invalidate(taskCoreSnapshotProvider),
       ),
-      data: (data) => _PlannerContent(snapshot: data),
+      data: (tasks) {
+        final plannerSnapshot = ref.watch(plannerSnapshotProvider);
+        return plannerSnapshot.when(
+          loading: () =>
+              const FoundationLoadingState(message: 'Loading planner schedule'),
+          error: (error, stackTrace) => FoundationErrorState(
+            title: 'Planner schedule could not load',
+            message: 'Try again to reload events and time blocks.',
+            actionLabel: 'Try again',
+            onRetry: () => ref.invalidate(plannerSnapshotProvider),
+          ),
+          data: (planner) =>
+              _PlannerContent(taskSnapshot: tasks, plannerSnapshot: planner),
+        );
+      },
     );
   }
 }
 
 class _PlannerContent extends ConsumerWidget {
-  const _PlannerContent({required this.snapshot});
+  const _PlannerContent({
+    required this.taskSnapshot,
+    required this.plannerSnapshot,
+  });
 
-  final TaskCoreSnapshot snapshot;
+  final TaskCoreSnapshot taskSnapshot;
+  final PlannerSnapshot plannerSnapshot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final activeTasks = snapshot.tasks.where((task) => !task.isArchived).length;
-    final completedTasks = snapshot.tasks
+    final activeTasks = taskSnapshot.tasks
+        .where((task) => !task.isArchived)
+        .length;
+    final completedTasks = taskSnapshot.tasks
         .where((task) => task.isCompleted)
         .length;
+    final scheduleItems = plannerScheduleItems(plannerSnapshot);
+    final conflicts = detectScheduleConflicts(scheduleItems);
+    final todayStart = _startOfDay(DateTime.now().toUtc());
+    final freeWindows = findFreeWindows(
+      items: scheduleItems,
+      startsAt: todayStart,
+      endsAt: todayStart.add(const Duration(days: 1)),
+      minimumMinutes: 60,
+    );
 
-    return ListView(
-      key: const ValueKey('plannerTaskCoreContent'),
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      children: [
-        Text(
-          'Planner',
-          key: const ValueKey('plannerDestinationTitle'),
-          style: theme.textTheme.headlineMedium,
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        Text(
-          '$activeTasks active tasks, $completedTasks completed',
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        _CreateActions(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x4),
-        if (snapshot.isEmpty)
-          const FoundationEmptyState(
-            title: 'No task-core records yet',
-            message:
-                'Create a task, tag, or note to start organizing execution.',
-            icon: Icons.checklist_outlined,
-          )
-        else ...[
-          _RecordSection(
-            title: 'Tasks',
-            emptyMessage: 'No tasks yet.',
-            children: [
-              for (final task in snapshot.tasks)
-                Card(
-                  child: ListTile(
-                    leading: Icon(
-                      task.isCompleted
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                    ),
-                    title: Text(task.title),
-                    subtitle: Text(
-                      task.isArchived
-                          ? 'Archived task'
-                          : 'Status: ${task.status.name}; ${snapshot.entityTags.where((entityTag) => entityTag.entityType == 'task' && entityTag.entityId == task.id).length} tags, ${snapshot.noteLinks.where((link) => link.entityType == 'task' && link.entityId == task.id).length} notes',
-                    ),
-                    trailing: Wrap(
-                      spacing: AppSpacing.x1,
-                      children: [
-                        IconButton(
-                          tooltip: 'Edit ${task.title}',
-                          onPressed: () => _showTaskCoreTextDialog(
-                            context: context,
-                            title: 'Edit task',
-                            label: 'Task title',
-                            initialValue: task.title,
-                            onSubmit: (title) => ref
-                                .read(taskCoreControllerProvider)
-                                .updateTask(
-                                  task.id,
-                                  TaskDraft(
-                                    title: title,
-                                    description: task.description,
-                                    areaId: task.areaId,
-                                    goalId: task.goalId,
-                                    projectId: task.projectId,
-                                    milestoneId: task.milestoneId,
-                                    status: task.status,
-                                    priority: task.priority,
-                                    energyRequirement: task.energyRequirement,
-                                    estimatedDurationMinutes:
-                                        task.estimatedDurationMinutes,
-                                    actualDurationMinutes:
-                                        task.actualDurationMinutes,
-                                    dueAt: task.dueAt,
-                                    scheduledStartAt: task.scheduledStartAt,
-                                    scheduledEndAt: task.scheduledEndAt,
-                                    preferredTimeOfDay: task.preferredTimeOfDay,
-                                    completedAt: task.completedAt,
-                                    parentTaskId: task.parentTaskId,
-                                    notes: task.notes,
-                                  ),
-                                ),
-                          ),
-                          icon: const Icon(Icons.edit_outlined),
-                        ),
-                        if (!task.isCompleted)
-                          IconButton(
-                            tooltip: 'Complete ${task.title}',
-                            onPressed: () => ref
-                                .read(taskCoreControllerProvider)
-                                .completeTask(task.id),
-                            icon: const Icon(Icons.done),
-                          ),
-                        IconButton(
-                          tooltip: task.isArchived
-                              ? 'Restore ${task.title}'
-                              : 'Archive ${task.title}',
-                          onPressed: task.isArchived
-                              ? () => ref
-                                    .read(taskCoreControllerProvider)
-                                    .restoreTask(task.id)
-                              : () => ref
-                                    .read(taskCoreControllerProvider)
-                                    .archiveTask(task.id),
-                          icon: Icon(
-                            task.isArchived
-                                ? Icons.unarchive_outlined
-                                : Icons.archive_outlined,
-                          ),
-                        ),
-                      ],
-                    ),
+    return DefaultTabController(
+      length: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.x4,
+              AppSpacing.x4,
+              AppSpacing.x4,
+              AppSpacing.x2,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Planner',
+                  key: const ValueKey('plannerDestinationTitle'),
+                  style: theme.textTheme.headlineMedium,
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  '$activeTasks active tasks, $completedTasks completed, '
+                  '${plannerSnapshot.events.length} events, '
+                  '${plannerSnapshot.timeBlocks.length} time blocks',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+                const SizedBox(height: AppSpacing.x4),
+                _CreateActions(snapshot: taskSnapshot),
+                const SizedBox(height: AppSpacing.x3),
+                _ScheduleSummary(
+                  conflicts: conflicts,
+                  freeWindows: freeWindows,
+                ),
+              ],
+            ),
+          ),
+          const TabBar(
+            tabs: [
+              Tab(text: 'Day'),
+              Tab(text: 'Week'),
+              Tab(text: 'Month'),
+              Tab(text: 'Agenda'),
             ],
           ),
-          _RecordSection(
-            title: 'Tags',
-            emptyMessage: 'No tags yet.',
-            children: [
-              for (final tag in snapshot.tags)
-                ListTile(
-                  leading: const Icon(Icons.sell_outlined),
-                  title: Text(tag.name),
-                  subtitle: Text(
-                    tag.isArchived
-                        ? 'Archived tag'
-                        : 'Used on ${snapshot.entityTags.where((entityTag) => entityTag.tagId == tag.id).length} records',
+          Expanded(
+            child: TabBarView(
+              children: [
+                _ScheduleView(
+                  key: const ValueKey('plannerDayView'),
+                  title: 'Day',
+                  items: _itemsInRange(
+                    scheduleItems,
+                    todayStart,
+                    todayStart.add(const Duration(days: 1)),
                   ),
-                  trailing: Wrap(
-                    spacing: AppSpacing.x1,
-                    children: [
-                      IconButton(
-                        tooltip: 'Edit ${tag.name}',
-                        onPressed: () => _showTaskCoreTextDialog(
-                          context: context,
-                          title: 'Edit tag',
-                          label: 'Tag name',
-                          initialValue: tag.name,
-                          onSubmit: (name) => ref
-                              .read(taskCoreControllerProvider)
-                              .updateTag(tag.id, TagDraft(name: name)),
-                        ),
-                        icon: const Icon(Icons.edit_outlined),
-                      ),
-                      IconButton(
-                        tooltip: tag.isArchived
-                            ? 'Restore ${tag.name}'
-                            : 'Archive ${tag.name}',
-                        onPressed: tag.isArchived
-                            ? () => ref
-                                  .read(taskCoreControllerProvider)
-                                  .restoreTag(tag.id)
-                            : () => ref
-                                  .read(taskCoreControllerProvider)
-                                  .archiveTag(tag.id),
-                        icon: Icon(
-                          tag.isArchived
-                              ? Icons.unarchive_outlined
-                              : Icons.archive_outlined,
-                        ),
-                      ),
-                    ],
+                  scheduledTasks: _tasksInRange(
+                    taskSnapshot.tasks,
+                    todayStart,
+                    todayStart.add(const Duration(days: 1)),
                   ),
+                  emptyMessage: 'No scheduled items for this day.',
                 ),
-            ],
-          ),
-          _RecordSection(
-            title: 'Notes',
-            emptyMessage: 'No notes yet.',
-            children: [
-              for (final note in snapshot.notes)
-                ListTile(
-                  leading: const Icon(Icons.note_outlined),
-                  title: Text(note.title),
-                  subtitle: Text(
-                    note.isArchived
-                        ? 'Archived note'
-                        : '${note.isPinned ? 'Pinned note' : 'Note'}; linked to ${snapshot.noteLinks.where((link) => link.noteId == note.id).length} records',
+                _ScheduleView(
+                  key: const ValueKey('plannerWeekView'),
+                  title: 'Week',
+                  items: _itemsInRange(
+                    scheduleItems,
+                    todayStart,
+                    todayStart.add(const Duration(days: 7)),
                   ),
-                  trailing: Wrap(
-                    spacing: AppSpacing.x1,
-                    children: [
-                      IconButton(
-                        tooltip: 'Edit ${note.title}',
-                        onPressed: () => _showTaskCoreTextDialog(
-                          context: context,
-                          title: 'Edit note',
-                          label: 'Note title',
-                          initialValue: note.title,
-                          onSubmit: (title) => ref
-                              .read(taskCoreControllerProvider)
-                              .updateNote(
-                                note.id,
-                                NoteDraft(
-                                  title: title,
-                                  content: note.content,
-                                  contentFormat: note.contentFormat,
-                                  isPinned: note.isPinned,
-                                ),
-                              ),
-                        ),
-                        icon: const Icon(Icons.edit_outlined),
-                      ),
-                      IconButton(
-                        tooltip: note.isArchived
-                            ? 'Restore ${note.title}'
-                            : 'Archive ${note.title}',
-                        onPressed: note.isArchived
-                            ? () => ref
-                                  .read(taskCoreControllerProvider)
-                                  .restoreNote(note.id)
-                            : () => ref
-                                  .read(taskCoreControllerProvider)
-                                  .archiveNote(note.id),
-                        icon: Icon(
-                          note.isArchived
-                              ? Icons.unarchive_outlined
-                              : Icons.archive_outlined,
-                        ),
-                      ),
-                    ],
+                  scheduledTasks: _tasksInRange(
+                    taskSnapshot.tasks,
+                    todayStart,
+                    todayStart.add(const Duration(days: 7)),
                   ),
+                  emptyMessage: 'No scheduled items for this week.',
                 ),
-            ],
+                _ScheduleView(
+                  key: const ValueKey('plannerMonthView'),
+                  title: 'Month',
+                  items: _itemsInRange(
+                    scheduleItems,
+                    todayStart,
+                    DateTime.utc(todayStart.year, todayStart.month + 1),
+                  ),
+                  scheduledTasks: _tasksInRange(
+                    taskSnapshot.tasks,
+                    todayStart,
+                    DateTime.utc(todayStart.year, todayStart.month + 1),
+                  ),
+                  emptyMessage: 'No scheduled items for this month.',
+                ),
+                _AgendaView(
+                  plannerSnapshot: plannerSnapshot,
+                  taskSnapshot: taskSnapshot,
+                ),
+              ],
+            ),
           ),
         ],
-      ],
+      ),
     );
   }
 }
@@ -299,6 +206,7 @@ class _CreateActions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(taskCoreControllerProvider);
+    final plannerController = ref.read(plannerControllerProvider);
 
     return Wrap(
       spacing: AppSpacing.x2,
@@ -340,6 +248,48 @@ class _CreateActions extends ConsumerWidget {
           ),
           icon: const Icon(Icons.note_add_outlined),
           label: const Text('Note'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('createEventButton'),
+          onPressed: () => _showTextDialog(
+            context: context,
+            title: 'Create event',
+            label: 'Event title',
+            actionLabel: 'Create',
+            onSubmit: (title) {
+              final startsAt = _nextWholeHour(DateTime.now().toUtc());
+              return plannerController.createEvent(
+                PlannerEventDraft(
+                  title: title,
+                  startsAt: startsAt,
+                  endsAt: startsAt.add(const Duration(hours: 1)),
+                ),
+              );
+            },
+          ),
+          icon: const Icon(Icons.event_outlined),
+          label: const Text('Event'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('createTimeBlockButton'),
+          onPressed: () => _showTextDialog(
+            context: context,
+            title: 'Create time block',
+            label: 'Time block title',
+            actionLabel: 'Create',
+            onSubmit: (title) {
+              final startsAt = _nextWholeHour(DateTime.now().toUtc());
+              return plannerController.createTimeBlock(
+                TimeBlockDraft(
+                  title: title,
+                  startsAt: startsAt,
+                  endsAt: startsAt.add(const Duration(hours: 1)),
+                ),
+              );
+            },
+          ),
+          icon: const Icon(Icons.view_timeline_outlined),
+          label: const Text('Time block'),
         ),
         FilledButton.icon(
           key: const ValueKey('tagFirstTaskButton'),
@@ -459,6 +409,348 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
   }
 }
 
+class _ScheduleSummary extends StatelessWidget {
+  const _ScheduleSummary({required this.conflicts, required this.freeWindows});
+
+  final List<ScheduleConflict> conflicts;
+  final List<FreeWindow> freeWindows;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final text = conflicts.isEmpty
+        ? '${freeWindows.length} free windows today'
+        : '${conflicts.length} schedule conflicts';
+    return Semantics(
+      label: 'Planner schedule summary',
+      child: Text(
+        text,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: conflicts.isEmpty
+              ? theme.colorScheme.onSurfaceVariant
+              : theme.colorScheme.error,
+        ),
+      ),
+    );
+  }
+}
+
+class _ScheduleView extends StatelessWidget {
+  const _ScheduleView({
+    super.key,
+    required this.title,
+    required this.items,
+    required this.scheduledTasks,
+    required this.emptyMessage,
+  });
+
+  final String title;
+  final List<PlannerScheduleItem> items;
+  final List<TaskItem> scheduledTasks;
+  final String emptyMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    final children = <Widget>[
+      for (final item in items) _ScheduleItemTile(item: item),
+      for (final task in scheduledTasks) _ScheduledTaskTile(task: task),
+    ];
+
+    return ListView(
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      children: [
+        Text(title, style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: AppSpacing.x3),
+        if (children.isEmpty)
+          FoundationEmptyState(
+            title: emptyMessage,
+            message:
+                'Scheduled events, time blocks, and tasks will appear here.',
+            icon: Icons.event_available_outlined,
+          )
+        else
+          ...children,
+      ],
+    );
+  }
+}
+
+class _AgendaView extends StatelessWidget {
+  const _AgendaView({
+    required this.plannerSnapshot,
+    required this.taskSnapshot,
+  });
+
+  final PlannerSnapshot plannerSnapshot;
+  final TaskCoreSnapshot taskSnapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = plannerScheduleItems(plannerSnapshot);
+
+    return ListView(
+      key: const ValueKey('plannerTaskCoreContent'),
+      padding: const EdgeInsets.all(AppSpacing.x4),
+      children: [
+        if (plannerSnapshot.isEmpty && taskSnapshot.isEmpty)
+          const FoundationEmptyState(
+            title: 'No planner records yet',
+            message:
+                'Create a task, event, time block, tag, or note to start organizing execution.',
+            icon: Icons.checklist_outlined,
+          )
+        else ...[
+          _RecordSection(
+            title: 'Schedule',
+            emptyMessage: 'No events or time blocks yet.',
+            children: [for (final item in items) _ScheduleItemTile(item: item)],
+          ),
+          _RecordSection(
+            title: 'Tasks',
+            emptyMessage: 'No tasks yet.',
+            children: [
+              for (final task in taskSnapshot.tasks)
+                _TaskTile(task: task, snapshot: taskSnapshot),
+            ],
+          ),
+          _RecordSection(
+            title: 'Tags',
+            emptyMessage: 'No tags yet.',
+            children: [
+              for (final tag in taskSnapshot.tags)
+                _TagTile(tag: tag, snapshot: taskSnapshot),
+            ],
+          ),
+          _RecordSection(
+            title: 'Notes',
+            emptyMessage: 'No notes yet.',
+            children: [
+              for (final note in taskSnapshot.notes)
+                _NoteTile(note: note, snapshot: taskSnapshot),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _ScheduleItemTile extends StatelessWidget {
+  const _ScheduleItemTile({required this.item});
+
+  final PlannerScheduleItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.event_outlined),
+        title: Text(item.title),
+        subtitle: Text(
+          '${item.sourceType}; ${_formatRange(item.startsAt, item.endsAt)}',
+        ),
+      ),
+    );
+  }
+}
+
+class _ScheduledTaskTile extends StatelessWidget {
+  const _ScheduledTaskTile({required this.task});
+
+  final TaskItem task;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.task_alt_outlined),
+        title: Text(task.title),
+        subtitle: Text(
+          'Task; ${_formatRange(task.scheduledStartAt!, task.scheduledEndAt!)}',
+        ),
+      ),
+    );
+  }
+}
+
+class _TaskTile extends ConsumerWidget {
+  const _TaskTile({required this.task, required this.snapshot});
+
+  final TaskItem task;
+  final TaskCoreSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Card(
+      child: ListTile(
+        leading: Icon(
+          task.isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
+        ),
+        title: Text(task.title),
+        subtitle: Text(
+          task.isArchived
+              ? 'Archived task'
+              : 'Status: ${task.status.name}; ${snapshot.entityTags.where((entityTag) => entityTag.entityType == 'task' && entityTag.entityId == task.id).length} tags, ${snapshot.noteLinks.where((link) => link.entityType == 'task' && link.entityId == task.id).length} notes',
+        ),
+        trailing: Wrap(
+          spacing: AppSpacing.x1,
+          children: [
+            IconButton(
+              tooltip: 'Edit ${task.title}',
+              onPressed: () => _showTaskCoreTextDialog(
+                context: context,
+                title: 'Edit task',
+                label: 'Task title',
+                initialValue: task.title,
+                onSubmit: (title) => ref
+                    .read(taskCoreControllerProvider)
+                    .updateTask(task.id, _taskDraftWithTitle(task, title)),
+              ),
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            if (!task.isCompleted)
+              IconButton(
+                tooltip: 'Complete ${task.title}',
+                onPressed: () =>
+                    ref.read(taskCoreControllerProvider).completeTask(task.id),
+                icon: const Icon(Icons.done),
+              ),
+            IconButton(
+              tooltip: task.isArchived
+                  ? 'Restore ${task.title}'
+                  : 'Archive ${task.title}',
+              onPressed: task.isArchived
+                  ? () => ref
+                        .read(taskCoreControllerProvider)
+                        .restoreTask(task.id)
+                  : () => ref
+                        .read(taskCoreControllerProvider)
+                        .archiveTask(task.id),
+              icon: Icon(
+                task.isArchived
+                    ? Icons.unarchive_outlined
+                    : Icons.archive_outlined,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TagTile extends ConsumerWidget {
+  const _TagTile({required this.tag, required this.snapshot});
+
+  final Tag tag;
+  final TaskCoreSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      leading: const Icon(Icons.sell_outlined),
+      title: Text(tag.name),
+      subtitle: Text(
+        tag.isArchived
+            ? 'Archived tag'
+            : 'Used on ${snapshot.entityTags.where((entityTag) => entityTag.tagId == tag.id).length} records',
+      ),
+      trailing: Wrap(
+        spacing: AppSpacing.x1,
+        children: [
+          IconButton(
+            tooltip: 'Edit ${tag.name}',
+            onPressed: () => _showTaskCoreTextDialog(
+              context: context,
+              title: 'Edit tag',
+              label: 'Tag name',
+              initialValue: tag.name,
+              onSubmit: (name) => ref
+                  .read(taskCoreControllerProvider)
+                  .updateTag(tag.id, TagDraft(name: name)),
+            ),
+            icon: const Icon(Icons.edit_outlined),
+          ),
+          IconButton(
+            tooltip: tag.isArchived
+                ? 'Restore ${tag.name}'
+                : 'Archive ${tag.name}',
+            onPressed: tag.isArchived
+                ? () => ref.read(taskCoreControllerProvider).restoreTag(tag.id)
+                : () => ref.read(taskCoreControllerProvider).archiveTag(tag.id),
+            icon: Icon(
+              tag.isArchived
+                  ? Icons.unarchive_outlined
+                  : Icons.archive_outlined,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NoteTile extends ConsumerWidget {
+  const _NoteTile({required this.note, required this.snapshot});
+
+  final Note note;
+  final TaskCoreSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      leading: const Icon(Icons.note_outlined),
+      title: Text(note.title),
+      subtitle: Text(
+        note.isArchived
+            ? 'Archived note'
+            : '${note.isPinned ? 'Pinned note' : 'Note'}; linked to ${snapshot.noteLinks.where((link) => link.noteId == note.id).length} records',
+      ),
+      trailing: Wrap(
+        spacing: AppSpacing.x1,
+        children: [
+          IconButton(
+            tooltip: 'Edit ${note.title}',
+            onPressed: () => _showTaskCoreTextDialog(
+              context: context,
+              title: 'Edit note',
+              label: 'Note title',
+              initialValue: note.title,
+              onSubmit: (title) => ref
+                  .read(taskCoreControllerProvider)
+                  .updateNote(
+                    note.id,
+                    NoteDraft(
+                      title: title,
+                      content: note.content,
+                      contentFormat: note.contentFormat,
+                      isPinned: note.isPinned,
+                    ),
+                  ),
+            ),
+            icon: const Icon(Icons.edit_outlined),
+          ),
+          IconButton(
+            tooltip: note.isArchived
+                ? 'Restore ${note.title}'
+                : 'Archive ${note.title}',
+            onPressed: note.isArchived
+                ? () =>
+                      ref.read(taskCoreControllerProvider).restoreNote(note.id)
+                : () =>
+                      ref.read(taskCoreControllerProvider).archiveNote(note.id),
+            icon: Icon(
+              note.isArchived
+                  ? Icons.unarchive_outlined
+                  : Icons.archive_outlined,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _RecordSection extends StatelessWidget {
   const _RecordSection({
     required this.title,
@@ -494,4 +786,72 @@ class _RecordSection extends StatelessWidget {
       ),
     );
   }
+}
+
+TaskDraft _taskDraftWithTitle(TaskItem task, String title) {
+  return TaskDraft(
+    title: title,
+    description: task.description,
+    areaId: task.areaId,
+    goalId: task.goalId,
+    projectId: task.projectId,
+    milestoneId: task.milestoneId,
+    status: task.status,
+    priority: task.priority,
+    energyRequirement: task.energyRequirement,
+    estimatedDurationMinutes: task.estimatedDurationMinutes,
+    actualDurationMinutes: task.actualDurationMinutes,
+    dueAt: task.dueAt,
+    scheduledStartAt: task.scheduledStartAt,
+    scheduledEndAt: task.scheduledEndAt,
+    preferredTimeOfDay: task.preferredTimeOfDay,
+    completedAt: task.completedAt,
+    parentTaskId: task.parentTaskId,
+    notes: task.notes,
+  );
+}
+
+DateTime _startOfDay(DateTime value) {
+  final utc = value.toUtc();
+  return DateTime.utc(utc.year, utc.month, utc.day);
+}
+
+DateTime _nextWholeHour(DateTime value) {
+  final utc = value.toUtc();
+  return DateTime.utc(utc.year, utc.month, utc.day, utc.hour + 1);
+}
+
+List<PlannerScheduleItem> _itemsInRange(
+  List<PlannerScheduleItem> items,
+  DateTime startsAt,
+  DateTime endsAt,
+) {
+  return items
+      .where(
+        (item) =>
+            item.endsAt.isAfter(startsAt) && item.startsAt.isBefore(endsAt),
+      )
+      .toList();
+}
+
+List<TaskItem> _tasksInRange(
+  List<TaskItem> tasks,
+  DateTime startsAt,
+  DateTime endsAt,
+) {
+  return tasks
+      .where(
+        (task) =>
+            !task.isArchived &&
+            task.scheduledStartAt != null &&
+            task.scheduledEndAt != null &&
+            task.scheduledEndAt!.isAfter(startsAt) &&
+            task.scheduledStartAt!.isBefore(endsAt),
+      )
+      .toList();
+}
+
+String _formatRange(DateTime startsAt, DateTime endsAt) {
+  String two(int value) => value.toString().padLeft(2, '0');
+  return '${two(startsAt.hour)}:${two(startsAt.minute)}-${two(endsAt.hour)}:${two(endsAt.minute)}';
 }

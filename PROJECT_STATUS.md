@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 3C — Productivity core complete
+**Current phase:** Phase 4A — Planner foundation complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -135,6 +135,19 @@ Initial validation completed successfully before documentation population:
 | Focused repository and widget tests for edit, restore, and relationship visibility | Complete |
 | Schema version preserved at version 3 | Complete |
 
+## Phase 4A planner foundation completion status
+
+| Deliverable | Status |
+|---|---|
+| Planner event and meeting domain model, Drift table, repository, and provider boundary | Complete |
+| Time-block domain model, Drift table, repository, and provider boundary | Complete |
+| Schema version 4 migration and snapshot | Complete |
+| Basic Day, Week, Month, and Agenda Planner views | Complete |
+| Existing scheduled tasks displayed in Planner schedule context | Complete |
+| Initial conflict detection and free-window helpers | Complete |
+| Recurrence and reminder contract fields without platform scheduling | Complete |
+| Planner repository, database, migration, provider, and widget tests | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -160,17 +173,20 @@ Implemented foundation behavior:
 - Schema version 3 adds Tasks, subtasks, Tags, entity-tag relationships, Notes, and note links only.
 - The Planner destination renders the Phase 3 task core and supports simple task, tag, and note creation, editing, archiving, restoration, task completion, task tagging, and note linking.
 - Task-core persistence is exposed through a typed repository interface rather than Drift access from widgets.
+- Schema version 4 adds Planner events and time blocks with inert recurrence and reminder contract fields only.
+- The Planner destination renders basic Day, Week, Month, and Agenda views for events, time blocks, and already scheduled tasks.
+- Planner scheduling persistence is exposed through a typed repository interface rather than Drift access from widgets.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
 - Backup and seed/template contracts exist without implementing backup files, restore, templates, or example records.
 - Placeholder screens remain generic and do not include persistence or productivity CRUD.
-- Planner events, Spaces records, templates, notifications, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
+- Full recurrence, platform notification scheduling, Spaces records, templates, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
 
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 3C productivity core.
+- Debug APK verification has passed for the Phase 4A Planner foundation.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -179,10 +195,10 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 
 - `flutter pub get` — Passed; 12 packages reported newer versions incompatible with current constraints.
 - `dart run build_runner build --delete-conflicting-outputs` — Passed; generated Drift code. Current `build_runner` reports that `--delete-conflicting-outputs` is ignored.
-- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v3.json` and updated migration verification tests.
+- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v4.json` and updated migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 77 tests passed.
+- `flutter test` — Passed; 88 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -198,8 +214,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, and Phase 3 productivity core are in place. Planner events and later modules have not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3 productivity core, and Phase 4A Planner foundation are in place. Full recurrence, platform notifications, and later modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-4A-PLANNER-FOUNDATION`: add the initial Planner scheduling foundation only.
+Complete Task `PHASE-4B-PLANNER-COMPLETE`: finish Planner scheduling behavior without starting Spaces or later modules.
