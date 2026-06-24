@@ -20,7 +20,7 @@ abstract final class AppRadii {
 }
 
 abstract final class AppTheme {
-  static const _seedColor = Color(0xFF386A5F);
+  static const _seedColor = Color(0xFF1D4ED8);
 
   static ThemeData get light {
     final colorScheme = ColorScheme.fromSeed(
@@ -28,7 +28,13 @@ abstract final class AppTheme {
       brightness: Brightness.light,
     );
 
-    return _themeFrom(colorScheme);
+    return _themeFrom(
+      colorScheme.copyWith(
+        surface: const Color(0xFFFAFCFF),
+        surfaceContainerHighest: const Color(0xFFE8F0FF),
+        outline: const Color(0xFF6B7280),
+      ),
+    );
   }
 
   static ThemeData get dark {
@@ -37,7 +43,13 @@ abstract final class AppTheme {
       brightness: Brightness.dark,
     );
 
-    return _themeFrom(colorScheme);
+    return _themeFrom(
+      colorScheme.copyWith(
+        surface: const Color(0xFF080B12),
+        surfaceContainerHighest: const Color(0xFF111827),
+        outline: const Color(0xFF64748B),
+      ),
+    );
   }
 
   static ThemeData _themeFrom(ColorScheme colorScheme) {
