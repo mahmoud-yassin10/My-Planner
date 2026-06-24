@@ -1,0 +1,504 @@
+# Momentum OS Data Model
+
+## 1. Data-model goals
+
+The data model must:
+
+- Represent stable core planning concepts relationally
+- Support configurable Spaces without creating one table per template
+- Preserve data through migrations
+- Use synchronization-ready identifiers and metadata
+- Permit archive, restore, export, and controlled deletion
+- Support reliable analytics and search
+- Avoid hard-coded personal domains
+
+## 2. Common persistent fields
+
+Most persistent tables should include:
+
+- `id`: UUID v4 string
+- `createdAt`: UTC timestamp
+- `updatedAt`: UTC timestamp
+- `archivedAt`: nullable UTC timestamp where archive is supported
+- `deletedAt`: nullable UTC timestamp only where soft deletion is justified
+- `syncStatus`: optional/reserved synchronization state
+- `version`: optional integer for future conflict handling
+
+Rules:
+
+- IDs are generated before insertion.
+- `createdAt` is immutable after insert.
+- `updatedAt` changes on meaningful mutations.
+- Archive is reversible.
+- Delete semantics are documented per entity.
+- Foreign-key behavior is explicit.
+- Local timestamps are converted to UTC for storage.
+
+## 3. Core productivity tables
+
+### `areas`
+
+- `id`
+- `name`
+- `description`
+- `iconKey`
+- `colorValue`
+- `status`
+- `sortOrder`
+- common timestamps
+
+### `goals`
+
+- `id`
+- `title`
+- `description`
+- `areaId`
+- `parentGoalId`
+- `goalType`
+- `timeHorizon`
+- `measurementType`
+- `targetValue`
+- `currentValue`
+- `unit`
+- `startAt`
+- `deadlineAt`
+- `priority`
+- `status`
+- `motivation`
+- `reviewFrequency`
+- `lastReviewAt`
+- `nextReviewAt`
+- `notes`
+- `customFieldsJson` only for limited goal extensions
+- common timestamps
+
+### `projects`
+
+- `id`
+- `title`
+- `description`
+- `areaId`
+- `goalId`
+- `status`
+- `startAt`
+- `deadlineAt`
+- `progress`
+- `notes`
+- `customFieldsJson`
+- common timestamps
+
+### `milestones`
+
+- `id`
+- `title`
+- `description`
+- `goalId`
+- `projectId`
+- `dueAt`
+- `status`
+- `completedAt`
+- `sortOrder`
+- `notes`
+- common timestamps
+
+### `tasks`
+
+- `id`
+- `title`
+- `description`
+- `areaId`
+- `goalId`
+- `projectId`
+- `milestoneId`
+- `parentTaskId`
+- `status`
+- `priority`
+- `energyRequirement`
+- `estimatedDurationMinutes`
+- `actualDurationMinutes`
+- `dueAt`
+- `scheduledStartAt`
+- `scheduledEndAt`
+- `preferredTimeOfDay`
+- `recurrenceRuleId`
+- `autoRescheduleEligible`
+- `completedAt`
+- `notes`
+- common timestamps
+
+Subtasks initially use the same `tasks` table through `parentTaskId` unless later evidence requires a separate table.
+
+### `task_dependencies`
+
+- `taskId`
+- `dependsOnTaskId`
+- `dependencyType`
+
+Composite uniqueness prevents duplicate edges. Cycles must be rejected at the domain layer.
+
+### `events`
+
+- `id`
+- `title`
+- `description`
+- `startAt`
+- `endAt`
+- `isAllDay`
+- `location`
+- `onlineUrl`
+- `areaId`
+- `projectId`
+- `contactRecordId` or generic entity link
+- `preparationNotes`
+- `meetingNotes`
+- `outcome`
+- `followUpTaskId`
+- common timestamps
+
+### `event_participants`
+
+- `id`
+- `eventId`
+- `displayName`
+- `email`
+- `phone`
+- `responseStatus`
+
+### `focus_sessions`
+
+- `id`
+- `taskId`
+- `areaId`
+- `plannedDurationMinutes`
+- `actualDurationMinutes`
+- `startedAt`
+- `endedAt`
+- `sessionType`
+- `status`
+- `notes`
+- `reflection`
+- `interruptionCount`
+- common timestamps
+
+## 4. Notes, tags, and relationships
+
+### `notes`
+
+- `id`
+- `title`
+- `content`
+- `contentFormat`
+- `isPinned`
+- common timestamps
+
+### `tags`
+
+- `id`
+- `name`
+- `colorValue`
+- common timestamps
+
+### `entity_tags`
+
+- `id`
+- `entityType`
+- `entityId`
+- `tagId`
+
+### `entity_links`
+
+Generic links between supported entities:
+
+- `id`
+- `sourceType`
+- `sourceId`
+- `targetType`
+- `targetId`
+- `relationshipType`
+- common timestamps
+
+Generic entity references require domain validation and cleanup tests because SQLite cannot enforce polymorphic foreign keys directly.
+
+## 5. Spaces engine
+
+### `spaces`
+
+- `id`
+- `name`
+- `description`
+- `iconKey`
+- `colorValue`
+- `sortOrder`
+- `isTemplateManaged`
+- common timestamps
+
+### `space_record_types`
+
+- `id`
+- `spaceId`
+- `name`
+- `singularName`
+- `description`
+- `iconKey`
+- `sortOrder`
+- common timestamps
+
+### `space_fields`
+
+- `id`
+- `recordTypeId`
+- `name`
+- `fieldKey`
+- `fieldType`
+- `isRequired`
+- `isUnique`
+- `defaultValueJson`
+- `configurationJson`
+- `sortOrder`
+- common timestamps
+
+### `space_statuses`
+
+- `id`
+- `recordTypeId`
+- `name`
+- `colorValue`
+- `sortOrder`
+- `isTerminal`
+- common timestamps
+
+### `space_records`
+
+- `id`
+- `recordTypeId`
+- `title`
+- `statusId`
+- common timestamps
+
+### `space_record_values`
+
+- `id`
+- `recordId`
+- `fieldId`
+- typed value columns where practical:
+  - `textValue`
+  - `integerValue`
+  - `decimalValue`
+  - `booleanValue`
+  - `dateTimeValue`
+  - `jsonValue`
+
+Only the column appropriate to the field type should be populated. Repository validation enforces type consistency.
+
+### `space_record_relationships`
+
+- `id`
+- `sourceRecordId`
+- `targetRecordId`
+- `fieldId`
+- common timestamps
+
+### `space_views`
+
+- `id`
+- `spaceId`
+- `recordTypeId`
+- `name`
+- `viewType`
+- `configurationJson`
+- `sortOrder`
+- common timestamps
+
+### `space_filters`
+
+- `id`
+- `viewId`
+- `name`
+- `filterDefinitionJson`
+- `sortDefinitionJson`
+- common timestamps
+
+## 6. Templates
+
+### `template_installations`
+
+- `id`
+- `templateKey`
+- `templateVersion`
+- `installedAt`
+- `updatedAt`
+- `configurationSnapshotJson`
+- `status`
+
+Template definitions may be bundled application assets. Installed configuration becomes user-editable data.
+
+Uninstallation must explicitly choose:
+
+- Preserve records and detach template metadata
+- Archive records
+- Export then delete
+- Delete records after confirmation
+
+## 7. Finance and stable extension tables
+
+Stable concepts that require robust relational querying may use dedicated tables when implementation reaches the relevant phase:
+
+- `accounts`
+- `transactions`
+- `budgets`
+- `financial_goals`
+- `invoices`
+
+Currency is always stored as data and user configuration. No default currency assumption belongs in the schema.
+
+## 8. Reminders and automations
+
+### `reminder_rules`
+
+- `id`
+- `ownerType`
+- `ownerId`
+- `triggerAt`
+- `relativeOffsetMinutes`
+- `recurrenceRule`
+- `channel`
+- `isEnabled`
+- common timestamps
+
+### `notifications`
+
+- `id`
+- `type`
+- `title`
+- `body`
+- `scheduledAt`
+- `deliveredAt`
+- `readAt`
+- `ownerType`
+- `ownerId`
+- `platformNotificationId`
+- common timestamps
+
+### `automation_rules`
+
+- `id`
+- `name`
+- `triggerType`
+- `triggerConfigJson`
+- `conditionsJson`
+- `actionsJson`
+- `isEnabled`
+- common timestamps
+
+### `automation_runs`
+
+- `id`
+- `automationRuleId`
+- `startedAt`
+- `completedAt`
+- `status`
+- `resultJson`
+- `errorSummary`
+
+Automation runs must be idempotent where a retry could occur.
+
+## 9. AI data
+
+### `ai_conversations`
+
+- `id`
+- `title`
+- common timestamps
+
+### `ai_messages`
+
+- `id`
+- `conversationId`
+- `role`
+- `content`
+- `structuredContentJson`
+- common timestamps
+
+### `ai_actions`
+
+- `id`
+- `conversationId`
+- `toolKey`
+- `proposalJson`
+- `approvedPayloadJson`
+- `status`
+- `validationResultJson`
+- `appliedAt`
+- `undoneAt`
+- common timestamps
+
+AI action records support audit and safe undo. They must not contain provider secrets.
+
+## 10. Application configuration
+
+### `app_settings`
+
+Use a typed repository rather than arbitrary key-value access throughout features.
+
+Potential keys:
+
+- locale
+- date/time formats
+- first day of week
+- theme
+- accent
+- base currency
+- quiet hours
+- notification defaults
+- dashboard configuration
+- AI privacy settings
+
+### `schema_metadata`
+
+Tracks:
+
+- database version
+- application migration markers
+- optional seed/template versions
+
+## 11. Indexing plan
+
+Add indexes based on actual query paths, including likely:
+
+- Tasks by status and due/scheduled time
+- Tasks by Area, Goal, Project, or Milestone
+- Events by start/end time
+- Goals by status and review date
+- Records by type/status
+- Reminder rules by next trigger
+- Notifications by read state and schedule
+- Notes and records for search indexing
+
+Index definitions are finalized with query implementation and tested against realistic data.
+
+## 12. Migration strategy
+
+- Increment the Drift schema version for every persistent schema change.
+- Implement explicit forward migrations.
+- Test creation from empty and upgrade from every supported prior version.
+- Back up critical user data before destructive migration operations.
+- Do not edit released migration history silently.
+- Record migration-impacting decisions in `docs/DECISIONS.md`.
+- Generate and inspect schema snapshots when Drift support is added.
+
+## 13. Backup and export
+
+JSON backup must include:
+
+- Schema/app version
+- Export timestamp
+- Stable IDs
+- Core entities
+- Space definitions and records
+- Settings appropriate for backup
+- Template installation metadata
+- Relationship integrity information
+
+Secrets and secure-storage values are excluded unless a separately designed encrypted flow is approved.
+
+CSV export is feature-specific and must retain field names and stable references where practical.
