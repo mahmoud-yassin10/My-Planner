@@ -123,6 +123,18 @@ class NotificationPreparationResult {
   final String message;
 }
 
+class ScheduledNotification {
+  const ScheduledNotification({
+    required this.platformId,
+    required this.intent,
+    required this.scheduledAt,
+  });
+
+  final int platformId;
+  final NotificationIntent intent;
+  final DateTime scheduledAt;
+}
+
 class NotificationFailure implements Exception {
   const NotificationFailure(this.message);
 
@@ -138,4 +150,8 @@ class NotificationValidationFailure extends NotificationFailure {
 
 class NotificationPermissionFailure extends NotificationFailure {
   const NotificationPermissionFailure(super.message);
+}
+
+class NotificationSchedulingFailure extends NotificationFailure {
+  const NotificationSchedulingFailure(super.message);
 }

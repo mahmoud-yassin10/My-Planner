@@ -93,4 +93,143 @@ void main() {
       );
     },
   );
+
+  test('schedule delegates valid intents to the adapter deterministically', () async {
+    final adapter = _FakeNotificationPlatformAdapter();
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.granted(),
+    );
+    final intent = _scheduledIntent(DateTime.utc(2026, 6, 24, 9));
+
+    final scheduled = await service.scheduleIntent(intent);
+
+    expect(scheduled.platformId, deterministicNotificationIdFor(intent));
+    expect(adapter.scheduled.single.platformId, scheduled.platformId);
+    expect(adapter.scheduled.single.scheduledAt, DateTime.utc(2026, 6, 24, 9));
+    expect(records.single.operation, 'scheduleIntent');
+    expect(records.single.metadata['platformId'], scheduled.platformId);
+  });
+
+  test('cancel delegates deterministic identifiers to the adapter', () async {
+    final adapter = _FakeNotificationPlatformAdapter();
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.granted(),
+    );
+    final intent = _scheduledIntent(DateTime.utc(2026, 6, 24, 9));
+
+    await service.cancelIntent(intent);
+
+    expect(adapter.canceled.single, deterministicNotificationIdFor(intent));
+    expect(records.single.operation, 'cancelIntent');
+  });
+
+  test('reschedule cancels the previous intent before scheduling the next', () async {
+    final adapter = _FakeNotificationPlatformAdapter();
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.granted(),
+    );
+    final previous = _scheduledIntent(DateTime.utc(2026, 6, 24, 9));
+    final next = _scheduledIntent(DateTime.utc(2026, 6, 24, 10));
+
+    final scheduled = await service.rescheduleIntent(
+      previousIntent: previous,
+      nextIntent: next,
+    );
+
+    expect(adapter.canceled.single, deterministicNotificationIdFor(previous));
+    expect(
+      adapter.scheduled.single.platformId,
+      deterministicNotificationIdFor(next),
+    );
+    expect(scheduled.platformId, deterministicNotificationIdFor(next));
+    expect(records.single.operation, 'rescheduleIntent');
+  });
+
+  test('permission denial fails safely before adapter calls', () async {
+    final adapter = _FakeNotificationPlatformAdapter();
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.denied(),
+    );
+
+    await expectLater(
+      service.scheduleIntent(_scheduledIntent(DateTime.utc(2026, 6, 24, 9))),
+      throwsA(isA<NotificationPermissionFailure>()),
+    );
+
+    expect(adapter.scheduled, isEmpty);
+    expect(records.single.operation, 'scheduleIntent');
+    expect(records.single.metadata['status'], 'denied');
+  });
+
+  test('adapter failures are translated and preserve debug diagnostics', () async {
+    final adapter = _FakeNotificationPlatformAdapter(
+      scheduleError: StateError('platform detail'),
+    );
+    service = LocalPlaceholderNotificationService(
+      logger: AppLogger(sink: records.add),
+      adapter: adapter,
+      initialPermissionState: const NotificationPermissionState.granted(),
+    );
+
+    await expectLater(
+      service.scheduleIntent(_scheduledIntent(DateTime.utc(2026, 6, 24, 9))),
+      throwsA(
+        isA<NotificationSchedulingFailure>().having(
+          (failure) => failure.message,
+          'safe message',
+          'Notification could not be scheduled.',
+        ),
+      ),
+    );
+
+    expect(records.single.operation, 'scheduleIntent');
+    expect(records.single.error, isA<StateError>());
+    expect(records.single.stackTrace, isNotNull);
+  });
+}
+
+NotificationIntent _scheduledIntent(DateTime scheduledAt) {
+  return NotificationIntent(
+    category: NotificationIntentCategory.custom,
+    title: 'Generic reminder',
+    body: 'Review the generic item.',
+    scheduledAt: scheduledAt,
+    ownerType: 'generic',
+    ownerId: 'item-1',
+  );
+}
+
+class _FakeNotificationPlatformAdapter implements NotificationPlatformAdapter {
+  _FakeNotificationPlatformAdapter({this.scheduleError, this.cancelError});
+
+  final Object? scheduleError;
+  final Object? cancelError;
+  final scheduled = <ScheduledNotification>[];
+  final canceled = <int>[];
+
+  @override
+  Future<void> schedule(ScheduledNotification notification) async {
+    final error = scheduleError;
+    if (error != null) {
+      throw error;
+    }
+    scheduled.add(notification);
+  }
+
+  @override
+  Future<void> cancel(int platformId) async {
+    final error = cancelError;
+    if (error != null) {
+      throw error;
+    }
+    canceled.add(platformId);
+  }
 }
