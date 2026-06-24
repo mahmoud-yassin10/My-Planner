@@ -202,7 +202,9 @@ Schema version 1 contains only foundation tables:
 - `app_settings`
 - `schema_metadata`
 
-The database provides production SQLite opening through `path_provider` and Drift native databases, in-memory opening for tests, foreign-key enablement for every connection, Riverpod lifecycle disposal, Drift generated code checked into the repository, and a schema snapshot in `drift_schemas/app_database/drift_schema_v1.json`.
+The database provides production SQLite opening through `path_provider` and Drift native databases, in-memory opening for tests, foreign-key enablement for every connection, Riverpod lifecycle disposal, Drift generated code checked into the repository, schema snapshots in `drift_schemas/app_database/`, and generated step-by-step migration helpers for schema evolution.
+
+Schema version 2 adds the Phase 3A hierarchy tables for Areas, Goals, Projects, and Milestones. Widgets access these records through Riverpod controllers and repository interfaces; Drift remains behind `DriftHierarchyRepository`.
 
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 

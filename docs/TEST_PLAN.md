@@ -49,6 +49,8 @@ Use an isolated Drift database for:
 
 Phase 2 adds focused tests for database open/close, schema version 1, foreign-key enablement, fresh database creation, schema snapshot presence, UUID v4 and deterministic ID services, UTC clock behavior, typed settings defaults/updates/watch streams/persistence/reset/validation, repository failure translation, Riverpod provider boundaries, database startup success/failure/retry recovery, backup envelope round-trip, and seed/template contract validation.
 
+Phase 3A adds focused tests for schema version 2, migration from version 1, generated Drift migration verification, hierarchy repository create/watch/archive/restore/delete behavior, validation of milestone ownership and goal hierarchy cycles, repository-boundary failure translation, hierarchy provider boundaries, and Goals screen hierarchy rendering.
+
 ### Widget tests
 
 Cover:

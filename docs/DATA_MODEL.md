@@ -36,6 +36,8 @@ Rules:
 
 Phase 2 establishes these conventions before productivity tables are added. Phase 3+ tables must use UUID v4 string identifiers generated before insert, UTC timestamps, immutable `createdAt`, meaningful `updatedAt` changes, documented archive/delete semantics, and repository-level failure translation.
 
+Phase 3A implements Areas, Goals, Projects, and Milestones in schema version 2. Archive is represented by nullable `archivedAt` and is reversible. Delete is a permanent repository operation; SQLite foreign keys reject deletion while dependent hierarchy records still reference the row. Repository methods translate raw persistence failures into safe `PersistenceFailure` types.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -509,6 +511,8 @@ Phase 2 procedure for future schema version 2:
 5. Run `dart run drift_dev make-migrations`.
 6. Add migration tests using the schema snapshot harness.
 7. Run formatting, analysis, tests, debug APK build, and `git diff --check`.
+
+Schema version 2 is now checked in with `drift_schemas/app_database/drift_schema_v2.json`, generated `app_database.steps.dart`, and generated migration verification tests.
 
 ## 13. Backup and export
 

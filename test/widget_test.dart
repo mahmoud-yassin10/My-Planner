@@ -6,8 +6,11 @@ import 'package:momentum_os/app/bootstrap.dart';
 import 'package:momentum_os/app/routing/app_router.dart';
 import 'package:momentum_os/app/shell/quick_add_sheet.dart';
 import 'package:momentum_os/app/startup/startup_host.dart';
+import 'package:momentum_os/core/database/app_database.dart';
 import 'package:momentum_os/core/logging/app_logger.dart';
 import 'package:momentum_os/core/widgets/foundation_states.dart';
+import 'package:momentum_os/features/goals/application/hierarchy_controller.dart';
+import 'package:momentum_os/features/goals/domain/hierarchy_models.dart';
 
 void main() {
   group('app shell navigation', () {
@@ -450,7 +453,20 @@ Future<void> _pumpApp(WidgetTester tester, {required Size size}) async {
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
 
-  await tester.pumpWidget(const ProviderScope(child: MomentumApp()));
+  final database = AppDatabase.inMemory();
+  addTearDown(database.close);
+
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(database),
+        hierarchySnapshotProvider.overrideWith(
+          (ref) => Stream.value(const HierarchySnapshot()),
+        ),
+      ],
+      child: const MomentumApp(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -487,5 +503,6 @@ Future<void> _pumpWithSize(
 
 Future<void> _tapDestination(WidgetTester tester, String label) async {
   await tester.tap(find.text(label).last);
-  await tester.pumpAndSettle();
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 300));
 }

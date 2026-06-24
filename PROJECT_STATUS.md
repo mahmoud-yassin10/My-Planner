@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 2 — Persistence foundation
+**Current phase:** Phase 3A — Hierarchy core complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -86,6 +86,24 @@ Initial validation completed successfully before documentation population:
 | Persistence failure translation | Complete |
 | Phase 2 validation | Complete |
 
+## Phase 3A hierarchy core completion status
+
+| Deliverable | Status |
+|---|---|
+| Areas domain, Drift table, repository operations, and UI rendering | Complete |
+| Goals with parent-child hierarchy and cycle validation | Complete |
+| Projects linked optionally to Areas and Goals | Complete |
+| Milestones linked to exactly one Goal or Project | Complete |
+| UUID v4 identifier generation through repository boundaries | Complete |
+| UTC `createdAt` and `updatedAt` conventions | Complete |
+| Reversible archive metadata | Complete |
+| Explicit permanent delete semantics with foreign-key protection | Complete |
+| Drift schema version 2 migration from version 1 | Complete |
+| Schema v2 snapshot and generated migration helper | Complete |
+| Hierarchy repository provider boundary | Complete |
+| Goals screen loading, empty, content, and error states | Complete |
+| Repository, database, migration, provider, and widget tests | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -105,16 +123,20 @@ Implemented foundation behavior:
 - Structured logging is available through a Riverpod provider with injectable sinks for tests.
 - Startup initialization can fail into a recoverable retry screen instead of a blank app.
 - Drift-backed local persistence foundation is available for app settings and schema metadata.
+- Schema version 2 adds Areas, Goals, Projects, and Milestones only.
+- The Goals destination renders the Phase 3A hierarchy and supports simple creation and archive actions through a controller.
+- Hierarchy persistence is exposed through a typed repository interface rather than Drift access from widgets.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
 - Backup and seed/template contracts exist without implementing backup files, restore, templates, or example records.
 - Placeholder screens remain generic and do not include persistence or productivity CRUD.
+- Tasks, planner events, notes, tags, Spaces records, templates, notifications, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
 
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 2 persistence foundation.
+- Debug APK verification has passed for the Phase 3A hierarchy core.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -123,10 +145,10 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 
 - `flutter pub get` — Passed; 12 packages reported newer versions incompatible with current constraints.
 - `dart run build_runner build --delete-conflicting-outputs` — Passed; generated Drift code. Current `build_runner` reports that `--delete-conflicting-outputs` is ignored.
-- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v1.json`.
+- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v2.json`, `lib\core\database\app_database.steps.dart`, and migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 52 tests passed.
+- `flutter test` — Passed; 64 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -142,8 +164,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, and persistence contracts are in place. Productivity CRUD has not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, and the Phase 3A hierarchy core are in place. Tasks and later productivity modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-3A-HIERARCHY-CORE`: implement Areas, Goals hierarchy, Projects, and Milestones only.
+Complete Task `PHASE-3B-TASK-CORE`: implement Tasks, subtasks, tags, and notes only.

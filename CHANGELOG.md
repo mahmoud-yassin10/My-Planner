@@ -33,6 +33,10 @@ The project follows a phase-based development process. Version numbers will be i
 - Persistence convention and failure boundary helpers
 - Settings watch-stream persistence failures are translated at the repository boundary
 - Removed unused SQLite native bundle and JSON serialization/code-generation dependencies
+- Schema version 2 with Areas, Goals hierarchy, Projects, and Milestones
+- Drift-backed hierarchy repository with validation, archive/restore/delete behavior, and Riverpod providers
+- Goals destination now renders the Phase 3A hierarchy with loading, empty, content, and error states
+- Drift schema version 2 snapshot, generated migration helper, and migration verification tests
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`

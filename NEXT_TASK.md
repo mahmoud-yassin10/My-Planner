@@ -2,43 +2,45 @@
 
 ## Task ID
 
-`PHASE-3A-HIERARCHY-CORE`
+`PHASE-3B-TASK-CORE`
 
 ## Goal
 
-Implement the first productivity-core vertical slice for Momentum OS using the Phase 2 persistence foundation.
+Extend the productivity core using the Phase 3A hierarchy foundation.
 
-Create Areas, Goals hierarchy, Projects, and Milestones only, with domain models, Drift tables, repositories, controllers where useful, placeholder-to-real UI updates, validation, archive behavior, and focused tests.
+Implement Tasks, subtasks, tags, and notes only, with domain models, Drift tables, repositories, controllers where useful, validation, archive/delete behavior, focused UI updates, migrations, and tests.
 
 ## Scope
 
 Included:
 
-- Areas
-- Goals with parent-child hierarchy
-- Projects linked optionally to Areas and Goals
-- Milestones linked to Goals or Projects
+- Tasks linked optionally to Areas, Goals, Projects, and Milestones
+- Subtasks through `parentTaskId`
+- Task status, priority, energy requirement, estimates, due dates, scheduled windows, completion metadata, archive metadata, and notes field
+- Task dependency table only if needed for documented dependency behavior in this phase
+- Tags
+- Entity-tag relationships for Phase 3A/3B entities
+- Notes with generic entity links where needed
 - UUID v4 identifiers generated before insert
 - UTC `createdAt` and `updatedAt`
-- Archive metadata where supported
-- Explicit delete semantics
-- Drift schema version 2 migration from version 1
+- Explicit archive, restore, completion, and delete semantics
+- Drift schema version 3 migration from version 2
 - Repository contracts and Drift-backed implementations
 - Riverpod providers exposing interfaces
-- Loading, empty, content, and error states for the implemented screens
+- Loading, empty, content, and error states for implemented screens
 - Focused unit, repository, database, migration, widget, and integration-style tests
 - Documentation updates
 
 Excluded:
 
-- Tasks and subtasks
-- Events and planner persistence
-- Notes and tags
+- Planner calendar events
+- Recurrence engine
+- Reminders and notifications
+- Focus sessions
 - Spaces engine
 - Templates
 - AI persistence
 - Search indexing
-- Notifications
 - Analytics
 - Backup files or restore flows
 - Cloud synchronization
@@ -46,22 +48,21 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Use the existing Drift database and increment schema version to 2.
+- Use the existing Drift database and increment schema version to 3.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
 - Use typed repositories and Riverpod providers.
-- Use transactions for multi-table writes where needed.
-- Preserve Phase 1 navigation and Phase 2 settings behavior.
-- Do not implement tasks, events, notes, spaces, templates, AI, search, notifications, analytics, backup/restore, or cloud features.
+- Preserve Phase 1 navigation, Phase 2 settings behavior, and Phase 3A hierarchy behavior.
+- Do not implement planner events, Spaces, templates, AI, search indexing, notifications, analytics, backup/restore, or cloud features.
 
 ## Files likely affected
 
 - `lib/core/database/`
-- `lib/features/areas/`
 - `lib/features/goals/`
-- `lib/features/projects/`
-- `lib/features/milestones/`
-- `lib/shared/repositories/`
+- `lib/features/planner/`
+- `lib/features/tasks/`
+- `lib/features/tags/`
+- `lib/features/notes/`
 - `test/`
 - `drift_schemas/`
 - `PROJECT_STATUS.md`
@@ -88,13 +89,13 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Areas, Goals hierarchy, Projects, and Milestones are implemented only.
-- Drift schema version 2 and migration from version 1 are tested.
+- Tasks, subtasks, tags, and notes are implemented only.
+- Drift schema version 3 and migration from version 2 are tested.
 - Repository boundaries prevent UI access to Drift.
 - UUID and UTC timestamp conventions are followed.
-- Archive/delete semantics are explicit and tested.
+- Archive/delete/complete semantics are explicit and tested.
 - Screens include relevant loading, empty, content, and error states.
-- No excluded Phase 3B+ feature is implemented.
+- No excluded Phase 4+ feature is implemented.
 - Generated code and schema snapshots are current.
 - `flutter analyze` reports no issues.
 - All tests pass.
@@ -103,6 +104,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 3A hierarchy core passes validation and documentation is current.
+Stop after Phase 3B task core passes validation and documentation is current.
 
-Do not implement Tasks, Events, Notes, Spaces, Templates, AI, Search, Notifications, Analytics, Backup/Restore, or Cloud functionality.
+Do not implement Planner events, recurrence, reminders, Spaces, Templates, AI, Search indexing, Notifications, Analytics, Backup/Restore, or Cloud functionality.
