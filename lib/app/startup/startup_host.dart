@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/logging/app_logger.dart';
 import '../../core/widgets/foundation_states.dart';
+import '../../core/database/database_initializer.dart';
 import '../theme/app_theme.dart';
 
-typedef AppInitializer = Future<void> Function();
+typedef AppInitializer = Future<void> Function(ProviderContainer container);
 
-Future<void> defaultAppInitializer() async {}
+Future<void> defaultAppInitializer(ProviderContainer container) async {
+  await container.read(databaseInitializerProvider).initialize();
+}
 
 class StartupHost extends ConsumerStatefulWidget {
   const StartupHost({
@@ -42,7 +45,8 @@ class _StartupHostState extends ConsumerState<StartupHost> {
     });
 
     try {
-      await widget.initializer();
+      final container = ProviderScope.containerOf(context, listen: false);
+      await widget.initializer(container);
       if (!mounted) {
         return;
       }

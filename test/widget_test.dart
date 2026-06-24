@@ -370,7 +370,7 @@ void main() {
     testWidgets('Startup success shows the app', (tester) async {
       await _pumpStartupHost(
         tester,
-        initializer: () async {},
+        initializer: (_) async {},
         records: <AppLogRecord>[],
       );
 
@@ -386,7 +386,7 @@ void main() {
       await _pumpStartupHost(
         tester,
         records: records,
-        initializer: () async => throw StateError('startup failed'),
+        initializer: (_) async => throw StateError('startup failed'),
       );
 
       expect(find.text('Momentum OS could not start'), findsOneWidget);
@@ -402,7 +402,7 @@ void main() {
       await _pumpStartupHost(
         tester,
         records: records,
-        initializer: () async {
+        initializer: (_) async {
           attempts++;
           if (attempts == 1) {
             throw StateError('startup failed once');

@@ -193,11 +193,28 @@ Persistence rules:
 - Raw JSON is reserved for truly dynamic values, not stable relational concepts.
 - Query performance is reviewed before adding denormalized caches.
 
+### Phase 2 persistence foundation
+
+The initial database is `AppDatabase` in `lib/core/database/`.
+
+Schema version 1 contains only foundation tables:
+
+- `app_settings`
+- `schema_metadata`
+
+The database provides production SQLite opening through `path_provider` and `sqlite3_flutter_libs`, in-memory opening for tests, foreign-key enablement for every connection, Riverpod lifecycle disposal, Drift generated code checked into the repository, and a schema snapshot in `drift_schemas/app_database/drift_schema_v1.json`.
+
+Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
+
+Repository contracts live outside Drift implementations. The Phase 2 settings contract is `SettingsRepository`; `DriftSettingsRepository` is the local implementation.
+
 ## 9. Preferences and secure data
 
 Use a typed preferences repository for non-sensitive configuration.
 
 Use `flutter_secure_storage` only for secrets or security-sensitive values. A future remote AI token should not be stored as an embedded application secret; provider calls must pass through a secure backend.
+
+The Phase 2 typed settings repository supports theme mode, optional accent color value, optional locale tag, first day of week, and time-format preference. Feature code must not read or write arbitrary settings keys directly.
 
 ## 10. Error handling
 

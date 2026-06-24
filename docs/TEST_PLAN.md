@@ -47,6 +47,8 @@ Use an isolated Drift database for:
 - Template install/uninstall
 - Backup serialization
 
+Phase 2 adds focused tests for database open/close, schema version 1, foreign-key enablement, fresh database creation, schema snapshot presence, UUID v4 and deterministic ID services, UTC clock behavior, typed settings defaults/updates/watch streams/persistence/reset/validation, repository failure translation, Riverpod provider boundaries, database startup success/failure/retry recovery, backup envelope round-trip, and seed/template contract validation.
+
 ### Widget tests
 
 Cover:
@@ -105,6 +107,7 @@ Generated-model or Drift change:
 
 ```powershell
 dart run build_runner build --delete-conflicting-outputs
+dart run drift_dev make-migrations
 dart format .
 flutter analyze
 flutter test

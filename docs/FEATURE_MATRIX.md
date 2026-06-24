@@ -26,13 +26,13 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Not started | |
-| Migration strategy implementation | 2 | Not started | |
-| UUID service | 2 | Not started | |
-| Typed settings | 2 | Not started | |
-| Repository contracts | 2 | Not started | |
-| Backup-ready serialization | 2 | Not started | |
-| Database tests | 2 | Not started | |
+| Drift database | 2 | Complete | Schema version 1 with app settings and schema metadata |
+| Migration strategy implementation | 2 | Complete | Schema snapshot and migration harness foundation |
+| UUID service | 2 | Complete | Replaceable UUID v4 service |
+| Typed settings | 2 | Complete | Drift-backed typed settings repository |
+| Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
+| Backup-ready serialization | 2 | Complete | Backup envelope contract for Phase 2 settings payload |
+| Database tests | 2 | Complete | Database, repository, provider, startup, and contract tests |
 
 ## Productivity core
 

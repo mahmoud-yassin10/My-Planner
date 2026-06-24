@@ -34,6 +34,8 @@ Rules:
 - Foreign-key behavior is explicit.
 - Local timestamps are converted to UTC for storage.
 
+Phase 2 establishes these conventions before productivity tables are added. Phase 3+ tables must use UUID v4 string identifiers generated before insert, UTC timestamps, immutable `createdAt`, meaningful `updatedAt` changes, documented archive/delete semantics, and repository-level failure translation.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -453,6 +455,16 @@ Potential keys:
 - dashboard configuration
 - AI privacy settings
 
+Phase 2 implements a small typed subset:
+
+- `themeMode`
+- `accentColorValue`
+- `localeTag`
+- `firstDayOfWeek`
+- `timeFormat`
+
+The storage table is internally flexible, but callers use `SettingsRepository` and `AppSettingsPreferences`.
+
 ### `schema_metadata`
 
 Tracks:
@@ -460,6 +472,8 @@ Tracks:
 - database version
 - application migration markers
 - optional seed/template versions
+
+Phase 2 stores schema metadata for database readiness and future migration checks. It does not install templates or seed records.
 
 ## 11. Indexing plan
 
@@ -486,6 +500,16 @@ Index definitions are finalized with query implementation and tested against rea
 - Record migration-impacting decisions in `docs/DECISIONS.md`.
 - Generate and inspect schema snapshots when Drift support is added.
 
+Phase 2 procedure for future schema version 2:
+
+1. Update Drift tables in `lib/core/database/app_database.dart`.
+2. Increment `schemaVersion`.
+3. Add explicit migration logic from version 1 to version 2.
+4. Run `dart run build_runner build --delete-conflicting-outputs`.
+5. Run `dart run drift_dev make-migrations`.
+6. Add migration tests using the schema snapshot harness.
+7. Run formatting, analysis, tests, debug APK build, and `git diff --check`.
+
 ## 13. Backup and export
 
 JSON backup must include:
@@ -502,3 +526,5 @@ JSON backup must include:
 Secrets and secure-storage values are excluded unless a separately designed encrypted flow is approved.
 
 CSV export is feature-specific and must retain field names and stable references where practical.
+
+Phase 2 adds only a backup envelope serialization contract for settings payloads. It does not add file backup, file restore, CSV export, encryption, or filesystem workflows.

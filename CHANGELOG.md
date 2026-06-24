@@ -21,6 +21,17 @@ The project follows a phase-based development process. Version numbers will be i
 - Route-level error screen for unavailable routes
 - Centralized light and dark Material 3 themes
 - Updated the default Momentum OS palette to a blue accent with refined light and dark surfaces
+- Drift and SQLite persistence foundation with schema version 1
+- App settings and schema metadata tables only for the Phase 2 schema
+- Production and in-memory database openers with foreign keys enabled
+- Drift schema snapshot for `app_database` version 1
+- Database startup initialization through the recoverable startup host
+- Replaceable UUID v4 and UTC clock services
+- Typed settings repository with defaults, updates, watch stream, reset, validation, and failure translation
+- Minimal seed/template installation contract
+- Backup envelope serialization contract for Phase 2 settings payloads
+- Persistence convention and failure boundary helpers
+- Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`
 - Android namespace `com.mahmoudyassin.momentum_os`
@@ -40,4 +51,4 @@ The project follows a phase-based development process. Version numbers will be i
 ### Notes
 
 - Phase 1 foundation intentionally uses placeholders for creation, AI, Search, Notifications, and Settings.
-- Persistence, productivity CRUD, real AI, real Search, notification scheduling, settings persistence, analytics, and templates remain unimplemented.
+- Productivity CRUD, real AI, real Search, notification scheduling, analytics, real templates, backup files, restore flows, and cloud synchronization remain unimplemented.

@@ -2,72 +2,74 @@
 
 ## Task ID
 
-`PHASE-2A-DRIFT-FOUNDATION`
+`PHASE-3A-HIERARCHY-CORE`
 
 ## Goal
 
-Add the first local persistence foundation for Momentum OS using Drift and SQLite without implementing productivity CRUD.
+Implement the first productivity-core vertical slice for Momentum OS using the Phase 2 persistence foundation.
 
-Create only the database opening path, schema version 1 foundation, UUID service, migration test harness, and repository boundary scaffolding needed for later vertical slices.
+Create Areas, Goals hierarchy, Projects, and Milestones only, with domain models, Drift tables, repositories, controllers where useful, placeholder-to-real UI updates, validation, archive behavior, and focused tests.
 
 ## Scope
 
 Included:
 
-- Add initial Drift and SQLite packages compatible with the current Flutter and Dart versions.
-- Add code generation packages required by Drift.
-- Create the application database class.
-- Establish schema version 1.
-- Add a safe database opening path for the local app.
-- Add a UUID v4 service for future persistent entities.
-- Add repository boundary scaffolding only where it has immediate foundation value.
-- Add a migration test harness that can verify fresh database creation.
-- Keep database details out of widgets and screens.
-- Update documentation for persistence foundation contracts.
+- Areas
+- Goals with parent-child hierarchy
+- Projects linked optionally to Areas and Goals
+- Milestones linked to Goals or Projects
+- UUID v4 identifiers generated before insert
+- UTC `createdAt` and `updatedAt`
+- Archive metadata where supported
+- Explicit delete semantics
+- Drift schema version 2 migration from version 1
+- Repository contracts and Drift-backed implementations
+- Riverpod providers exposing interfaces
+- Loading, empty, content, and error states for the implemented screens
+- Focused unit, repository, database, migration, widget, and integration-style tests
+- Documentation updates
 
 Excluded:
 
-- Areas CRUD
-- Goals CRUD
-- Projects CRUD
-- Tasks CRUD
-- Events CRUD
-- Notes CRUD
-- Spaces CRUD
+- Tasks and subtasks
+- Events and planner persistence
+- Notes and tags
+- Spaces engine
 - Templates
 - AI persistence
 - Search indexing
-- Notification scheduling
-- Settings persistence beyond foundation contracts
-- Backup/export implementation
+- Notifications
+- Analytics
+- Backup files or restore flows
 - Cloud synchronization
 
 ## Architecture Requirements
 
-- Read all repository documentation before editing.
-- Use Drift with SQLite as documented in the approved architecture.
-- Use UUID v4 identifiers for future persistent entities.
-- Keep persistence behind repositories or explicit database boundaries.
-- Do not let widgets or screens access Drift directly.
-- Keep schema versioning explicit.
-- Add generated files only through the required build command.
-- Do not add unrelated packages or feature implementations.
-- Document any genuine architecture change in `docs/DECISIONS.md` before implementation.
+- Read all required repository documentation before editing.
+- Use the existing Drift database and increment schema version to 2.
+- Keep widgets and screens away from Drift.
+- Keep domain contracts free of Drift and presentation packages.
+- Use typed repositories and Riverpod providers.
+- Use transactions for multi-table writes where needed.
+- Preserve Phase 1 navigation and Phase 2 settings behavior.
+- Do not implement tasks, events, notes, spaces, templates, AI, search, notifications, analytics, backup/restore, or cloud features.
 
 ## Files likely affected
 
-- `pubspec.yaml`
-- `pubspec.lock`
 - `lib/core/database/`
-- `lib/core/services/`
+- `lib/features/areas/`
+- `lib/features/goals/`
+- `lib/features/projects/`
+- `lib/features/milestones/`
 - `lib/shared/repositories/`
 - `test/`
+- `drift_schemas/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
 - `docs/ARCHITECTURE.md`
 - `docs/DATA_MODEL.md`
 - `docs/FEATURE_MATRIX.md`
-- `docs/DECISIONS.md` only if a real new decision is made
+- `docs/TEST_PLAN.md`
 - `CHANGELOG.md`
 
 ## Required validation
@@ -76,27 +78,31 @@ Run from the Flutter project root:
 
 - `flutter pub get`
 - `dart run build_runner build --delete-conflicting-outputs`
+- `dart run drift_dev make-migrations`
 - `dart format .`
 - `flutter analyze`
 - `flutter test`
+- `flutter build apk --debug`
+- `git diff --check`
+- `git status --short`
 
 ## Acceptance criteria
 
-- Drift and SQLite packages are installed.
-- Database opens successfully in tests.
-- Schema version 1 exists.
-- Fresh database creation is tested.
-- UUID v4 service exists and is tested.
-- Repository boundaries prevent direct widget access to Drift.
-- No productivity CRUD is implemented.
-- Generated code is current.
+- Areas, Goals hierarchy, Projects, and Milestones are implemented only.
+- Drift schema version 2 and migration from version 1 are tested.
+- Repository boundaries prevent UI access to Drift.
+- UUID and UTC timestamp conventions are followed.
+- Archive/delete semantics are explicit and tested.
+- Screens include relevant loading, empty, content, and error states.
+- No excluded Phase 3B+ feature is implemented.
+- Generated code and schema snapshots are current.
 - `flutter analyze` reports no issues.
-- `flutter test` passes.
+- All tests pass.
+- Debug APK builds.
 - Documentation is updated.
-- `NEXT_TASK.md` is changed to the next bounded task.
 
 ## Stop condition
 
-Stop after the Drift foundation, tests, generated files, and documentation pass validation.
+Stop after Phase 3A hierarchy core passes validation and documentation is current.
 
-Do not implement Areas, Goals, Projects, Tasks, Events, Notes, Spaces, Templates, real AI, Search indexing, Notifications, Settings persistence, analytics, backup/export, or cloud functionality.
+Do not implement Tasks, Events, Notes, Spaces, Templates, AI, Search, Notifications, Analytics, Backup/Restore, or Cloud functionality.
