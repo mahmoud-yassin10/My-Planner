@@ -11,6 +11,8 @@ import 'package:momentum_os/features/planner/data/drift_planner_repository.dart'
 import 'package:momentum_os/features/planner/domain/planner_repository.dart';
 import 'package:momentum_os/features/spaces/data/drift_spaces_repository.dart';
 import 'package:momentum_os/features/spaces/domain/spaces_repository.dart';
+import 'package:momentum_os/features/templates/data/drift_template_repository.dart';
+import 'package:momentum_os/features/templates/domain/template_repository.dart';
 import 'package:momentum_os/features/tasks/data/drift_task_core_repository.dart';
 import 'package:momentum_os/features/tasks/domain/task_core_repository.dart';
 import 'package:momentum_os/shared/repositories/settings_repository.dart';
@@ -133,6 +135,29 @@ void main() {
 
     expect(repository, isA<SpacesRepository>());
     expect(repository, isA<DriftSpacesRepository>());
+    expect((await repository.current()).isEmpty, isTrue);
+  });
+
+  test('template repository provider exposes the interface boundary', () async {
+    final database = AppDatabase.inMemory();
+    addTearDown(database.close);
+
+    final container = ProviderContainer(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(database),
+        idServiceProvider.overrideWithValue(FixedIdService(['template-1'])),
+        utcClockProvider.overrideWithValue(
+          FixedUtcClock(DateTime.utc(2026, 6, 24)),
+        ),
+        appLoggerProvider.overrideWithValue(AppLogger(sink: (_) {})),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final repository = container.read(templateRepositoryProvider);
+
+    expect(repository, isA<TemplateRepository>());
+    expect(repository, isA<DriftTemplateRepository>());
     expect((await repository.current()).isEmpty, isTrue);
   });
 }

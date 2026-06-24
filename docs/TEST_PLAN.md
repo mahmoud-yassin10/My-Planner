@@ -63,6 +63,8 @@ Phase 5A adds focused tests for schema version 6, generated Drift migration veri
 
 Phase 5B adds focused tests for Spaces archive/restore/delete lifecycle operations, foreign-key-protected delete translation, saved-view configuration validation, and saved list/table/board/card view rendering.
 
+Phase 6A adds focused tests for schema version 7, template installation metadata persistence, provider boundaries, install/uninstall metadata behavior, duplicate/missing/unsafe template validation, zero-installed-template support, and template foundation panel loading/empty/content/error rendering.
+
 ### Widget tests
 
 Cover:

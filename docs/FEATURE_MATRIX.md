@@ -26,8 +26,8 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Complete | Schema version 6 with settings metadata, productivity-core, planner, and Spaces foundation tables |
-| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 6 |
+| Drift database | 2 | Complete | Schema version 7 with settings metadata, productivity-core, planner, Spaces, and template metadata tables |
+| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 7 |
 | UUID service | 2 | Complete | Replaceable UUID v4 service |
 | Typed settings | 2 | Complete | Drift-backed typed settings repository |
 | Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
@@ -80,22 +80,23 @@ Status values:
 | Board view | 5 | Complete |
 | Calendar view | 5 | Not started |
 | Card view | 5 | Complete |
-| Template installer/uninstaller | 6 | Planned |
+| Template installer/uninstaller | 6 | Complete |
 
 ## Templates
 
 | Template | Phase | Status |
 |---|---:|---|
-| Freelancing CRM | 6 | Not started |
-| Finance | 6 | Not started |
-| Opportunities | 6 | Not started |
-| Learning | 6 | Not started |
-| Competitive programming | 6 | Not started |
-| Machine learning | 6 | Not started |
-| University | 6 | Not started |
-| Fitness | 6 | Not started |
-| Reading | 6 | Not started |
-| Content creation | 6 | Not started |
+| Template infrastructure | 6 | Complete |
+| Freelancing CRM | 6 | Planned |
+| Finance | 6 | Planned |
+| Opportunities | 6 | Planned |
+| Learning | 6 | Planned |
+| Competitive programming | 6 | Planned |
+| Machine learning | 6 | Planned |
+| University | 6 | Planned |
+| Fitness | 6 | Planned |
+| Reading | 6 | Planned |
+| Content creation | 6 | Planned |
 
 ## Notifications and automations
 

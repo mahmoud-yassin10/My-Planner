@@ -214,6 +214,8 @@ Schema version 6 adds the initial configurable Spaces foundation: Spaces, record
 
 Phase 5B saved view rendering and Spaces lifecycle operations continue through the same controller/repository boundary; presentation parses saved view configuration from domain models and does not query Drift directly.
 
+Schema version 7 adds template installation metadata only. Template definitions are provided through an injectable registry that is empty by default; `TemplateRepository` records install/uninstall metadata without creating productivity or Space records.
+
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 
 Repository contracts live outside Drift implementations. The Phase 2 settings contract is `SettingsRepository`; `DriftSettingsRepository` is the local implementation.

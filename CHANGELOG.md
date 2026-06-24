@@ -51,7 +51,9 @@ The project follows a phase-based development process. Version numbers will be i
 - Spaces destination now renders the Phase 5A Spaces foundation with loading, empty, content, and error states
 - Spaces archive, restore, and explicit delete operations for implemented Spaces entities
 - Saved Spaces list, table, board, and card view rendering with deterministic saved-view configuration validation
-- Drift schema snapshots and migration verification tests through version 6
+- Schema version 7 with template installation metadata
+- Template infrastructure with empty-by-default registry, install metadata, uninstall choices, repository/provider boundary, and foundation panel states
+- Drift schema snapshots and migration verification tests through version 7
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`

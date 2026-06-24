@@ -46,6 +46,8 @@ Phase 5A implements the initial configurable Spaces foundation in schema version
 
 Phase 5B keeps schema version 6 and adds repository lifecycle behavior plus saved-view rendering contracts. Space definitions, record types, fields, statuses, and records use reversible `archivedAt`; all Phase 5A entities have explicit permanent delete operations with foreign-key protection. Saved view `configJson` is validated as a JSON object with supported keys `recordTypeId`, `visibleFieldKeys`, `groupByStatus`, and `sortFieldKey`.
 
+Phase 6A implements template installation metadata in schema version 7. Template definitions are injectable descriptors and are empty by default; installing a template stores metadata only and does not create Areas, Goals, Projects, Tasks, Notes, Events, Spaces, or Space records.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -324,6 +326,8 @@ Generic entity references require domain validation and cleanup tests because SQ
 - `updatedAt`
 - `configurationSnapshotJson`
 - `status`
+- `uninstallChoice`
+- `uninstalledAt`
 
 Template definitions may be bundled application assets. Installed configuration becomes user-editable data.
 
@@ -512,6 +516,8 @@ Schema version 4 adds Planner events and time blocks. `planner_events.linkedTask
 Schema version 5 adds focus sessions. `focus_sessions.taskId` references `tasks.id`; focus sessions store planned and actual duration for Phase 4 Planner behavior without adding analytics dashboards.
 
 Schema version 6 adds the Phase 5A Spaces foundation tables. `space_record_types.spaceId`, `space_saved_filters.spaceId`, and `space_saved_views.spaceId` reference `spaces.id`; field, status, and record rows reference `space_record_types.id`; record links reference `space_records.id` for their source record and store generic target references for supported core entities. Repository validation handles dynamic field-value typing where SQLite cannot model configurable fields directly in Phase 5A.
+
+Schema version 7 adds `template_installations` for removable template metadata. The table records installed template key/version, a configuration snapshot, status, optional uninstall choice, and uninstall timestamp. It intentionally does not store template-created records in Phase 6A.
 
 ## 13. Backup and export
 

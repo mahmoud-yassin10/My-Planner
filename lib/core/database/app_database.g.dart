@@ -13461,6 +13461,619 @@ class SpaceSavedViewsCompanion extends UpdateCompanion<SpaceSavedViewRow> {
   }
 }
 
+class $TemplateInstallationsTable extends TemplateInstallations
+    with TableInfo<$TemplateInstallationsTable, TemplateInstallationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TemplateInstallationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _templateKeyMeta = const VerificationMeta(
+    'templateKey',
+  );
+  @override
+  late final GeneratedColumn<String> templateKey = GeneratedColumn<String>(
+    'template_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _templateVersionMeta = const VerificationMeta(
+    'templateVersion',
+  );
+  @override
+  late final GeneratedColumn<String> templateVersion = GeneratedColumn<String>(
+    'template_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _installedAtMeta = const VerificationMeta(
+    'installedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> installedAt = GeneratedColumn<DateTime>(
+    'installed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _configurationSnapshotJsonMeta =
+      const VerificationMeta('configurationSnapshotJson');
+  @override
+  late final GeneratedColumn<String> configurationSnapshotJson =
+      GeneratedColumn<String>(
+        'configuration_snapshot_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _uninstallChoiceMeta = const VerificationMeta(
+    'uninstallChoice',
+  );
+  @override
+  late final GeneratedColumn<String> uninstallChoice = GeneratedColumn<String>(
+    'uninstall_choice',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _uninstalledAtMeta = const VerificationMeta(
+    'uninstalledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> uninstalledAt =
+      GeneratedColumn<DateTime>(
+        'uninstalled_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    templateKey,
+    templateVersion,
+    installedAt,
+    updatedAt,
+    configurationSnapshotJson,
+    status,
+    uninstallChoice,
+    uninstalledAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'template_installations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TemplateInstallationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('template_key')) {
+      context.handle(
+        _templateKeyMeta,
+        templateKey.isAcceptableOrUnknown(
+          data['template_key']!,
+          _templateKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_templateKeyMeta);
+    }
+    if (data.containsKey('template_version')) {
+      context.handle(
+        _templateVersionMeta,
+        templateVersion.isAcceptableOrUnknown(
+          data['template_version']!,
+          _templateVersionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_templateVersionMeta);
+    }
+    if (data.containsKey('installed_at')) {
+      context.handle(
+        _installedAtMeta,
+        installedAt.isAcceptableOrUnknown(
+          data['installed_at']!,
+          _installedAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_installedAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('configuration_snapshot_json')) {
+      context.handle(
+        _configurationSnapshotJsonMeta,
+        configurationSnapshotJson.isAcceptableOrUnknown(
+          data['configuration_snapshot_json']!,
+          _configurationSnapshotJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_configurationSnapshotJsonMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('uninstall_choice')) {
+      context.handle(
+        _uninstallChoiceMeta,
+        uninstallChoice.isAcceptableOrUnknown(
+          data['uninstall_choice']!,
+          _uninstallChoiceMeta,
+        ),
+      );
+    }
+    if (data.containsKey('uninstalled_at')) {
+      context.handle(
+        _uninstalledAtMeta,
+        uninstalledAt.isAcceptableOrUnknown(
+          data['uninstalled_at']!,
+          _uninstalledAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TemplateInstallationRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TemplateInstallationRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      templateKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_key'],
+      )!,
+      templateVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_version'],
+      )!,
+      installedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}installed_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      configurationSnapshotJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}configuration_snapshot_json'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      uninstallChoice: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uninstall_choice'],
+      ),
+      uninstalledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}uninstalled_at'],
+      ),
+    );
+  }
+
+  @override
+  $TemplateInstallationsTable createAlias(String alias) {
+    return $TemplateInstallationsTable(attachedDatabase, alias);
+  }
+}
+
+class TemplateInstallationRow extends DataClass
+    implements Insertable<TemplateInstallationRow> {
+  final String id;
+  final String templateKey;
+  final String templateVersion;
+  final DateTime installedAt;
+  final DateTime updatedAt;
+  final String configurationSnapshotJson;
+  final String status;
+  final String? uninstallChoice;
+  final DateTime? uninstalledAt;
+  const TemplateInstallationRow({
+    required this.id,
+    required this.templateKey,
+    required this.templateVersion,
+    required this.installedAt,
+    required this.updatedAt,
+    required this.configurationSnapshotJson,
+    required this.status,
+    this.uninstallChoice,
+    this.uninstalledAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['template_key'] = Variable<String>(templateKey);
+    map['template_version'] = Variable<String>(templateVersion);
+    map['installed_at'] = Variable<DateTime>(installedAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['configuration_snapshot_json'] = Variable<String>(
+      configurationSnapshotJson,
+    );
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || uninstallChoice != null) {
+      map['uninstall_choice'] = Variable<String>(uninstallChoice);
+    }
+    if (!nullToAbsent || uninstalledAt != null) {
+      map['uninstalled_at'] = Variable<DateTime>(uninstalledAt);
+    }
+    return map;
+  }
+
+  TemplateInstallationsCompanion toCompanion(bool nullToAbsent) {
+    return TemplateInstallationsCompanion(
+      id: Value(id),
+      templateKey: Value(templateKey),
+      templateVersion: Value(templateVersion),
+      installedAt: Value(installedAt),
+      updatedAt: Value(updatedAt),
+      configurationSnapshotJson: Value(configurationSnapshotJson),
+      status: Value(status),
+      uninstallChoice: uninstallChoice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(uninstallChoice),
+      uninstalledAt: uninstalledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(uninstalledAt),
+    );
+  }
+
+  factory TemplateInstallationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TemplateInstallationRow(
+      id: serializer.fromJson<String>(json['id']),
+      templateKey: serializer.fromJson<String>(json['templateKey']),
+      templateVersion: serializer.fromJson<String>(json['templateVersion']),
+      installedAt: serializer.fromJson<DateTime>(json['installedAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      configurationSnapshotJson: serializer.fromJson<String>(
+        json['configurationSnapshotJson'],
+      ),
+      status: serializer.fromJson<String>(json['status']),
+      uninstallChoice: serializer.fromJson<String?>(json['uninstallChoice']),
+      uninstalledAt: serializer.fromJson<DateTime?>(json['uninstalledAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'templateKey': serializer.toJson<String>(templateKey),
+      'templateVersion': serializer.toJson<String>(templateVersion),
+      'installedAt': serializer.toJson<DateTime>(installedAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'configurationSnapshotJson': serializer.toJson<String>(
+        configurationSnapshotJson,
+      ),
+      'status': serializer.toJson<String>(status),
+      'uninstallChoice': serializer.toJson<String?>(uninstallChoice),
+      'uninstalledAt': serializer.toJson<DateTime?>(uninstalledAt),
+    };
+  }
+
+  TemplateInstallationRow copyWith({
+    String? id,
+    String? templateKey,
+    String? templateVersion,
+    DateTime? installedAt,
+    DateTime? updatedAt,
+    String? configurationSnapshotJson,
+    String? status,
+    Value<String?> uninstallChoice = const Value.absent(),
+    Value<DateTime?> uninstalledAt = const Value.absent(),
+  }) => TemplateInstallationRow(
+    id: id ?? this.id,
+    templateKey: templateKey ?? this.templateKey,
+    templateVersion: templateVersion ?? this.templateVersion,
+    installedAt: installedAt ?? this.installedAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    configurationSnapshotJson:
+        configurationSnapshotJson ?? this.configurationSnapshotJson,
+    status: status ?? this.status,
+    uninstallChoice: uninstallChoice.present
+        ? uninstallChoice.value
+        : this.uninstallChoice,
+    uninstalledAt: uninstalledAt.present
+        ? uninstalledAt.value
+        : this.uninstalledAt,
+  );
+  TemplateInstallationRow copyWithCompanion(
+    TemplateInstallationsCompanion data,
+  ) {
+    return TemplateInstallationRow(
+      id: data.id.present ? data.id.value : this.id,
+      templateKey: data.templateKey.present
+          ? data.templateKey.value
+          : this.templateKey,
+      templateVersion: data.templateVersion.present
+          ? data.templateVersion.value
+          : this.templateVersion,
+      installedAt: data.installedAt.present
+          ? data.installedAt.value
+          : this.installedAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      configurationSnapshotJson: data.configurationSnapshotJson.present
+          ? data.configurationSnapshotJson.value
+          : this.configurationSnapshotJson,
+      status: data.status.present ? data.status.value : this.status,
+      uninstallChoice: data.uninstallChoice.present
+          ? data.uninstallChoice.value
+          : this.uninstallChoice,
+      uninstalledAt: data.uninstalledAt.present
+          ? data.uninstalledAt.value
+          : this.uninstalledAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateInstallationRow(')
+          ..write('id: $id, ')
+          ..write('templateKey: $templateKey, ')
+          ..write('templateVersion: $templateVersion, ')
+          ..write('installedAt: $installedAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('configurationSnapshotJson: $configurationSnapshotJson, ')
+          ..write('status: $status, ')
+          ..write('uninstallChoice: $uninstallChoice, ')
+          ..write('uninstalledAt: $uninstalledAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    templateKey,
+    templateVersion,
+    installedAt,
+    updatedAt,
+    configurationSnapshotJson,
+    status,
+    uninstallChoice,
+    uninstalledAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TemplateInstallationRow &&
+          other.id == this.id &&
+          other.templateKey == this.templateKey &&
+          other.templateVersion == this.templateVersion &&
+          other.installedAt == this.installedAt &&
+          other.updatedAt == this.updatedAt &&
+          other.configurationSnapshotJson == this.configurationSnapshotJson &&
+          other.status == this.status &&
+          other.uninstallChoice == this.uninstallChoice &&
+          other.uninstalledAt == this.uninstalledAt);
+}
+
+class TemplateInstallationsCompanion
+    extends UpdateCompanion<TemplateInstallationRow> {
+  final Value<String> id;
+  final Value<String> templateKey;
+  final Value<String> templateVersion;
+  final Value<DateTime> installedAt;
+  final Value<DateTime> updatedAt;
+  final Value<String> configurationSnapshotJson;
+  final Value<String> status;
+  final Value<String?> uninstallChoice;
+  final Value<DateTime?> uninstalledAt;
+  final Value<int> rowid;
+  const TemplateInstallationsCompanion({
+    this.id = const Value.absent(),
+    this.templateKey = const Value.absent(),
+    this.templateVersion = const Value.absent(),
+    this.installedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.configurationSnapshotJson = const Value.absent(),
+    this.status = const Value.absent(),
+    this.uninstallChoice = const Value.absent(),
+    this.uninstalledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TemplateInstallationsCompanion.insert({
+    required String id,
+    required String templateKey,
+    required String templateVersion,
+    required DateTime installedAt,
+    required DateTime updatedAt,
+    required String configurationSnapshotJson,
+    required String status,
+    this.uninstallChoice = const Value.absent(),
+    this.uninstalledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       templateKey = Value(templateKey),
+       templateVersion = Value(templateVersion),
+       installedAt = Value(installedAt),
+       updatedAt = Value(updatedAt),
+       configurationSnapshotJson = Value(configurationSnapshotJson),
+       status = Value(status);
+  static Insertable<TemplateInstallationRow> custom({
+    Expression<String>? id,
+    Expression<String>? templateKey,
+    Expression<String>? templateVersion,
+    Expression<DateTime>? installedAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? configurationSnapshotJson,
+    Expression<String>? status,
+    Expression<String>? uninstallChoice,
+    Expression<DateTime>? uninstalledAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (templateKey != null) 'template_key': templateKey,
+      if (templateVersion != null) 'template_version': templateVersion,
+      if (installedAt != null) 'installed_at': installedAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (configurationSnapshotJson != null)
+        'configuration_snapshot_json': configurationSnapshotJson,
+      if (status != null) 'status': status,
+      if (uninstallChoice != null) 'uninstall_choice': uninstallChoice,
+      if (uninstalledAt != null) 'uninstalled_at': uninstalledAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TemplateInstallationsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? templateKey,
+    Value<String>? templateVersion,
+    Value<DateTime>? installedAt,
+    Value<DateTime>? updatedAt,
+    Value<String>? configurationSnapshotJson,
+    Value<String>? status,
+    Value<String?>? uninstallChoice,
+    Value<DateTime?>? uninstalledAt,
+    Value<int>? rowid,
+  }) {
+    return TemplateInstallationsCompanion(
+      id: id ?? this.id,
+      templateKey: templateKey ?? this.templateKey,
+      templateVersion: templateVersion ?? this.templateVersion,
+      installedAt: installedAt ?? this.installedAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      configurationSnapshotJson:
+          configurationSnapshotJson ?? this.configurationSnapshotJson,
+      status: status ?? this.status,
+      uninstallChoice: uninstallChoice ?? this.uninstallChoice,
+      uninstalledAt: uninstalledAt ?? this.uninstalledAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (templateKey.present) {
+      map['template_key'] = Variable<String>(templateKey.value);
+    }
+    if (templateVersion.present) {
+      map['template_version'] = Variable<String>(templateVersion.value);
+    }
+    if (installedAt.present) {
+      map['installed_at'] = Variable<DateTime>(installedAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (configurationSnapshotJson.present) {
+      map['configuration_snapshot_json'] = Variable<String>(
+        configurationSnapshotJson.value,
+      );
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (uninstallChoice.present) {
+      map['uninstall_choice'] = Variable<String>(uninstallChoice.value);
+    }
+    if (uninstalledAt.present) {
+      map['uninstalled_at'] = Variable<DateTime>(uninstalledAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateInstallationsCompanion(')
+          ..write('id: $id, ')
+          ..write('templateKey: $templateKey, ')
+          ..write('templateVersion: $templateVersion, ')
+          ..write('installedAt: $installedAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('configurationSnapshotJson: $configurationSnapshotJson, ')
+          ..write('status: $status, ')
+          ..write('uninstallChoice: $uninstallChoice, ')
+          ..write('uninstalledAt: $uninstalledAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -13493,6 +14106,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $SpaceSavedViewsTable spaceSavedViews = $SpaceSavedViewsTable(
     this,
   );
+  late final $TemplateInstallationsTable templateInstallations =
+      $TemplateInstallationsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -13520,6 +14135,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     spaceRecordLinks,
     spaceSavedFilters,
     spaceSavedViews,
+    templateInstallations,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -24809,6 +25425,313 @@ typedef $$SpaceSavedViewsTableProcessedTableManager =
       SpaceSavedViewRow,
       PrefetchHooks Function({bool spaceId})
     >;
+typedef $$TemplateInstallationsTableCreateCompanionBuilder =
+    TemplateInstallationsCompanion Function({
+      required String id,
+      required String templateKey,
+      required String templateVersion,
+      required DateTime installedAt,
+      required DateTime updatedAt,
+      required String configurationSnapshotJson,
+      required String status,
+      Value<String?> uninstallChoice,
+      Value<DateTime?> uninstalledAt,
+      Value<int> rowid,
+    });
+typedef $$TemplateInstallationsTableUpdateCompanionBuilder =
+    TemplateInstallationsCompanion Function({
+      Value<String> id,
+      Value<String> templateKey,
+      Value<String> templateVersion,
+      Value<DateTime> installedAt,
+      Value<DateTime> updatedAt,
+      Value<String> configurationSnapshotJson,
+      Value<String> status,
+      Value<String?> uninstallChoice,
+      Value<DateTime?> uninstalledAt,
+      Value<int> rowid,
+    });
+
+class $$TemplateInstallationsTableFilterComposer
+    extends Composer<_$AppDatabase, $TemplateInstallationsTable> {
+  $$TemplateInstallationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get installedAt => $composableBuilder(
+    column: $table.installedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get configurationSnapshotJson => $composableBuilder(
+    column: $table.configurationSnapshotJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get uninstallChoice => $composableBuilder(
+    column: $table.uninstallChoice,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get uninstalledAt => $composableBuilder(
+    column: $table.uninstalledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TemplateInstallationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TemplateInstallationsTable> {
+  $$TemplateInstallationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get installedAt => $composableBuilder(
+    column: $table.installedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get configurationSnapshotJson => $composableBuilder(
+    column: $table.configurationSnapshotJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get uninstallChoice => $composableBuilder(
+    column: $table.uninstallChoice,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get uninstalledAt => $composableBuilder(
+    column: $table.uninstalledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TemplateInstallationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TemplateInstallationsTable> {
+  $$TemplateInstallationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get installedAt => $composableBuilder(
+    column: $table.installedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get configurationSnapshotJson => $composableBuilder(
+    column: $table.configurationSnapshotJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get uninstallChoice => $composableBuilder(
+    column: $table.uninstallChoice,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get uninstalledAt => $composableBuilder(
+    column: $table.uninstalledAt,
+    builder: (column) => column,
+  );
+}
+
+class $$TemplateInstallationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TemplateInstallationsTable,
+          TemplateInstallationRow,
+          $$TemplateInstallationsTableFilterComposer,
+          $$TemplateInstallationsTableOrderingComposer,
+          $$TemplateInstallationsTableAnnotationComposer,
+          $$TemplateInstallationsTableCreateCompanionBuilder,
+          $$TemplateInstallationsTableUpdateCompanionBuilder,
+          (
+            TemplateInstallationRow,
+            BaseReferences<
+              _$AppDatabase,
+              $TemplateInstallationsTable,
+              TemplateInstallationRow
+            >,
+          ),
+          TemplateInstallationRow,
+          PrefetchHooks Function()
+        > {
+  $$TemplateInstallationsTableTableManager(
+    _$AppDatabase db,
+    $TemplateInstallationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TemplateInstallationsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TemplateInstallationsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TemplateInstallationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> templateKey = const Value.absent(),
+                Value<String> templateVersion = const Value.absent(),
+                Value<DateTime> installedAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> configurationSnapshotJson = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String?> uninstallChoice = const Value.absent(),
+                Value<DateTime?> uninstalledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TemplateInstallationsCompanion(
+                id: id,
+                templateKey: templateKey,
+                templateVersion: templateVersion,
+                installedAt: installedAt,
+                updatedAt: updatedAt,
+                configurationSnapshotJson: configurationSnapshotJson,
+                status: status,
+                uninstallChoice: uninstallChoice,
+                uninstalledAt: uninstalledAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String templateKey,
+                required String templateVersion,
+                required DateTime installedAt,
+                required DateTime updatedAt,
+                required String configurationSnapshotJson,
+                required String status,
+                Value<String?> uninstallChoice = const Value.absent(),
+                Value<DateTime?> uninstalledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TemplateInstallationsCompanion.insert(
+                id: id,
+                templateKey: templateKey,
+                templateVersion: templateVersion,
+                installedAt: installedAt,
+                updatedAt: updatedAt,
+                configurationSnapshotJson: configurationSnapshotJson,
+                status: status,
+                uninstallChoice: uninstallChoice,
+                uninstalledAt: uninstalledAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TemplateInstallationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TemplateInstallationsTable,
+      TemplateInstallationRow,
+      $$TemplateInstallationsTableFilterComposer,
+      $$TemplateInstallationsTableOrderingComposer,
+      $$TemplateInstallationsTableAnnotationComposer,
+      $$TemplateInstallationsTableCreateCompanionBuilder,
+      $$TemplateInstallationsTableUpdateCompanionBuilder,
+      (
+        TemplateInstallationRow,
+        BaseReferences<
+          _$AppDatabase,
+          $TemplateInstallationsTable,
+          TemplateInstallationRow
+        >,
+      ),
+      TemplateInstallationRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -24856,4 +25779,6 @@ class $AppDatabaseManager {
       $$SpaceSavedFiltersTableTableManager(_db, _db.spaceSavedFilters);
   $$SpaceSavedViewsTableTableManager get spaceSavedViews =>
       $$SpaceSavedViewsTableTableManager(_db, _db.spaceSavedViews);
+  $$TemplateInstallationsTableTableManager get templateInstallations =>
+      $$TemplateInstallationsTableTableManager(_db, _db.templateInstallations);
 }

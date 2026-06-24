@@ -2,65 +2,57 @@
 
 ## Task ID
 
-`PHASE-6A-TEMPLATE-INFRASTRUCTURE`
+`PHASE-6B-TEMPLATE-PACK-DEFINITIONS`
 
 ## Goal
 
-Add removable template infrastructure without installing real template packs, creating example records, or hard-coding personal workflows.
+Add bundled template definition descriptors for the planned template categories without creating example records or installing real user data.
 
-Focus on a generic template registry contract, installation metadata, uninstall choices, repository boundaries, and tests.
+Focus on safe, generic, removable descriptors that can be installed through the Phase 6A metadata infrastructure.
 
 ## Scope
 
 Included:
 
-- Template definition domain model for bundled configuration descriptors
-- Template installation metadata model
-- Drift table and migration only if required for installation tracking
-- Repository/controller boundary for listing template definitions and installation state
-- Install/uninstall foundation that records metadata but does not create productivity or Space records
-- Uninstall-choice contract for preserve, archive, export, and delete outcomes without implementing export files
-- Safe validation that templates remain generic and removable
-- Settings or Spaces screen entry point only if needed to reach the foundation state
-- Loading, empty, content, and error states for any new template UI
-- Focused repository, database, migration, provider, domain, and widget tests
+- Bundled template definition descriptors for the planned Phase 6 categories
+- Generic configuration payloads only; no records, activities, people, employers, courses, currencies, schedules, or personal targets
+- Validation that descriptor keys, versions, and configuration payloads remain safe and removable
+- Template foundation panel rendering of available definitions
+- Tests proving install still records metadata only
+- Tests proving zero installed templates remains supported
 - Documentation updates
 
 Excluded:
 
-- Real template packs for freelancing, finance, opportunities, learning, competitive programming, machine learning, university, fitness, reading, or content creation
 - Example records or demo data
-- Template-created Areas, Goals, Projects, Tasks, Notes, Events, or Space records
+- Template-created Areas, Goals, Projects, Tasks, Notes, Events, Spaces, or Space records
+- Template editing UI beyond descriptor visibility
+- Export files or backup/restore flows
 - AI persistence or real AI provider
 - Search indexing
 - Analytics dashboards or charts
-- Backup files or restore flows
 - Cloud synchronization
 - Platform notification scheduling
 
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, and Phase 5 Spaces behavior.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, Phase 5 Spaces behavior, and Phase 6A template infrastructure behavior.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
-- Use repository/controller boundaries for template installation metadata.
-- Templates must be optional, editable later, removable, and safe when zero templates are installed.
-- Do not add AI, search indexing, analytics, backup/restore, platform notifications, or cloud features.
+- Use the Phase 6A template registry and repository boundaries.
+- Do not create hard-coded personal workflows or data.
+- Do not create productivity or Space records from templates in this phase.
 
 ## Files likely affected
 
 - `lib/features/templates/`
-- `lib/core/database/`
 - `test/features/templates/`
-- `test/repositories/`
-- `test/database/`
+- `test/repositories/template_repository_test.dart`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
 - `docs/FEATURE_MATRIX.md`
 - `docs/TEST_PLAN.md`
-- `docs/DATA_MODEL.md`
-- `docs/ARCHITECTURE.md` only if contracts change
 - `CHANGELOG.md`
 
 ## Required validation
@@ -79,11 +71,10 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Template definitions and installation metadata remain behind repository/controller boundaries.
-- Installing a template records metadata only and does not create fake records.
-- Uninstall choices are modeled and validated without implementing export files.
+- Planned template categories are represented as safe descriptors only.
+- Installing a template still records metadata only and does not create records.
+- Descriptor validation rejects example records or demo data.
 - Zero installed templates remains a supported state.
-- Generated code and schema snapshots are current if schema generation is touched.
 - `flutter analyze` reports no issues.
 - All tests pass.
 - Debug APK builds.
@@ -91,6 +82,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 6A template infrastructure passes validation and documentation is current.
+Stop after Phase 6B template descriptor definitions pass validation and documentation is current.
 
-Do not implement real template packs, example records, AI, Search indexing, Analytics, Backup/Restore, platform Notifications, or Cloud functionality.
+Do not implement example records, template-created records, AI, Search indexing, Analytics, Backup/Restore, platform Notifications, or Cloud functionality.

@@ -11,7 +11,7 @@ import 'app_database.steps.dart';
 
 part 'app_database.g.dart';
 
-const appDatabaseSchemaVersion = 6;
+const appDatabaseSchemaVersion = 7;
 
 @DataClassName('AppSettingRow')
 class AppSettings extends Table {
@@ -381,6 +381,22 @@ class SpaceSavedViews extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('TemplateInstallationRow')
+class TemplateInstallations extends Table {
+  TextColumn get id => text()();
+  TextColumn get templateKey => text()();
+  TextColumn get templateVersion => text()();
+  DateTimeColumn get installedAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get configurationSnapshotJson => text()();
+  TextColumn get status => text()();
+  TextColumn get uninstallChoice => text().nullable()();
+  DateTimeColumn get uninstalledAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -405,12 +421,13 @@ class SpaceSavedViews extends Table {
     SpaceRecordLinks,
     SpaceSavedFilters,
     SpaceSavedViews,
+    TemplateInstallations,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 6;
+  static const latestSchemaVersion = 7;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -455,6 +472,9 @@ class AppDatabase extends _$AppDatabase {
             await migrator.createTable(schema.spaceRecordLinks);
             await migrator.createTable(schema.spaceSavedFilters);
             await migrator.createTable(schema.spaceSavedViews);
+          },
+          from6To7: (migrator, schema) async {
+            await migrator.createTable(schema.templateInstallations);
           },
         )(migrator, from, to);
       },

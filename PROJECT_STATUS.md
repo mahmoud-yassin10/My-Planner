@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 5B — Spaces views foundation complete
+**Current phase:** Phase 6A — Template infrastructure complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -189,6 +189,18 @@ Initial validation completed successfully before documentation population:
 | Spaces screen saved-view selection state | Complete |
 | Focused repository and widget tests for lifecycle and view rendering | Complete |
 
+## Phase 6A template infrastructure completion status
+
+| Deliverable | Status |
+|---|---|
+| Template definition domain model and injectable empty-by-default registry | Complete |
+| Template installation metadata domain model, Drift table, repository, and provider boundary | Complete |
+| Schema version 7 migration and snapshot | Complete |
+| Install foundation that records metadata only without creating records | Complete |
+| Uninstall-choice contract for preserve, archive, export, and delete outcomes | Complete |
+| Template foundation panel loading, empty, content, and error states | Complete |
+| Repository, database, migration, provider, and widget tests | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -223,17 +235,19 @@ Implemented foundation behavior:
 - The Spaces destination renders Space definitions, record types, fields, statuses, records, links, saved filters, and saved views with loading, empty, content, and error states.
 - Saved Spaces views render generic records as list, table, board, and card previews without templates or hard-coded examples.
 - Spaces repositories expose explicit archive, restore, and permanent delete operations for implemented entities.
+- Schema version 7 adds template installation metadata only.
+- Template infrastructure exposes an empty-by-default registry, install metadata, uninstall choices, and a foundation panel without real template packs or example records.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
 - Backup and seed/template contracts exist without implementing backup files, restore, templates, or example records.
 - Placeholder screens remain generic and do not include persistence or productivity CRUD.
-- Platform notification scheduling, templates, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
+- Platform notification scheduling, real template packs, analytics, AI persistence, backup files, restore flows, and cloud synchronization remain unimplemented.
 
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 5B Spaces views foundation.
+- Debug APK verification has passed for the Phase 6A template infrastructure.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -242,10 +256,10 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 
 - `flutter pub get` — Passed; 12 packages reported newer versions incompatible with current constraints.
 - `dart run build_runner build --delete-conflicting-outputs` — Passed; generated Drift code. Current `build_runner` reports that `--delete-conflicting-outputs` is ignored.
-- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v6.json` and updated migration verification tests.
+- `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v7.json` and updated migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 112 tests passed.
+- `flutter test` — Passed; 128 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -261,8 +275,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3 productivity core, Phase 4 Planner, and the Phase 5 Spaces foundation/view layer are in place. Platform notifications and later modules have not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3 productivity core, Phase 4 Planner, the Phase 5 Spaces foundation/view layer, and Phase 6A template infrastructure are in place. Platform notifications and later modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-6A-TEMPLATE-INFRASTRUCTURE`: add removable template infrastructure only.
+Complete Task `PHASE-6B-TEMPLATE-PACK-DEFINITIONS`: add bundled template definition descriptors only.

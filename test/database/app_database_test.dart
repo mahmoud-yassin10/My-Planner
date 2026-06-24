@@ -17,7 +17,7 @@ void main() {
   });
 
   test(
-    'fresh database creation includes foundation, productivity-core, planner, and spaces tables',
+    'fresh database creation includes foundation, productivity-core, planner, spaces, and template tables',
     () async {
       final database = AppDatabase.inMemory();
       addTearDown(database.close);
@@ -65,6 +65,10 @@ void main() {
         tables.map((row) => row.data['name']),
         contains('space_saved_views'),
       );
+      expect(
+        tables.map((row) => row.data['name']),
+        contains('template_installations'),
+      );
     },
   );
 
@@ -88,7 +92,7 @@ void main() {
     expect(row.updatedAt.isUtc, isTrue);
   });
 
-  test('migration from version 1 creates spaces foundation tables', () async {
+  test('migration from version 1 creates template infrastructure tables', () async {
     final tempDirectory = await Directory.systemTemp.createTemp(
       'momentum_os_migration_test_',
     );
@@ -147,6 +151,10 @@ void main() {
       tables.map((row) => row.data['name']),
       contains('space_saved_views'),
     );
+    expect(
+      tables.map((row) => row.data['name']),
+      contains('template_installations'),
+    );
   });
 
   test(
@@ -191,6 +199,7 @@ void main() {
       expect(schema.toString(), contains('space_record_links'));
       expect(schema.toString(), contains('space_saved_filters'));
       expect(schema.toString(), contains('space_saved_views'));
+      expect(schema.toString(), contains('template_installations'));
     },
   );
 }
