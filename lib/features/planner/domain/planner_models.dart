@@ -2,6 +2,8 @@ enum PlannerEventKind { event, meeting }
 
 enum TimeBlockKind { focus, buffer, personal, travel }
 
+enum FocusSessionStatus { planned, running, completed, cancelled }
+
 class PlannerEvent {
   const PlannerEvent({
     required this.id,
@@ -69,12 +71,48 @@ class TimeBlock {
 }
 
 class PlannerSnapshot {
-  const PlannerSnapshot({this.events = const [], this.timeBlocks = const []});
+  const PlannerSnapshot({
+    this.events = const [],
+    this.timeBlocks = const [],
+    this.focusSessions = const [],
+  });
 
   final List<PlannerEvent> events;
   final List<TimeBlock> timeBlocks;
+  final List<FocusSession> focusSessions;
 
-  bool get isEmpty => events.isEmpty && timeBlocks.isEmpty;
+  bool get isEmpty =>
+      events.isEmpty && timeBlocks.isEmpty && focusSessions.isEmpty;
+}
+
+class FocusSession {
+  const FocusSession({
+    required this.id,
+    this.taskId,
+    required this.plannedDurationMinutes,
+    this.actualDurationMinutes,
+    required this.startedAt,
+    this.endedAt,
+    required this.status,
+    this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+    this.archivedAt,
+  });
+
+  final String id;
+  final String? taskId;
+  final int plannedDurationMinutes;
+  final int? actualDurationMinutes;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  final FocusSessionStatus status;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? archivedAt;
+
+  bool get isArchived => archivedAt != null;
 }
 
 class PlannerEventDraft {
@@ -120,6 +158,26 @@ class TimeBlockDraft {
   final DateTime startsAt;
   final DateTime endsAt;
   final String? linkedTaskId;
+  final String? notes;
+}
+
+class FocusSessionDraft {
+  const FocusSessionDraft({
+    this.taskId,
+    required this.plannedDurationMinutes,
+    this.actualDurationMinutes,
+    required this.startedAt,
+    this.endedAt,
+    this.status = FocusSessionStatus.planned,
+    this.notes,
+  });
+
+  final String? taskId;
+  final int plannedDurationMinutes;
+  final int? actualDurationMinutes;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  final FocusSessionStatus status;
   final String? notes;
 }
 
@@ -175,7 +233,63 @@ List<PlannerScheduleItem> plannerScheduleItems(PlannerSnapshot snapshot) {
           startsAt: block.startsAt,
           endsAt: block.endsAt,
         ),
+    for (final session in snapshot.focusSessions)
+      if (!session.isArchived)
+        PlannerScheduleItem(
+          id: session.id,
+          title: 'Focus session',
+          sourceType: 'focus session',
+          startsAt: session.startedAt,
+          endsAt:
+              session.endedAt ??
+              session.startedAt.add(
+                Duration(minutes: session.plannedDurationMinutes),
+              ),
+        ),
   ];
+  items.sort((a, b) => a.startsAt.compareTo(b.startsAt));
+  return items;
+}
+
+List<PlannerScheduleItem> expandedPlannerScheduleItems({
+  required PlannerSnapshot snapshot,
+  required DateTime startsAt,
+  required DateTime endsAt,
+}) {
+  final items = <PlannerScheduleItem>[];
+  for (final item in plannerScheduleItems(snapshot)) {
+    items.add(item);
+  }
+  for (final event in snapshot.events) {
+    if (event.isArchived || event.recurrenceRule == null) {
+      continue;
+    }
+    final interval = switch (event.recurrenceRule) {
+      'daily' => const Duration(days: 1),
+      'weekly' => const Duration(days: 7),
+      _ => null,
+    };
+    if (interval == null) {
+      continue;
+    }
+    final duration = event.endsAt.difference(event.startsAt);
+    var occurrenceStart = event.startsAt.add(interval);
+    while (occurrenceStart.isBefore(endsAt)) {
+      final occurrenceEnd = occurrenceStart.add(duration);
+      if (occurrenceEnd.isAfter(startsAt)) {
+        items.add(
+          PlannerScheduleItem(
+            id: '${event.id}:${occurrenceStart.toIso8601String()}',
+            title: event.title,
+            sourceType: '${event.kind.name} recurrence',
+            startsAt: occurrenceStart,
+            endsAt: occurrenceEnd,
+          ),
+        );
+      }
+      occurrenceStart = occurrenceStart.add(interval);
+    }
+  }
   items.sort((a, b) => a.startsAt.compareTo(b.startsAt));
   return items;
 }

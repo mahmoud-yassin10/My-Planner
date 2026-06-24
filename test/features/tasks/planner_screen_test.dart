@@ -20,6 +20,10 @@ void main() {
     expect(find.text('No scheduled items for this day.'), findsOneWidget);
     expect(find.byKey(const ValueKey('createTaskButton')), findsOneWidget);
     expect(find.byKey(const ValueKey('createEventButton')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('createFocusSessionButton')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Planner screen renders task-core content', (tester) async {
@@ -77,8 +81,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Task A'), findsOneWidget);
-    expect(find.text('Tag A'), findsOneWidget);
     expect(find.text('Status: inbox; 1 tags, 1 notes'), findsOneWidget);
+    await tester.drag(
+      find.byKey(const ValueKey('plannerTaskCoreContent')),
+      const Offset(0, -350),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tag A'), findsOneWidget);
     expect(find.text('Used on 1 records'), findsOneWidget);
     expect(find.byTooltip('Edit Task A'), findsOneWidget);
     expect(find.byTooltip('Archive Task A'), findsOneWidget);
@@ -127,7 +137,8 @@ void main() {
   testWidgets('Planner screen renders schedule tabs and planner records', (
     tester,
   ) async {
-    final now = DateTime.utc(2026, 6, 24, 9);
+    final current = DateTime.now().toUtc();
+    final now = DateTime.utc(current.year, current.month, current.day, 9);
 
     await _pumpPlannerScreen(
       tester,
@@ -170,6 +181,18 @@ void main() {
             updatedAt: now,
           ),
         ],
+        focusSessions: [
+          FocusSession(
+            id: 'focus-1',
+            plannedDurationMinutes: 25,
+            actualDurationMinutes: 20,
+            startedAt: now.add(const Duration(hours: 4)),
+            endedAt: now.add(const Duration(hours: 4, minutes: 20)),
+            status: FocusSessionStatus.completed,
+            createdAt: now,
+            updatedAt: now,
+          ),
+        ],
       ),
     );
 
@@ -179,7 +202,14 @@ void main() {
     expect(find.text('Agenda'), findsOneWidget);
     expect(find.text('Event A'), findsOneWidget);
     expect(find.text('Focus Block'), findsOneWidget);
+    await tester.drag(
+      find.byKey(const ValueKey('plannerDayView')),
+      const Offset(0, -350),
+    );
+    await tester.pumpAndSettle();
+
     expect(find.text('Scheduled Task'), findsOneWidget);
+    expect(find.text('Focus session'), findsOneWidget);
   });
 }
 

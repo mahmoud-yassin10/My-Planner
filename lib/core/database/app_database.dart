@@ -11,7 +11,7 @@ import 'app_database.steps.dart';
 
 part 'app_database.g.dart';
 
-const appDatabaseSchemaVersion = 4;
+const appDatabaseSchemaVersion = 5;
 
 @DataClassName('AppSettingRow')
 class AppSettings extends Table {
@@ -243,6 +243,24 @@ class TimeBlocks extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('FocusSessionRow')
+class FocusSessions extends Table {
+  TextColumn get id => text()();
+  TextColumn get taskId => text().nullable().references(Tasks, #id)();
+  IntColumn get plannedDurationMinutes => integer()();
+  IntColumn get actualDurationMinutes => integer().nullable()();
+  DateTimeColumn get startedAt => dateTime()();
+  DateTimeColumn get endedAt => dateTime().nullable()();
+  TextColumn get status => text()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -258,12 +276,13 @@ class TimeBlocks extends Table {
     NoteLinks,
     PlannerEvents,
     TimeBlocks,
+    FocusSessions,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 4;
+  static const latestSchemaVersion = 5;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -295,6 +314,9 @@ class AppDatabase extends _$AppDatabase {
           from3To4: (migrator, schema) async {
             await migrator.createTable(schema.plannerEvents);
             await migrator.createTable(schema.timeBlocks);
+          },
+          from4To5: (migrator, schema) async {
+            await migrator.createTable(schema.focusSessions);
           },
         )(migrator, from, to);
       },

@@ -2,35 +2,31 @@
 
 ## Task ID
 
-`PHASE-4B-PLANNER-COMPLETE`
+`PHASE-5A-SPACES-FOUNDATION`
 
 ## Goal
 
-Finish Phase 4 Planner scheduling behavior without implementing later Spaces, Templates, AI, Analytics, Backup, or Cloud systems.
+Add the initial configurable Spaces foundation without implementing templates, AI, analytics dashboards, backup/restore, or cloud synchronization.
 
-Focus on completing the Planner vertical slice around already implemented events, time blocks, tasks, recurrence logic, reminders contracts, focus sessions, free-time/conflict behavior, and estimated versus actual effort.
+Focus on Space definitions, record types, custom fields, statuses, records, relationships, and saved filters/views behind repository boundaries.
 
 ## Scope
 
 Included:
 
-- Event and time-block edit, archive, restore, and delete flows where supported
-- Task scheduling and rescheduling controls using existing task scheduling fields
-- Recurrence rule evaluation for local schedule expansion only
-- Reminder contract persistence and validation without platform notification scheduling
-- Focus session domain model, repository contract, Drift tables, and UI surface
-- Planned versus actual duration updates through task and focus-session boundaries
-- Conflict detection and free-window behavior surfaced clearly in Planner views
-- Loading, empty, content, and error state consistency across Planner views
+- Space definition domain model, repository contract, Drift table, and migration
+- Record type domain model, repository contract, Drift table, and migration
+- Custom field definitions with type-safe validation for initial field types
+- Editable status definitions for records
+- Space records with generic field-value storage appropriate for Phase 5A only
+- Relationships between Space records and supported core entities through repository boundaries
+- Saved filters and basic saved views contracts
+- Spaces screen loading, empty, content, and error states
 - Focused database, repository, migration, controller, domain, and widget tests
 - Documentation updates
 
 Excluded:
 
-- Local notification scheduling
-- Background jobs
-- Platform notification scheduling
-- Spaces engine
 - Templates
 - AI persistence or real AI provider
 - Search indexing
@@ -41,15 +37,15 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, and Phase 4A Planner foundation behavior.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, and Phase 4 Planner behavior.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
-- Use repository/controller boundaries for Planner persistence and scheduling behavior.
-- Do not add platform notification scheduling, Spaces, templates, AI, search indexing, analytics, backup/restore, or cloud features.
+- Use repository/controller boundaries for Spaces persistence and validation behavior.
+- Do not add templates, AI, search indexing, analytics, backup/restore, platform notifications, or cloud features.
 
 ## Files likely affected
 
-- `lib/features/planner/`
+- `lib/features/spaces/`
 - `lib/core/database/`
 - `test/`
 - `PROJECT_STATUS.md`
@@ -76,12 +72,10 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Planner events, time blocks, focus sessions, and scheduled tasks remain behind repository/controller boundaries.
-- Day, week, month, and agenda views support implemented scheduling behavior with accessible empty/error/loading states.
-- Recurrence expansion is deterministic and local-only.
-- Reminder contracts are validated but do not schedule platform notifications.
-- Conflict and free-window behavior is covered by tests.
-- Planned versus actual effort can be recorded through implemented Phase 4 boundaries.
+- Space definitions, record types, fields, statuses, records, relationships, filters, and views remain behind repository/controller boundaries.
+- The Spaces destination renders implemented records with accessible empty/error/loading states.
+- Initial custom field validation is deterministic and type-safe.
+- No template installer/uninstaller behavior is implemented yet.
 - Generated code and schema snapshots are current.
 - `flutter analyze` reports no issues.
 - All tests pass.
@@ -90,6 +84,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 4B Planner completion passes validation and documentation is current.
+Stop after Phase 5A Spaces foundation passes validation and documentation is current.
 
-Do not implement full recurrence, platform notifications, Spaces, Templates, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.
+Do not implement Templates, AI, Search indexing, Analytics, Backup/Restore, platform Notifications, or Cloud functionality.

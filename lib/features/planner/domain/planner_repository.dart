@@ -15,4 +15,10 @@ abstract interface class PlannerRepository {
   Future<void> archiveTimeBlock(String id);
   Future<void> restoreTimeBlock(String id);
   Future<void> deleteTimeBlock(String id);
+
+  Future<FocusSession> createFocusSession(FocusSessionDraft draft);
+  Future<FocusSession> updateFocusSession(String id, FocusSessionDraft draft);
+  Future<void> archiveFocusSession(String id);
+  Future<void> restoreFocusSession(String id);
+  Future<void> deleteFocusSession(String id);
 }

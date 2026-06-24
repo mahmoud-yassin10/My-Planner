@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,9 +63,17 @@ class _PlannerContent extends ConsumerWidget {
     final completedTasks = taskSnapshot.tasks
         .where((task) => task.isCompleted)
         .length;
-    final scheduleItems = plannerScheduleItems(plannerSnapshot);
-    final conflicts = detectScheduleConflicts(scheduleItems);
     final todayStart = _startOfDay(DateTime.now().toUtc());
+    final scheduleRangeEnd = DateTime.utc(
+      todayStart.year,
+      todayStart.month + 1,
+    );
+    final scheduleItems = expandedPlannerScheduleItems(
+      snapshot: plannerSnapshot,
+      startsAt: todayStart,
+      endsAt: scheduleRangeEnd,
+    );
+    final conflicts = detectScheduleConflicts(scheduleItems);
     final freeWindows = findFreeWindows(
       items: scheduleItems,
       startsAt: todayStart,
@@ -95,7 +105,8 @@ class _PlannerContent extends ConsumerWidget {
                 Text(
                   '$activeTasks active tasks, $completedTasks completed, '
                   '${plannerSnapshot.events.length} events, '
-                  '${plannerSnapshot.timeBlocks.length} time blocks',
+                  '${plannerSnapshot.timeBlocks.length} time blocks, '
+                  '${plannerSnapshot.focusSessions.length} focus sessions',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -157,12 +168,12 @@ class _PlannerContent extends ConsumerWidget {
                   items: _itemsInRange(
                     scheduleItems,
                     todayStart,
-                    DateTime.utc(todayStart.year, todayStart.month + 1),
+                    scheduleRangeEnd,
                   ),
                   scheduledTasks: _tasksInRange(
                     taskSnapshot.tasks,
                     todayStart,
-                    DateTime.utc(todayStart.year, todayStart.month + 1),
+                    scheduleRangeEnd,
                   ),
                   emptyMessage: 'No scheduled items for this month.',
                 ),
@@ -290,6 +301,63 @@ class _CreateActions extends ConsumerWidget {
           ),
           icon: const Icon(Icons.view_timeline_outlined),
           label: const Text('Time block'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('createFocusSessionButton'),
+          onPressed: () {
+            final startsAt = _nextWholeHour(DateTime.now().toUtc());
+            unawaited(
+              plannerController.createFocusSession(
+                FocusSessionDraft(
+                  taskId: snapshot.tasks.firstOrNull?.id,
+                  plannedDurationMinutes: 25,
+                  startedAt: startsAt,
+                ),
+              ),
+            );
+          },
+          icon: const Icon(Icons.timer_outlined),
+          label: const Text('Focus'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('scheduleFirstTaskButton'),
+          onPressed: snapshot.tasks.isEmpty
+              ? null
+              : () {
+                  final task = snapshot.tasks.first;
+                  final startsAt = _nextWholeHour(DateTime.now().toUtc());
+                  unawaited(
+                    controller.updateTask(
+                      task.id,
+                      _taskDraftWithTitle(task, task.title).copyWithSchedule(
+                        startsAt: startsAt,
+                        endsAt: startsAt.add(const Duration(hours: 1)),
+                        estimatedDurationMinutes: 60,
+                      ),
+                    ),
+                  );
+                },
+          icon: const Icon(Icons.schedule_outlined),
+          label: const Text('Schedule first task'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('recordActualFirstTaskButton'),
+          onPressed: snapshot.tasks.isEmpty
+              ? null
+              : () {
+                  final task = snapshot.tasks.first;
+                  unawaited(
+                    controller.updateTask(
+                      task.id,
+                      _taskDraftWithTitle(task, task.title).copyWithActual(
+                        actualDurationMinutes:
+                            task.estimatedDurationMinutes ?? 30,
+                      ),
+                    ),
+                  );
+                },
+          icon: const Icon(Icons.more_time_outlined),
+          label: const Text('Record actual'),
         ),
         FilledButton.icon(
           key: const ValueKey('tagFirstTaskButton'),
@@ -486,8 +554,6 @@ class _AgendaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = plannerScheduleItems(plannerSnapshot);
-
     return ListView(
       key: const ValueKey('plannerTaskCoreContent'),
       padding: const EdgeInsets.all(AppSpacing.x4),
@@ -501,9 +567,28 @@ class _AgendaView extends StatelessWidget {
           )
         else ...[
           _RecordSection(
-            title: 'Schedule',
-            emptyMessage: 'No events or time blocks yet.',
-            children: [for (final item in items) _ScheduleItemTile(item: item)],
+            title: 'Events',
+            emptyMessage: 'No events yet.',
+            children: [
+              for (final event in plannerSnapshot.events)
+                _PlannerEventTile(event: event),
+            ],
+          ),
+          _RecordSection(
+            title: 'Time blocks',
+            emptyMessage: 'No time blocks yet.',
+            children: [
+              for (final block in plannerSnapshot.timeBlocks)
+                _TimeBlockTile(block: block),
+            ],
+          ),
+          _RecordSection(
+            title: 'Focus sessions',
+            emptyMessage: 'No focus sessions yet.',
+            children: [
+              for (final session in plannerSnapshot.focusSessions)
+                _FocusSessionTile(session: session),
+            ],
           ),
           _RecordSection(
             title: 'Tasks',
@@ -567,6 +652,190 @@ class _ScheduledTaskTile extends StatelessWidget {
         title: Text(task.title),
         subtitle: Text(
           'Task; ${_formatRange(task.scheduledStartAt!, task.scheduledEndAt!)}',
+        ),
+      ),
+    );
+  }
+}
+
+class _PlannerEventTile extends ConsumerWidget {
+  const _PlannerEventTile({required this.event});
+
+  final PlannerEvent event;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Card(
+      child: ListTile(
+        leading: Icon(
+          event.kind == PlannerEventKind.meeting
+              ? Icons.groups_outlined
+              : Icons.event_outlined,
+        ),
+        title: Text(event.title),
+        subtitle: Text(
+          event.isArchived
+              ? 'Archived event'
+              : '${event.kind.name}; ${_formatRange(event.startsAt, event.endsAt)}${event.recurrenceRule == null ? '' : '; repeats ${event.recurrenceRule}'}${event.reminderPolicy == null ? '' : '; reminder contract'}',
+        ),
+        trailing: Wrap(
+          spacing: AppSpacing.x1,
+          children: [
+            IconButton(
+              tooltip: 'Edit ${event.title}',
+              onPressed: () => _showTaskCoreTextDialog(
+                context: context,
+                title: 'Edit event',
+                label: 'Event title',
+                initialValue: event.title,
+                onSubmit: (title) => ref
+                    .read(plannerControllerProvider)
+                    .updateEvent(
+                      event.id,
+                      PlannerEventDraft(
+                        title: title,
+                        description: event.description,
+                        kind: event.kind,
+                        startsAt: event.startsAt,
+                        endsAt: event.endsAt,
+                        isAllDay: event.isAllDay,
+                        location: event.location,
+                        meetingUrl: event.meetingUrl,
+                        linkedTaskId: event.linkedTaskId,
+                        recurrenceRule: event.recurrenceRule,
+                        reminderPolicy: event.reminderPolicy,
+                      ),
+                    ),
+              ),
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            IconButton(
+              tooltip: event.isArchived
+                  ? 'Restore ${event.title}'
+                  : 'Archive ${event.title}',
+              onPressed: event.isArchived
+                  ? () => ref
+                        .read(plannerControllerProvider)
+                        .restoreEvent(event.id)
+                  : () => ref
+                        .read(plannerControllerProvider)
+                        .archiveEvent(event.id),
+              icon: Icon(
+                event.isArchived
+                    ? Icons.unarchive_outlined
+                    : Icons.archive_outlined,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TimeBlockTile extends ConsumerWidget {
+  const _TimeBlockTile({required this.block});
+
+  final TimeBlock block;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.view_timeline_outlined),
+        title: Text(block.title),
+        subtitle: Text(
+          block.isArchived
+              ? 'Archived time block'
+              : '${block.kind.name}; ${_formatRange(block.startsAt, block.endsAt)}',
+        ),
+        trailing: Wrap(
+          spacing: AppSpacing.x1,
+          children: [
+            IconButton(
+              tooltip: 'Edit ${block.title}',
+              onPressed: () => _showTaskCoreTextDialog(
+                context: context,
+                title: 'Edit time block',
+                label: 'Time block title',
+                initialValue: block.title,
+                onSubmit: (title) => ref
+                    .read(plannerControllerProvider)
+                    .updateTimeBlock(
+                      block.id,
+                      TimeBlockDraft(
+                        title: title,
+                        kind: block.kind,
+                        startsAt: block.startsAt,
+                        endsAt: block.endsAt,
+                        linkedTaskId: block.linkedTaskId,
+                        notes: block.notes,
+                      ),
+                    ),
+              ),
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            IconButton(
+              tooltip: block.isArchived
+                  ? 'Restore ${block.title}'
+                  : 'Archive ${block.title}',
+              onPressed: block.isArchived
+                  ? () => ref
+                        .read(plannerControllerProvider)
+                        .restoreTimeBlock(block.id)
+                  : () => ref
+                        .read(plannerControllerProvider)
+                        .archiveTimeBlock(block.id),
+              icon: Icon(
+                block.isArchived
+                    ? Icons.unarchive_outlined
+                    : Icons.archive_outlined,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FocusSessionTile extends ConsumerWidget {
+  const _FocusSessionTile({required this.session});
+
+  final FocusSession session;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final endsAt =
+        session.endedAt ??
+        session.startedAt.add(
+          Duration(minutes: session.plannedDurationMinutes),
+        );
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.timer_outlined),
+        title: const Text('Focus session'),
+        subtitle: Text(
+          session.isArchived
+              ? 'Archived focus session'
+              : '${session.status.name}; planned ${session.plannedDurationMinutes} minutes; actual ${session.actualDurationMinutes ?? 0} minutes; ${_formatRange(session.startedAt, endsAt)}',
+        ),
+        trailing: IconButton(
+          tooltip: session.isArchived
+              ? 'Restore focus session'
+              : 'Archive focus session',
+          onPressed: session.isArchived
+              ? () => ref
+                    .read(plannerControllerProvider)
+                    .restoreFocusSession(session.id)
+              : () => ref
+                    .read(plannerControllerProvider)
+                    .archiveFocusSession(session.id),
+          icon: Icon(
+            session.isArchived
+                ? Icons.unarchive_outlined
+                : Icons.archive_outlined,
+          ),
         ),
       ),
     );
@@ -809,6 +1078,58 @@ TaskDraft _taskDraftWithTitle(TaskItem task, String title) {
     parentTaskId: task.parentTaskId,
     notes: task.notes,
   );
+}
+
+extension on TaskDraft {
+  TaskDraft copyWithSchedule({
+    required DateTime startsAt,
+    required DateTime endsAt,
+    required int estimatedDurationMinutes,
+  }) {
+    return TaskDraft(
+      title: title,
+      description: description,
+      areaId: areaId,
+      goalId: goalId,
+      projectId: projectId,
+      milestoneId: milestoneId,
+      parentTaskId: parentTaskId,
+      status: TaskStatus.planned,
+      priority: priority,
+      energyRequirement: energyRequirement,
+      estimatedDurationMinutes: estimatedDurationMinutes,
+      actualDurationMinutes: actualDurationMinutes,
+      dueAt: dueAt,
+      scheduledStartAt: startsAt,
+      scheduledEndAt: endsAt,
+      preferredTimeOfDay: preferredTimeOfDay,
+      completedAt: completedAt,
+      notes: notes,
+    );
+  }
+
+  TaskDraft copyWithActual({required int actualDurationMinutes}) {
+    return TaskDraft(
+      title: title,
+      description: description,
+      areaId: areaId,
+      goalId: goalId,
+      projectId: projectId,
+      milestoneId: milestoneId,
+      parentTaskId: parentTaskId,
+      status: status,
+      priority: priority,
+      energyRequirement: energyRequirement,
+      estimatedDurationMinutes: estimatedDurationMinutes,
+      actualDurationMinutes: actualDurationMinutes,
+      dueAt: dueAt,
+      scheduledStartAt: scheduledStartAt,
+      scheduledEndAt: scheduledEndAt,
+      preferredTimeOfDay: preferredTimeOfDay,
+      completedAt: completedAt,
+      notes: notes,
+    );
+  }
 }
 
 DateTime _startOfDay(DateTime value) {

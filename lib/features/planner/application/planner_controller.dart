@@ -32,6 +32,22 @@ class PlannerController {
   Future<void> archiveTimeBlock(String id) => _repository.archiveTimeBlock(id);
 
   Future<void> restoreTimeBlock(String id) => _repository.restoreTimeBlock(id);
+
+  Future<FocusSession> createFocusSession(FocusSessionDraft draft) {
+    return _repository.createFocusSession(draft);
+  }
+
+  Future<FocusSession> updateFocusSession(String id, FocusSessionDraft draft) {
+    return _repository.updateFocusSession(id, draft);
+  }
+
+  Future<void> archiveFocusSession(String id) {
+    return _repository.archiveFocusSession(id);
+  }
+
+  Future<void> restoreFocusSession(String id) {
+    return _repository.restoreFocusSession(id);
+  }
 }
 
 final plannerControllerProvider = Provider<PlannerController>((ref) {

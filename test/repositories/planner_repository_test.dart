@@ -19,7 +19,7 @@ void main() {
     records = <AppLogRecord>[];
     repository = DriftPlannerRepository(
       database: database,
-      idService: FixedIdService(['event-1', 'block-1']),
+      idService: FixedIdService(['event-1', 'block-1', 'focus-1']),
       clock: FixedUtcClock(DateTime.utc(2026, 6, 24, 8)),
       logger: AppLogger(sink: records.add),
     );
@@ -27,37 +27,53 @@ void main() {
 
   tearDown(() => database.close());
 
-  test('creates events and time blocks with stable IDs', () async {
-    final startsAt = DateTime.utc(2026, 6, 24, 9);
+  test(
+    'creates events, time blocks, and focus sessions with stable IDs',
+    () async {
+      final startsAt = DateTime.utc(2026, 6, 24, 9);
 
-    final event = await repository.createEvent(
-      PlannerEventDraft(
-        title: 'Event A',
-        kind: PlannerEventKind.meeting,
-        startsAt: startsAt,
-        endsAt: startsAt.add(const Duration(hours: 1)),
-        recurrenceRule: 'contract:none',
-        reminderPolicy: 'contract:none',
-      ),
-    );
-    final block = await repository.createTimeBlock(
-      TimeBlockDraft(
-        title: 'Focus Block',
-        startsAt: startsAt.add(const Duration(hours: 2)),
-        endsAt: startsAt.add(const Duration(hours: 3)),
-      ),
-    );
+      final event = await repository.createEvent(
+        PlannerEventDraft(
+          title: 'Event A',
+          kind: PlannerEventKind.meeting,
+          startsAt: startsAt,
+          endsAt: startsAt.add(const Duration(hours: 1)),
+          recurrenceRule: 'daily',
+          reminderPolicy: 'minutesBefore:10',
+        ),
+      );
+      final block = await repository.createTimeBlock(
+        TimeBlockDraft(
+          title: 'Focus Block',
+          startsAt: startsAt.add(const Duration(hours: 2)),
+          endsAt: startsAt.add(const Duration(hours: 3)),
+        ),
+      );
+      final session = await repository.createFocusSession(
+        FocusSessionDraft(
+          plannedDurationMinutes: 25,
+          actualDurationMinutes: 20,
+          startedAt: startsAt.add(const Duration(hours: 4)),
+          endedAt: startsAt.add(const Duration(hours: 4, minutes: 20)),
+          status: FocusSessionStatus.completed,
+        ),
+      );
 
-    final snapshot = await repository.current();
+      final snapshot = await repository.current();
 
-    expect(event.id, 'event-1');
-    expect(event.kind, PlannerEventKind.meeting);
-    expect(event.recurrenceRule, 'contract:none');
-    expect(block.id, 'block-1');
-    expect(snapshot.events.single.title, 'Event A');
-    expect(snapshot.timeBlocks.single.title, 'Focus Block');
-    expect(snapshot.events.single.createdAt.isUtc, isTrue);
-  });
+      expect(event.id, 'event-1');
+      expect(event.kind, PlannerEventKind.meeting);
+      expect(event.recurrenceRule, 'daily');
+      expect(event.reminderPolicy, 'minutesBefore:10');
+      expect(block.id, 'block-1');
+      expect(session.id, 'focus-1');
+      expect(session.status, FocusSessionStatus.completed);
+      expect(snapshot.events.single.title, 'Event A');
+      expect(snapshot.timeBlocks.single.title, 'Focus Block');
+      expect(snapshot.focusSessions.single.actualDurationMinutes, 20);
+      expect(snapshot.events.single.createdAt.isUtc, isTrue);
+    },
+  );
 
   test('updates, archives, restores, and deletes planner records', () async {
     final startsAt = DateTime.utc(2026, 6, 24, 9);
@@ -96,15 +112,22 @@ void main() {
     await repository.archiveTimeBlock(block.id);
     await repository.restoreEvent(event.id);
     await repository.restoreTimeBlock(block.id);
+    final session = await repository.createFocusSession(
+      FocusSessionDraft(plannedDurationMinutes: 25, startedAt: startsAt),
+    );
+    await repository.archiveFocusSession(session.id);
+    await repository.restoreFocusSession(session.id);
 
     final snapshot = await repository.current();
     expect(snapshot.events.single.title, 'Event B');
     expect(snapshot.events.single.isArchived, isFalse);
     expect(snapshot.timeBlocks.single.title, 'Block B');
     expect(snapshot.timeBlocks.single.isArchived, isFalse);
+    expect(snapshot.focusSessions.single.isArchived, isFalse);
 
     await repository.deleteEvent(event.id);
     await repository.deleteTimeBlock(block.id);
+    await repository.deleteFocusSession(session.id);
     expect((await repository.current()).isEmpty, isTrue);
   });
 
@@ -141,6 +164,46 @@ void main() {
     expect(records.single.operation, 'createEvent');
     expect(records.single.error, isNotNull);
     expect(records.single.stackTrace, isNotNull);
+  });
+
+  test('validates recurrence and reminder contracts', () async {
+    final startsAt = DateTime.utc(2026, 6, 24, 9);
+
+    final event = await repository.createEvent(
+      PlannerEventDraft(
+        title: 'Recurring event',
+        startsAt: startsAt,
+        endsAt: startsAt.add(const Duration(hours: 1)),
+        recurrenceRule: 'daily',
+        reminderPolicy: 'minutesBefore:15',
+      ),
+    );
+
+    expect(event.recurrenceRule, 'daily');
+    expect(event.reminderPolicy, 'minutesBefore:15');
+
+    await expectLater(
+      repository.createEvent(
+        PlannerEventDraft(
+          title: 'Invalid recurrence',
+          startsAt: startsAt,
+          endsAt: startsAt.add(const Duration(hours: 1)),
+          recurrenceRule: 'monthly',
+        ),
+      ),
+      throwsA(isA<PersistenceValidationFailure>()),
+    );
+    await expectLater(
+      repository.createEvent(
+        PlannerEventDraft(
+          title: 'Invalid reminder',
+          startsAt: startsAt,
+          endsAt: startsAt.add(const Duration(hours: 1)),
+          reminderPolicy: 'soon',
+        ),
+      ),
+      throwsA(isA<PersistenceValidationFailure>()),
+    );
   });
 
   test('detects conflicts and free windows from schedule items', () {
@@ -183,6 +246,34 @@ void main() {
     expect(conflicts, hasLength(1));
     expect(freeWindows.first.startsAt, DateTime.utc(2026, 6, 24, 8));
     expect(freeWindows.last.startsAt, DateTime.utc(2026, 6, 24, 12));
+  });
+
+  test('expands daily and weekly recurring events locally', () {
+    final startsAt = DateTime.utc(2026, 6, 24, 9);
+    final snapshot = PlannerSnapshot(
+      events: [
+        PlannerEvent(
+          id: 'event-1',
+          title: 'Daily Event',
+          kind: PlannerEventKind.event,
+          startsAt: startsAt,
+          endsAt: startsAt.add(const Duration(hours: 1)),
+          isAllDay: false,
+          recurrenceRule: 'daily',
+          createdAt: startsAt,
+          updatedAt: startsAt,
+        ),
+      ],
+    );
+
+    final items = expandedPlannerScheduleItems(
+      snapshot: snapshot,
+      startsAt: startsAt,
+      endsAt: startsAt.add(const Duration(days: 3)),
+    );
+
+    expect(items.where((item) => item.title == 'Daily Event'), hasLength(3));
+    expect(items.last.sourceType, 'event recurrence');
   });
 
   test('planner events can link to existing tasks', () async {

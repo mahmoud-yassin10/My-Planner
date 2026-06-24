@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'generated/schema.dart';
 
 import 'generated/schema_v1.dart' as v1;
-import 'generated/schema_v4.dart' as v4;
+import 'generated/schema_v5.dart' as v5;
 
 void main() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -36,7 +36,7 @@ void main() {
     }
   });
 
-  test('migration from v1 to v4 preserves settings and metadata', () async {
+  test('migration from v1 to v5 preserves settings and metadata', () async {
     const updatedAt = '2026-06-24T00:00:00.000Z';
     const oldAppSettingsData = <v1.AppSettingsData>[
       v1.AppSettingsData(
@@ -45,8 +45,8 @@ void main() {
         updatedAt: updatedAt,
       ),
     ];
-    const expectedNewAppSettingsData = <v4.AppSettingsData>[
-      v4.AppSettingsData(
+    const expectedNewAppSettingsData = <v5.AppSettingsData>[
+      v5.AppSettingsData(
         key: 'themeMode',
         value: 'system',
         updatedAt: updatedAt,
@@ -63,9 +63,9 @@ void main() {
 
     await verifier.testWithDataIntegrity(
       oldVersion: 1,
-      newVersion: 4,
+      newVersion: 5,
       createOld: v1.DatabaseAtV1.new,
-      createNew: v4.DatabaseAtV4.new,
+      createNew: v5.DatabaseAtV5.new,
       openTestedDatabase: AppDatabase.new,
       createItems: (batch, oldDb) {
         batch.insertAll(oldDb.appSettings, oldAppSettingsData);
@@ -79,7 +79,7 @@ void main() {
         final metadata = await newDb.select(newDb.schemaMetadata).get();
         expect(metadata, hasLength(1));
         expect(metadata.single.key, 'schemaVersion');
-        expect(metadata.single.value, '4');
+        expect(metadata.single.value, '5');
       },
     );
   });

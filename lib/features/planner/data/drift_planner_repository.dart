@@ -45,7 +45,11 @@ class DriftPlannerRepository implements PlannerRepository {
     yield* _database
         .customSelect(
           'SELECT 1',
-          readsFrom: {_database.plannerEvents, _database.timeBlocks},
+          readsFrom: {
+            _database.plannerEvents,
+            _database.timeBlocks,
+            _database.focusSessions,
+          },
         )
         .watch()
         .skip(1)
@@ -226,6 +230,91 @@ class DriftPlannerRepository implements PlannerRepository {
     )..where((table) => table.id.equals(id))).go(),
   );
 
+  @override
+  Future<FocusSession> createFocusSession(FocusSessionDraft draft) async {
+    final cleaned = _validateFocusSessionDraft(draft);
+    final now = _clock.now();
+    final session = FocusSession(
+      id: _idService.newId(),
+      taskId: cleaned.taskId,
+      plannedDurationMinutes: cleaned.plannedDurationMinutes,
+      actualDurationMinutes: cleaned.actualDurationMinutes,
+      startedAt: cleaned.startedAt,
+      endedAt: cleaned.endedAt,
+      status: cleaned.status,
+      notes: cleaned.notes,
+      createdAt: now,
+      updatedAt: now,
+    );
+
+    try {
+      await _database
+          .into(_database.focusSessions)
+          .insert(_focusSessionCompanion(session));
+      return session;
+    } catch (error, stackTrace) {
+      _logFailure('createFocusSession', error, stackTrace);
+      throw const PersistenceWriteFailure('Unable to create focus session.');
+    }
+  }
+
+  @override
+  Future<FocusSession> updateFocusSession(
+    String id,
+    FocusSessionDraft draft,
+  ) async {
+    final previous = await _focusSessionById(id);
+    final cleaned = _validateFocusSessionDraft(draft);
+    final session = FocusSession(
+      id: id,
+      taskId: cleaned.taskId,
+      plannedDurationMinutes: cleaned.plannedDurationMinutes,
+      actualDurationMinutes: cleaned.actualDurationMinutes,
+      startedAt: cleaned.startedAt,
+      endedAt: cleaned.endedAt,
+      status: cleaned.status,
+      notes: cleaned.notes,
+      createdAt: previous.createdAt,
+      updatedAt: _clock.now(),
+      archivedAt: previous.archivedAt,
+    );
+
+    try {
+      await (_database.update(_database.focusSessions)
+            ..where((table) => table.id.equals(id)))
+          .write(_focusSessionUpdate(session));
+      return session;
+    } catch (error, stackTrace) {
+      _logFailure('updateFocusSession', error, stackTrace);
+      throw const PersistenceWriteFailure('Unable to update focus session.');
+    }
+  }
+
+  @override
+  Future<void> archiveFocusSession(String id) => _setArchive(
+    operation: 'archiveFocusSession',
+    tableName: 'focus_sessions',
+    id: id,
+    archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreFocusSession(String id) => _setArchive(
+    operation: 'restoreFocusSession',
+    tableName: 'focus_sessions',
+    id: id,
+    archivedAt: null,
+  );
+
+  @override
+  Future<void> deleteFocusSession(String id) => _delete(
+    operation: 'deleteFocusSession',
+    tableName: 'focus_sessions',
+    delete: () => (_database.delete(
+      _database.focusSessions,
+    )..where((table) => table.id.equals(id))).go(),
+  );
+
   Future<PlannerSnapshot> _snapshot() async {
     final events =
         await (_database.select(_database.plannerEvents)..orderBy([
@@ -239,10 +328,17 @@ class DriftPlannerRepository implements PlannerRepository {
               (table) => OrderingTerm.asc(table.title),
             ]))
             .get();
+    final sessions =
+        await (_database.select(_database.focusSessions)..orderBy([
+              (table) => OrderingTerm.asc(table.startedAt),
+              (table) => OrderingTerm.asc(table.createdAt),
+            ]))
+            .get();
 
     return PlannerSnapshot(
       events: events.map(_eventFromRow).toList(),
       timeBlocks: blocks.map(_timeBlockFromRow).toList(),
+      focusSessions: sessions.map(_focusSessionFromRow).toList(),
     );
   }
 
@@ -276,9 +372,26 @@ class DriftPlannerRepository implements PlannerRepository {
     }
   }
 
+  Future<FocusSession> _focusSessionById(String id) async {
+    try {
+      final row = await (_database.select(
+        _database.focusSessions,
+      )..where((table) => table.id.equals(id))).getSingleOrNull();
+      if (row == null) {
+        throw const PersistenceReadFailure('Focus session was not found.');
+      }
+      return _focusSessionFromRow(row);
+    } catch (error, stackTrace) {
+      _logFailure('readFocusSession', error, stackTrace);
+      throw const PersistenceReadFailure('Unable to read focus session.');
+    }
+  }
+
   PlannerEventDraft _validateEventDraft(PlannerEventDraft draft) {
     final title = _requiredText(draft.title, 'Event title');
     _validateDateRange(draft.startsAt, draft.endsAt);
+    final recurrenceRule = _validateRecurrenceRule(draft.recurrenceRule);
+    final reminderPolicy = _validateReminderPolicy(draft.reminderPolicy);
     return PlannerEventDraft(
       title: title,
       description: _optionalText(draft.description),
@@ -289,8 +402,8 @@ class DriftPlannerRepository implements PlannerRepository {
       location: _optionalText(draft.location),
       meetingUrl: _optionalText(draft.meetingUrl),
       linkedTaskId: _optionalText(draft.linkedTaskId),
-      recurrenceRule: _optionalText(draft.recurrenceRule),
-      reminderPolicy: _optionalText(draft.reminderPolicy),
+      recurrenceRule: recurrenceRule,
+      reminderPolicy: reminderPolicy,
     );
   }
 
@@ -305,6 +418,67 @@ class DriftPlannerRepository implements PlannerRepository {
       linkedTaskId: _optionalText(draft.linkedTaskId),
       notes: _optionalText(draft.notes),
     );
+  }
+
+  FocusSessionDraft _validateFocusSessionDraft(FocusSessionDraft draft) {
+    if (draft.plannedDurationMinutes <= 0) {
+      throw const PersistenceValidationFailure(
+        'Planned duration must be positive.',
+      );
+    }
+    if (draft.actualDurationMinutes != null &&
+        draft.actualDurationMinutes! < 0) {
+      throw const PersistenceValidationFailure(
+        'Actual duration must not be negative.',
+      );
+    }
+    if (draft.endedAt != null && draft.endedAt!.isBefore(draft.startedAt)) {
+      throw const PersistenceValidationFailure(
+        'Focus session end must not be before start.',
+      );
+    }
+    return FocusSessionDraft(
+      taskId: _optionalText(draft.taskId),
+      plannedDurationMinutes: draft.plannedDurationMinutes,
+      actualDurationMinutes: draft.actualDurationMinutes,
+      startedAt: draft.startedAt.toUtc(),
+      endedAt: draft.endedAt?.toUtc(),
+      status: draft.status,
+      notes: _optionalText(draft.notes),
+    );
+  }
+
+  String? _validateRecurrenceRule(String? value) {
+    final cleaned = _optionalText(value);
+    if (cleaned == null) {
+      return null;
+    }
+    if (cleaned == 'none' || cleaned == 'daily' || cleaned == 'weekly') {
+      return cleaned == 'none' ? null : cleaned;
+    }
+    throw const PersistenceValidationFailure(
+      'Recurrence rule must be none, daily, or weekly.',
+    );
+  }
+
+  String? _validateReminderPolicy(String? value) {
+    final cleaned = _optionalText(value);
+    if (cleaned == null || cleaned == 'none') {
+      return null;
+    }
+    final prefix = 'minutesBefore:';
+    if (!cleaned.startsWith(prefix)) {
+      throw const PersistenceValidationFailure(
+        'Reminder policy must be none or minutesBefore:<minutes>.',
+      );
+    }
+    final minutes = int.tryParse(cleaned.substring(prefix.length));
+    if (minutes == null || minutes < 0) {
+      throw const PersistenceValidationFailure(
+        'Reminder minutes must not be negative.',
+      );
+    }
+    return cleaned;
   }
 
   void _validateDateRange(DateTime startsAt, DateTime endsAt) {
@@ -340,6 +514,7 @@ class DriftPlannerRepository implements PlannerRepository {
           switch (tableName) {
             'planner_events' => _database.plannerEvents,
             'time_blocks' => _database.timeBlocks,
+            'focus_sessions' => _database.focusSessions,
             _ => throw ArgumentError.value(tableName, 'tableName'),
           },
         },
@@ -437,6 +612,36 @@ class DriftPlannerRepository implements PlannerRepository {
     );
   }
 
+  FocusSessionsCompanion _focusSessionCompanion(FocusSession session) {
+    return FocusSessionsCompanion.insert(
+      id: session.id,
+      taskId: Value(session.taskId),
+      plannedDurationMinutes: session.plannedDurationMinutes,
+      actualDurationMinutes: Value(session.actualDurationMinutes),
+      startedAt: session.startedAt,
+      endedAt: Value(session.endedAt),
+      status: session.status.name,
+      notes: Value(session.notes),
+      createdAt: session.createdAt,
+      updatedAt: session.updatedAt,
+      archivedAt: Value(session.archivedAt),
+    );
+  }
+
+  FocusSessionsCompanion _focusSessionUpdate(FocusSession session) {
+    return FocusSessionsCompanion(
+      taskId: Value(session.taskId),
+      plannedDurationMinutes: Value(session.plannedDurationMinutes),
+      actualDurationMinutes: Value(session.actualDurationMinutes),
+      startedAt: Value(session.startedAt),
+      endedAt: Value(session.endedAt),
+      status: Value(session.status.name),
+      notes: Value(session.notes),
+      updatedAt: Value(session.updatedAt),
+      archivedAt: Value(session.archivedAt),
+    );
+  }
+
   PlannerEvent _eventFromRow(PlannerEventRow row) {
     return PlannerEvent(
       id: row.id,
@@ -469,6 +674,26 @@ class DriftPlannerRepository implements PlannerRepository {
       startsAt: row.startsAt,
       endsAt: row.endsAt,
       linkedTaskId: row.linkedTaskId,
+      notes: row.notes,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+      archivedAt: row.archivedAt,
+    );
+  }
+
+  FocusSession _focusSessionFromRow(FocusSessionRow row) {
+    return FocusSession(
+      id: row.id,
+      taskId: row.taskId,
+      plannedDurationMinutes: row.plannedDurationMinutes,
+      actualDurationMinutes: row.actualDurationMinutes,
+      startedAt: row.startedAt,
+      endedAt: row.endedAt,
+      status: _enumValue(
+        FocusSessionStatus.values,
+        row.status,
+        FocusSessionStatus.planned,
+      ),
       notes: row.notes,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,

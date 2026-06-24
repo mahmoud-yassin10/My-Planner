@@ -57,6 +57,8 @@ Phase 3C adds focused tests for hierarchy and task-core edit flows, restore acti
 
 Phase 4A adds focused tests for schema version 4, generated Drift migration verification from earlier snapshots, Planner event and time-block repository behavior, provider boundaries, conflict and free-window helpers, task scheduling visibility, and Planner Day/Week/Month/Agenda rendering.
 
+Phase 4B adds focused tests for schema version 5, focus session persistence, recurrence expansion, reminder contract validation, Planner task scheduling and actual-duration actions, and completed Planner widget coverage.
+
 ### Widget tests
 
 Cover:

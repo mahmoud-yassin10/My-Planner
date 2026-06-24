@@ -40,6 +40,8 @@ Phase 3A implements Areas, Goals, Projects, and Milestones in schema version 2. 
 
 Phase 4A implements Planner events and time blocks in schema version 4. Archive is represented by nullable `archivedAt` and is reversible. Delete is a permanent repository operation; SQLite foreign keys reject deletion when linked tasks require protection. Recurrence and reminder fields are inert contracts only until Phase 4B and Phase 7 add the relevant behavior.
 
+Phase 4B implements focus sessions in schema version 5. Recurrence expansion is local and deterministic for supported event rules. Reminder policies are validated contracts only; platform notification scheduling remains deferred to Phase 7.
+
 ## 3. Core productivity tables
 
 ### `areas`
@@ -175,7 +177,6 @@ Event participants, preparation notes, meeting outcomes, and follow-up tasks rem
 
 - `id`
 - `taskId`
-- `areaId`
 - `plannedDurationMinutes`
 - `actualDurationMinutes`
 - `startedAt`
@@ -520,6 +521,8 @@ Schema version 2 is now checked in with `drift_schemas/app_database/drift_schema
 Schema version 3 adds Tasks/subtasks, Tags, entity-tag relationships, Notes, and note links. Subtasks use `tasks.parentTaskId`; note and tag links use generic entity references validated at the repository boundary where SQLite cannot enforce polymorphic targets directly.
 
 Schema version 4 adds Planner events and time blocks. `planner_events.linkedTaskId` and `time_blocks.linkedTaskId` reference `tasks.id`. Recurrence and reminder text fields are contract placeholders and do not schedule platform notifications.
+
+Schema version 5 adds focus sessions. `focus_sessions.taskId` references `tasks.id`; focus sessions store planned and actual duration for Phase 4 Planner behavior without adding analytics dashboards.
 
 ## 13. Backup and export
 

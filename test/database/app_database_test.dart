@@ -44,6 +44,7 @@ void main() {
       expect(tables.map((row) => row.data['name']), contains('note_links'));
       expect(tables.map((row) => row.data['name']), contains('planner_events'));
       expect(tables.map((row) => row.data['name']), contains('time_blocks'));
+      expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
     },
   );
 
@@ -105,6 +106,7 @@ void main() {
     expect(tables.map((row) => row.data['name']), contains('note_links'));
     expect(tables.map((row) => row.data['name']), contains('planner_events'));
     expect(tables.map((row) => row.data['name']), contains('time_blocks'));
+    expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
   });
 
   test(
@@ -140,6 +142,7 @@ void main() {
       expect(schema.toString(), contains('note_links'));
       expect(schema.toString(), contains('planner_events'));
       expect(schema.toString(), contains('time_blocks'));
+      expect(schema.toString(), contains('focus_sessions'));
     },
   );
 }

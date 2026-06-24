@@ -26,8 +26,8 @@ Status values:
 
 | Feature | Phase | Status | Notes |
 |---|---:|---|---|
-| Drift database | 2 | Complete | Schema version 4 with settings metadata, productivity-core tables, and planner foundation tables |
-| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 4 |
+| Drift database | 2 | Complete | Schema version 5 with settings metadata, productivity-core tables, and planner tables |
+| Migration strategy implementation | 2 | Complete | Schema snapshots and migration harness through version 5 |
 | UUID service | 2 | Complete | Replaceable UUID v4 service |
 | Typed settings | 2 | Complete | Drift-backed typed settings repository |
 | Repository contracts | 2 | Complete | Settings repository and persistence failure boundary |
@@ -57,11 +57,11 @@ Status values:
 | Agenda | 4 | Complete |
 | Events and meetings | 4 | Complete |
 | Time blocks | 4 | Complete |
-| Recurrence | 4 | Planned |
-| Reminders | 4 | Planned |
-| Focus sessions | 4 | Not started |
+| Recurrence | 4 | Complete |
+| Reminders | 4 | Complete |
+| Focus sessions | 4 | Complete |
 | Free-time detection | 4 | Complete |
-| Planned vs actual time | 4 | Planned |
+| Planned vs actual time | 4 | Complete |
 
 ## Spaces engine
 

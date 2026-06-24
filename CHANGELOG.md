@@ -44,6 +44,8 @@ The project follows a phase-based development process. Version numbers will be i
 - Schema version 4 with Planner events and time blocks
 - Drift-backed Planner repository with event, time-block, conflict, free-window, and provider tests
 - Planner Day, Week, Month, and Agenda foundation views for events, time blocks, and scheduled tasks
+- Schema version 5 with focus sessions
+- Planner recurrence expansion, reminder contract validation, task scheduling, actual-duration, and focus-session completion behavior
 - Drift schema version 3 snapshot and migration verification tests
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
