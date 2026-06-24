@@ -20,6 +20,7 @@ The project follows a phase-based development process. Version numbers will be i
 - Recoverable startup initialization handling with retry screen
 - Route-level error screen for unavailable routes
 - Centralized light and dark Material 3 themes
+- Updated the default Momentum OS palette to a blue accent with refined light and dark surfaces
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`
 - Android namespace `com.mahmoudyassin.momentum_os`
