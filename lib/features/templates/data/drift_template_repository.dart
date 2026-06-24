@@ -8,6 +8,7 @@ import '../../../core/errors/persistence_failure.dart';
 import '../../../core/logging/app_logger.dart';
 import '../../../core/services/id_service.dart';
 import '../../../core/services/utc_clock.dart';
+import 'bundled_template_definitions.dart';
 import '../domain/template_models.dart';
 import '../domain/template_repository.dart';
 
@@ -256,8 +257,7 @@ class DriftTemplateRepository implements TemplateRepository {
         'Template configuration must be a JSON object.',
       );
     }
-    if (decoded.containsKey('exampleRecords') ||
-        decoded.containsKey('demoData')) {
+    if (_containsForbiddenPayloadKey(decoded)) {
       throw const PersistenceValidationFailure(
         'Template infrastructure must not include example records.',
       );
@@ -271,6 +271,24 @@ class DriftTemplateRepository implements TemplateRepository {
       throw PersistenceValidationFailure('$label must not be empty.');
     }
     return trimmed;
+  }
+
+  bool _containsForbiddenPayloadKey(Object? value) {
+    const forbiddenKeys = {'records', 'exampleRecords', 'demoData'};
+    if (value is Map) {
+      for (final entry in value.entries) {
+        if (forbiddenKeys.contains(entry.key)) {
+          return true;
+        }
+        if (_containsForbiddenPayloadKey(entry.value)) {
+          return true;
+        }
+      }
+    }
+    if (value is List) {
+      return value.any(_containsForbiddenPayloadKey);
+    }
+    return false;
   }
 
   T _enumValue<T extends Enum>(List<T> values, String name, T fallback) {
@@ -295,7 +313,7 @@ class DriftTemplateRepository implements TemplateRepository {
 }
 
 final templateDefinitionsProvider = Provider<List<TemplateDefinition>>((ref) {
-  return const [];
+  return bundledTemplateDefinitions;
 });
 
 final templateRepositoryProvider = Provider<TemplateRepository>((ref) {

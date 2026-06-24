@@ -87,22 +87,22 @@ Status values:
 | Template | Phase | Status |
 |---|---:|---|
 | Template infrastructure | 6 | Complete |
-| Freelancing CRM | 6 | Planned |
-| Finance | 6 | Planned |
-| Opportunities | 6 | Planned |
-| Learning | 6 | Planned |
-| Competitive programming | 6 | Planned |
-| Machine learning | 6 | Planned |
-| University | 6 | Planned |
-| Fitness | 6 | Planned |
-| Reading | 6 | Planned |
-| Content creation | 6 | Planned |
+| Freelancing CRM | 6 | Complete |
+| Finance | 6 | Complete |
+| Opportunities | 6 | Complete |
+| Learning | 6 | Complete |
+| Competitive programming | 6 | Complete |
+| Machine learning | 6 | Complete |
+| University | 6 | Complete |
+| Fitness | 6 | Complete |
+| Reading | 6 | Complete |
+| Content creation | 6 | Complete |
 
 ## Notifications and automations
 
 | Feature | Phase | Status |
 |---|---:|---|
-| Local notifications | 7 | Not started |
+| Local notifications | 7 | Planned |
 | Reminder scheduling | 7 | Not started |
 | Background jobs | 7 | Not started |
 | Notification inbox | 7 | Not started |

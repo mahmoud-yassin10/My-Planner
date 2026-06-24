@@ -65,6 +65,8 @@ Phase 5B adds focused tests for Spaces archive/restore/delete lifecycle operatio
 
 Phase 6A adds focused tests for schema version 7, template installation metadata persistence, provider boundaries, install/uninstall metadata behavior, duplicate/missing/unsafe template validation, zero-installed-template support, and template foundation panel loading/empty/content/error rendering.
 
+Phase 6B adds focused tests for bundled template descriptor coverage, descriptor payload safety, metadata-only installation behavior, and zero-created-record guarantees.
+
 ### Widget tests
 
 Cover:

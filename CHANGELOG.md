@@ -52,7 +52,8 @@ The project follows a phase-based development process. Version numbers will be i
 - Spaces archive, restore, and explicit delete operations for implemented Spaces entities
 - Saved Spaces list, table, board, and card view rendering with deterministic saved-view configuration validation
 - Schema version 7 with template installation metadata
-- Template infrastructure with empty-by-default registry, install metadata, uninstall choices, repository/provider boundary, and foundation panel states
+- Template infrastructure with injectable registry, install metadata, uninstall choices, repository/provider boundary, and foundation panel states
+- Bundled template descriptors for the planned Phase 6 template categories without example records or created user data
 - Drift schema snapshots and migration verification tests through version 7
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors

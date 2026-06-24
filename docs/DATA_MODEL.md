@@ -46,7 +46,9 @@ Phase 5A implements the initial configurable Spaces foundation in schema version
 
 Phase 5B keeps schema version 6 and adds repository lifecycle behavior plus saved-view rendering contracts. Space definitions, record types, fields, statuses, and records use reversible `archivedAt`; all Phase 5A entities have explicit permanent delete operations with foreign-key protection. Saved view `configJson` is validated as a JSON object with supported keys `recordTypeId`, `visibleFieldKeys`, `groupByStatus`, and `sortFieldKey`.
 
-Phase 6A implements template installation metadata in schema version 7. Template definitions are injectable descriptors and are empty by default; installing a template stores metadata only and does not create Areas, Goals, Projects, Tasks, Notes, Events, Spaces, or Space records.
+Phase 6A implements template installation metadata in schema version 7. Template definitions are injectable descriptors; installing a template stores metadata only and does not create Areas, Goals, Projects, Tasks, Notes, Events, Spaces, or Space records.
+
+Phase 6B adds bundled descriptor definitions for the planned template categories without a schema change. Template descriptors remain metadata and configuration contracts only; installing one still stores template-installation metadata without creating user records or example data.
 
 ## 3. Core productivity tables
 

@@ -158,6 +158,8 @@ void main() {
 
     expect(repository, isA<TemplateRepository>());
     expect(repository, isA<DriftTemplateRepository>());
-    expect((await repository.current()).isEmpty, isTrue);
+    final snapshot = await repository.current();
+    expect(snapshot.definitions, isNotEmpty);
+    expect(snapshot.installations, isEmpty);
   });
 }

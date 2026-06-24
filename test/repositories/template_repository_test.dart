@@ -114,7 +114,7 @@ void main() {
           name: 'Unsafe template',
           description: 'Contains unsupported example records.',
           version: '1.0.0',
-          configurationJson: '{"exampleRecords":[]}',
+          configurationJson: '{"spaces":[{"records":[]}]}',
         ),
       ],
     );
