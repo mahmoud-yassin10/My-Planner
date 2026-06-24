@@ -192,7 +192,7 @@ class _GlobalActionButton extends StatelessWidget {
     return IconButton(
       tooltip: tooltip,
       icon: Icon(icon),
-      onPressed: () => context.go(path),
+      onPressed: () => context.push(path),
     );
   }
 }

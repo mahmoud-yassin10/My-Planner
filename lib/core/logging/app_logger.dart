@@ -143,9 +143,13 @@ class AppLogger {
         AppLogLevel.warning => 900,
         AppLogLevel.error => 1000,
       },
-      error: record.error,
+      error: safeDeveloperErrorIdentifier(record.error),
       stackTrace: record.stackTrace,
     );
+  }
+
+  static String? safeDeveloperErrorIdentifier(Object? error) {
+    return error?.runtimeType.toString();
   }
 }
 

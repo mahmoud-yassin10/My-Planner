@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:momentum_os/app/app.dart';
+import 'package:momentum_os/app/bootstrap.dart';
 import 'package:momentum_os/app/routing/app_router.dart';
 import 'package:momentum_os/app/shell/quick_add_sheet.dart';
 import 'package:momentum_os/app/startup/startup_host.dart';
@@ -123,6 +124,31 @@ void main() {
       );
     });
 
+    testWidgets('AI opens above Home and Back returns to Home', (tester) async {
+      await _pumpApp(tester, size: const Size(390, 844));
+
+      await tester.tap(find.byTooltip('Open AI Copilot'));
+      await tester.pumpAndSettle();
+
+      expect(find.byTooltip('Back'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('ai copilotDestinationTitle')),
+        findsOneWidget,
+      );
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const ValueKey('compactNavigationShell')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('homeDestinationTitle')),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('Search route is reachable', (tester) async {
       await _pumpApp(tester, size: const Size(390, 844));
 
@@ -131,6 +157,34 @@ void main() {
 
       expect(
         find.byKey(const ValueKey('searchDestinationTitle')),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('Search opens above Planner and Back returns to Planner', (
+      tester,
+    ) async {
+      await _pumpApp(tester, size: const Size(390, 844));
+      await _tapDestination(tester, 'Planner');
+
+      await tester.tap(find.byTooltip('Open Global Search'));
+      await tester.pumpAndSettle();
+
+      expect(find.byTooltip('Back'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('searchDestinationTitle')),
+        findsOneWidget,
+      );
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const ValueKey('compactNavigationShell')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('plannerDestinationTitle')),
         findsOneWidget,
       );
     });
@@ -273,6 +327,40 @@ void main() {
       );
 
       expect(records.single.level, AppLogLevel.error);
+      expect(records.single.error, same(error));
+      expect(records.single.stackTrace, same(stackTrace));
+    });
+
+    test('default developer sink uses safe error identifiers', () {
+      final error = StateError('password should not appear');
+
+      expect(AppLogger.safeDeveloperErrorIdentifier(error), 'StateError');
+      expect(
+        AppLogger.safeDeveloperErrorIdentifier(error),
+        isNot(contains('password')),
+      );
+    });
+
+    test('Flutter framework errors use a static safe message', () {
+      final previousOnError = FlutterError.onError;
+      addTearDown(() {
+        FlutterError.onError = previousOnError;
+      });
+
+      FlutterError.onError = (details) {};
+      final records = <AppLogRecord>[];
+      final logger = AppLogger(sink: records.add);
+      final error = StateError('sensitive exception detail');
+      final stackTrace = StackTrace.current;
+
+      configureFlutterFrameworkErrorLogging(logger);
+      FlutterError.onError!(
+        FlutterErrorDetails(exception: error, stack: stackTrace),
+      );
+
+      expect(records.single.message, uncaughtFlutterFrameworkErrorMessage);
+      expect(records.single.message, isNot(contains('sensitive')));
+      expect(records.single.metadata['exceptionType'], 'StateError');
       expect(records.single.error, same(error));
       expect(records.single.stackTrace, same(stackTrace));
     });

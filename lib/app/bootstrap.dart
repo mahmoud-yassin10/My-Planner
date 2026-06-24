@@ -5,6 +5,9 @@ import '../core/logging/app_logger.dart';
 import 'app.dart';
 import 'startup/startup_host.dart';
 
+const uncaughtFlutterFrameworkErrorMessage =
+    'Uncaught Flutter framework error.';
+
 void bootstrap({
   AppInitializer initializer = defaultAppInitializer,
   AppLogger? logger,
@@ -12,13 +15,26 @@ void bootstrap({
   WidgetsFlutterBinding.ensureInitialized();
 
   final appLogger = logger ?? AppLogger();
+  configureFlutterFrameworkErrorLogging(appLogger);
+
+  runApp(
+    ProviderScope(
+      overrides: [appLoggerProvider.overrideWithValue(appLogger)],
+      child: StartupHost(initializer: initializer, child: const MomentumApp()),
+    ),
+  );
+}
+
+void Function(FlutterErrorDetails details)?
+configureFlutterFrameworkErrorLogging(AppLogger appLogger) {
   final previousOnError = FlutterError.onError;
 
   FlutterError.onError = (details) {
     appLogger.error(
       'flutter',
       'frameworkError',
-      details.exceptionAsString(),
+      uncaughtFlutterFrameworkErrorMessage,
+      metadata: {'exceptionType': details.exception.runtimeType.toString()},
       error: details.exception,
       stackTrace: details.stack,
     );
@@ -30,10 +46,5 @@ void bootstrap({
     }
   };
 
-  runApp(
-    ProviderScope(
-      overrides: [appLoggerProvider.overrideWithValue(appLogger)],
-      child: StartupHost(initializer: initializer, child: const MomentumApp()),
-    ),
-  );
+  return previousOnError;
 }
