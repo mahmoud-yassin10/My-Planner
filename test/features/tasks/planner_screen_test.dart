@@ -37,6 +37,15 @@ void main() {
           ),
         ],
         tags: [Tag(id: 'tag-1', name: 'Tag A', createdAt: now, updatedAt: now)],
+        entityTags: [
+          EntityTag(
+            id: 'entity-tag-1',
+            entityType: 'task',
+            entityId: 'task-1',
+            tagId: 'tag-1',
+            createdAt: now,
+          ),
+        ],
         notes: [
           Note(
             id: 'note-1',
@@ -48,12 +57,56 @@ void main() {
             updatedAt: now,
           ),
         ],
+        noteLinks: [
+          NoteLink(
+            id: 'note-link-1',
+            noteId: 'note-1',
+            entityType: 'task',
+            entityId: 'task-1',
+            relationshipType: 'related',
+            createdAt: now,
+          ),
+        ],
       ),
     );
 
     expect(find.text('Task A'), findsOneWidget);
     expect(find.text('Tag A'), findsOneWidget);
     expect(find.text('Note A'), findsOneWidget);
+    expect(find.text('Status: inbox; 1 tags, 1 notes'), findsOneWidget);
+    expect(find.text('Used on 1 records'), findsOneWidget);
+    expect(find.text('Note; linked to 1 records'), findsOneWidget);
+    expect(find.byTooltip('Edit Task A'), findsOneWidget);
+    expect(find.byTooltip('Archive Task A'), findsOneWidget);
+    expect(find.byKey(const ValueKey('tagFirstTaskButton')), findsOneWidget);
+    expect(find.byKey(const ValueKey('linkFirstNoteButton')), findsOneWidget);
+  });
+
+  testWidgets('Planner screen exposes restore actions for archived records', (
+    tester,
+  ) async {
+    final now = DateTime.utc(2026, 6, 24);
+
+    await _pumpPlannerScreen(
+      tester,
+      TaskCoreSnapshot(
+        tasks: [
+          TaskItem(
+            id: 'task-1',
+            title: 'Task A',
+            status: TaskStatus.inbox,
+            priority: TaskPriority.medium,
+            energyRequirement: TaskEnergyRequirement.normal,
+            createdAt: now,
+            updatedAt: now,
+            archivedAt: now,
+          ),
+        ],
+      ),
+    );
+
+    expect(find.text('Archived task'), findsOneWidget);
+    expect(find.byTooltip('Restore Task A'), findsOneWidget);
   });
 }
 

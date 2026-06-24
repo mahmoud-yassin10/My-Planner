@@ -19,23 +19,49 @@ class HierarchyController {
 
   Future<Area> createArea(AreaDraft draft) => _repository.createArea(draft);
 
+  Future<Area> updateArea(String id, AreaDraft draft) {
+    return _repository.updateArea(id, draft);
+  }
+
   Future<Goal> createGoal(GoalDraft draft) => _repository.createGoal(draft);
+
+  Future<Goal> updateGoal(String id, GoalDraft draft) {
+    return _repository.updateGoal(id, draft);
+  }
 
   Future<Project> createProject(ProjectDraft draft) {
     return _repository.createProject(draft);
+  }
+
+  Future<Project> updateProject(String id, ProjectDraft draft) {
+    return _repository.updateProject(id, draft);
   }
 
   Future<Milestone> createMilestone(MilestoneDraft draft) {
     return _repository.createMilestone(draft);
   }
 
+  Future<Milestone> updateMilestone(String id, MilestoneDraft draft) {
+    return _repository.updateMilestone(id, draft);
+  }
+
   Future<void> archiveArea(String id) => _repository.archiveArea(id);
+
+  Future<void> restoreArea(String id) => _repository.restoreArea(id);
 
   Future<void> archiveGoal(String id) => _repository.archiveGoal(id);
 
+  Future<void> restoreGoal(String id) => _repository.restoreGoal(id);
+
   Future<void> archiveProject(String id) => _repository.archiveProject(id);
+
+  Future<void> restoreProject(String id) => _repository.restoreProject(id);
 
   Future<void> archiveMilestone(String id) {
     return _repository.archiveMilestone(id);
+  }
+
+  Future<void> restoreMilestone(String id) {
+    return _repository.restoreMilestone(id);
   }
 }

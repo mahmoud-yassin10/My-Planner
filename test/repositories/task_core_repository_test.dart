@@ -85,6 +85,37 @@ void main() {
     expect((await repository.current()).tasks, isEmpty);
   });
 
+  test('updates and restores tasks, tags, and notes', () async {
+    final task = await repository.createTask(const TaskDraft(title: 'Task A'));
+    final tag = await repository.createTag(const TagDraft(name: 'Tag A'));
+    final note = await repository.createNote(
+      const NoteDraft(title: 'Note A', content: 'Generic note'),
+    );
+
+    await repository.updateTask(task.id, const TaskDraft(title: 'Task B'));
+    await repository.updateTag(tag.id, const TagDraft(name: 'Tag B'));
+    await repository.updateNote(
+      note.id,
+      const NoteDraft(title: 'Note B', content: 'Updated note'),
+    );
+    await repository.archiveTask(task.id);
+    await repository.archiveTag(tag.id);
+    await repository.archiveNote(note.id);
+    await repository.restoreTask(task.id);
+    await repository.restoreTag(tag.id);
+    await repository.restoreNote(note.id);
+
+    final snapshot = await repository.current();
+
+    expect(snapshot.tasks.single.title, 'Task B');
+    expect(snapshot.tasks.single.isArchived, isFalse);
+    expect(snapshot.tags.single.name, 'Tag B');
+    expect(snapshot.tags.single.isArchived, isFalse);
+    expect(snapshot.notes.single.title, 'Note B');
+    expect(snapshot.notes.single.content, 'Updated note');
+    expect(snapshot.notes.single.isArchived, isFalse);
+  });
+
   test('rejects task hierarchy cycles', () async {
     final parent = await repository.createTask(
       const TaskDraft(title: 'Task A'),

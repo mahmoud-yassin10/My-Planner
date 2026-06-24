@@ -13,7 +13,9 @@ abstract interface class TaskCoreRepository {
   Future<void> deleteTask(String id);
 
   Future<Tag> createTag(TagDraft draft);
+  Future<Tag> updateTag(String id, TagDraft draft);
   Future<void> archiveTag(String id);
+  Future<void> restoreTag(String id);
   Future<void> deleteTag(String id);
   Future<EntityTag> tagEntity({
     required String entityType,
@@ -22,7 +24,9 @@ abstract interface class TaskCoreRepository {
   });
 
   Future<Note> createNote(NoteDraft draft);
+  Future<Note> updateNote(String id, NoteDraft draft);
   Future<void> archiveNote(String id);
+  Future<void> restoreNote(String id);
   Future<void> deleteNote(String id);
   Future<NoteLink> linkNote({
     required String noteId,

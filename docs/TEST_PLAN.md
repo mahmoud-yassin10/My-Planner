@@ -53,6 +53,8 @@ Phase 3A adds focused tests for schema version 2, migration from version 1, gene
 
 Phase 3B adds focused tests for schema version 3, generated Drift migration verification from version 2, task/subtask/tag/note repository behavior, task completion/archive/restore/delete semantics, task hierarchy cycle validation, repository-boundary failure translation, task-core provider boundaries, and Planner task-core rendering.
 
+Phase 3C adds focused tests for hierarchy and task-core edit flows, restore actions, relationship visibility in Goals and Planner screens, and preservation of links while keeping schema version 3 unchanged.
+
 ### Widget tests
 
 Cover:

@@ -220,11 +220,50 @@ class DriftTaskCoreRepository implements TaskCoreRepository {
   }
 
   @override
+  Future<Tag> updateTag(String id, TagDraft draft) async {
+    final previous = await _tagById(id);
+    final name = _requiredText(draft.name, 'Tag name');
+    final tag = Tag(
+      id: id,
+      name: name,
+      colorValue: draft.colorValue,
+      createdAt: previous.createdAt,
+      updatedAt: _clock.now(),
+      archivedAt: previous.archivedAt,
+    );
+
+    try {
+      await (_database.update(
+        _database.tags,
+      )..where((table) => table.id.equals(id))).write(
+        TagsCompanion(
+          name: Value(tag.name),
+          colorValue: Value(tag.colorValue),
+          updatedAt: Value(tag.updatedAt),
+          archivedAt: Value(tag.archivedAt),
+        ),
+      );
+      return tag;
+    } catch (error, stackTrace) {
+      _logFailure('updateTag', error, stackTrace);
+      throw const PersistenceWriteFailure('Unable to update tag.');
+    }
+  }
+
+  @override
   Future<void> archiveTag(String id) => _setArchive(
     operation: 'archiveTag',
     tableName: 'tags',
     id: id,
     archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreTag(String id) => _setArchive(
+    operation: 'restoreTag',
+    tableName: 'tags',
+    id: id,
+    archivedAt: null,
   );
 
   @override
@@ -308,11 +347,54 @@ class DriftTaskCoreRepository implements TaskCoreRepository {
   }
 
   @override
+  Future<Note> updateNote(String id, NoteDraft draft) async {
+    final previous = await _noteById(id);
+    final title = _requiredText(draft.title, 'Note title');
+    final note = Note(
+      id: id,
+      title: title,
+      content: draft.content.trim(),
+      contentFormat: draft.contentFormat,
+      isPinned: draft.isPinned,
+      createdAt: previous.createdAt,
+      updatedAt: _clock.now(),
+      archivedAt: previous.archivedAt,
+    );
+
+    try {
+      await (_database.update(
+        _database.notes,
+      )..where((table) => table.id.equals(id))).write(
+        NotesCompanion(
+          title: Value(note.title),
+          content: Value(note.content),
+          contentFormat: Value(note.contentFormat.name),
+          isPinned: Value(note.isPinned),
+          updatedAt: Value(note.updatedAt),
+          archivedAt: Value(note.archivedAt),
+        ),
+      );
+      return note;
+    } catch (error, stackTrace) {
+      _logFailure('updateNote', error, stackTrace);
+      throw const PersistenceWriteFailure('Unable to update note.');
+    }
+  }
+
+  @override
   Future<void> archiveNote(String id) => _setArchive(
     operation: 'archiveNote',
     tableName: 'notes',
     id: id,
     archivedAt: _clock.now(),
+  );
+
+  @override
+  Future<void> restoreNote(String id) => _setArchive(
+    operation: 'restoreNote',
+    tableName: 'notes',
+    id: id,
+    archivedAt: null,
   );
 
   @override
@@ -395,6 +477,36 @@ class DriftTaskCoreRepository implements TaskCoreRepository {
     } catch (error, stackTrace) {
       _logFailure('readTask', error, stackTrace);
       throw const PersistenceReadFailure('Unable to read task.');
+    }
+  }
+
+  Future<Tag> _tagById(String id) async {
+    try {
+      final row = await (_database.select(
+        _database.tags,
+      )..where((table) => table.id.equals(id))).getSingleOrNull();
+      if (row == null) {
+        throw const PersistenceReadFailure('Tag was not found.');
+      }
+      return _tagFromRow(row);
+    } catch (error, stackTrace) {
+      _logFailure('readTag', error, stackTrace);
+      throw const PersistenceReadFailure('Unable to read tag.');
+    }
+  }
+
+  Future<Note> _noteById(String id) async {
+    try {
+      final row = await (_database.select(
+        _database.notes,
+      )..where((table) => table.id.equals(id))).getSingleOrNull();
+      if (row == null) {
+        throw const PersistenceReadFailure('Note was not found.');
+      }
+      return _noteFromRow(row);
+    } catch (error, stackTrace) {
+      _logFailure('readNote', error, stackTrace);
+      throw const PersistenceReadFailure('Unable to read note.');
     }
   }
 

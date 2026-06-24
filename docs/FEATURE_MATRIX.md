@@ -45,6 +45,7 @@ Status values:
 | Tasks and subtasks | 3 | Complete |
 | Tags and relationships | 3 | Complete |
 | Notes | 3 | Complete |
+| Productivity-core edit, restore, and relationship polish | 3 | Complete |
 
 ## Planner
 

@@ -34,6 +34,7 @@ void main() {
           Goal(
             id: 'goal-1',
             title: 'Goal A',
+            areaId: 'area-1',
             status: GoalStatus.active,
             createdAt: now,
             updatedAt: now,
@@ -43,6 +44,8 @@ void main() {
           Project(
             id: 'project-1',
             title: 'Project A',
+            areaId: 'area-1',
+            goalId: 'goal-1',
             status: ProjectStatus.planned,
             createdAt: now,
             updatedAt: now,
@@ -52,6 +55,7 @@ void main() {
           Milestone(
             id: 'milestone-1',
             title: 'Milestone A',
+            goalId: 'goal-1',
             status: MilestoneStatus.planned,
             sortOrder: 0,
             createdAt: now,
@@ -65,6 +69,39 @@ void main() {
     expect(find.text('Goal A'), findsOneWidget);
     expect(find.text('Project A'), findsOneWidget);
     expect(find.text('Milestone A'), findsOneWidget);
+    expect(find.text('1 goals, 1 projects'), findsOneWidget);
+    expect(
+      find.text('Status: active; 1 projects, 1 milestones'),
+      findsOneWidget,
+    );
+    expect(find.byTooltip('Edit Goal A'), findsOneWidget);
+    expect(find.byTooltip('Archive Goal A'), findsOneWidget);
+  });
+
+  testWidgets('Goals screen exposes restore actions for archived records', (
+    tester,
+  ) async {
+    final now = DateTime.utc(2026, 6, 24);
+
+    await _pumpGoalsScreen(
+      tester,
+      HierarchySnapshot(
+        areas: [
+          Area(
+            id: 'area-1',
+            name: 'Area A',
+            status: AreaStatus.active,
+            sortOrder: 0,
+            createdAt: now,
+            updatedAt: now,
+            archivedAt: now,
+          ),
+        ],
+      ),
+    );
+
+    expect(find.text('Archived area'), findsOneWidget);
+    expect(find.byTooltip('Restore Area A'), findsOneWidget);
   });
 }
 

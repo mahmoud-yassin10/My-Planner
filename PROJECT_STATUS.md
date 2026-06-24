@@ -3,7 +3,7 @@
 **Project:** Momentum OS  
 **Repository:** `mahmoud-yassin10/My-Planner`  
 **Local path:** `C:\Mahmoud\Coding\My Planner`  
-**Current phase:** Phase 3B — Task core complete
+**Current phase:** Phase 3C — Productivity core complete
 **Status date:** 2026-06-24
 
 ## Current state
@@ -123,6 +123,18 @@ Initial validation completed successfully before documentation population:
 | Planner screen loading, empty, content, and error states | Complete |
 | Repository, database, migration, provider, and widget tests | Complete |
 
+## Phase 3C productivity core completion status
+
+| Deliverable | Status |
+|---|---|
+| Edit flows for Areas, Goals, Projects, Milestones, Tasks, Tags, and Notes | Complete |
+| Restore actions for archived hierarchy and task-core records | Complete |
+| Relationship visibility across hierarchy records, task tags, and note links | Complete |
+| Validation-message consistency for implemented text-entry forms | Complete |
+| Repository/controller methods needed by implemented UI only | Complete |
+| Focused repository and widget tests for edit, restore, and relationship visibility | Complete |
+| Schema version preserved at version 3 | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -143,10 +155,10 @@ Implemented foundation behavior:
 - Startup initialization can fail into a recoverable retry screen instead of a blank app.
 - Drift-backed local persistence foundation is available for app settings and schema metadata.
 - Schema version 2 adds Areas, Goals, Projects, and Milestones only.
-- The Goals destination renders the Phase 3A hierarchy and supports simple creation and archive actions through a controller.
+- The Goals destination renders the Phase 3 hierarchy and supports simple creation, edit, archive, and restore actions through a controller.
 - Hierarchy persistence is exposed through a typed repository interface rather than Drift access from widgets.
 - Schema version 3 adds Tasks, subtasks, Tags, entity-tag relationships, Notes, and note links only.
-- The Planner destination renders the Phase 3B task core and supports simple task, tag, and note creation plus task completion.
+- The Planner destination renders the Phase 3 task core and supports simple task, tag, and note creation, editing, archiving, restoration, task completion, task tagging, and note linking.
 - Task-core persistence is exposed through a typed repository interface rather than Drift access from widgets.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
@@ -158,7 +170,7 @@ Implemented foundation behavior:
 ## Known issues
 
 - The dependency resolver reports newer package versions that are outside the generated constraints. This is informational and not a failure.
-- Debug APK verification has passed for the Phase 3B task core.
+- Debug APK verification has passed for the Phase 3C productivity core.
 - Real-device manual verification has not started because no release-ready product feature exists yet.
 
 ## Latest validation results
@@ -170,7 +182,7 @@ Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 - `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v3.json` and updated migration verification tests.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 73 tests passed.
+- `flutter test` — Passed; 77 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 
@@ -186,8 +198,8 @@ The approved direction is:
 - Provider-independent AI contracts
 - Local-first operation with future synchronization compatibility
 
-Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, Phase 3A hierarchy core, and Phase 3B task core are in place. Planner events and later modules have not been added yet.
+Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, route error handling, global placeholders, startup recovery, Drift persistence, typed settings, UUID/UTC services, persistence contracts, and Phase 3 productivity core are in place. Planner events and later modules have not been added yet.
 
 ## Next milestone
 
-Complete Task `PHASE-3C-PRODUCTIVITY-CORE-COMPLETE`: finish productivity-core integration and polish only.
+Complete Task `PHASE-4A-PLANNER-FOUNDATION`: add the initial Planner scheduling foundation only.

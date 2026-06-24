@@ -50,10 +50,10 @@ class _HierarchyContent extends ConsumerWidget {
             icon: Icons.flag_outlined,
           )
         else ...[
-          _AreaSection(areas: snapshot.areas),
-          _GoalSection(goals: snapshot.goals),
-          _ProjectSection(projects: snapshot.projects),
-          _MilestoneSection(milestones: snapshot.milestones),
+          _AreaSection(snapshot: snapshot),
+          _GoalSection(snapshot: snapshot),
+          _ProjectSection(snapshot: snapshot),
+          _MilestoneSection(snapshot: snapshot),
         ],
       ],
     );
@@ -112,6 +112,7 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create area',
             label: 'Area name',
+            actionLabel: 'Create',
             onSubmit: (name) => controller.createArea(AreaDraft(name: name)),
           ),
           icon: const Icon(Icons.layers_outlined),
@@ -123,6 +124,7 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create goal',
             label: 'Goal title',
+            actionLabel: 'Create',
             onSubmit: (title) => controller.createGoal(
               GoalDraft(title: title, areaId: snapshot.areas.firstOrNull?.id),
             ),
@@ -136,6 +138,7 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create project',
             label: 'Project title',
+            actionLabel: 'Create',
             onSubmit: (title) => controller.createProject(
               ProjectDraft(
                 title: title,
@@ -155,6 +158,7 @@ class _CreateActions extends ConsumerWidget {
                   context: context,
                   title: 'Create milestone',
                   label: 'Milestone title',
+                  actionLabel: 'Create',
                   onSubmit: (title) => controller.createMilestone(
                     MilestoneDraft(
                       title: title,
@@ -176,12 +180,19 @@ class _CreateActions extends ConsumerWidget {
     required BuildContext context,
     required String title,
     required String label,
+    required String actionLabel,
+    String initialValue = '',
     required Future<Object?> Function(String value) onSubmit,
   }) async {
     await showDialog<void>(
       context: context,
-      builder: (context) =>
-          _TextEntryDialog(title: title, label: label, onSubmit: onSubmit),
+      builder: (context) => _TextEntryDialog(
+        title: title,
+        label: label,
+        actionLabel: actionLabel,
+        initialValue: initialValue,
+        onSubmit: onSubmit,
+      ),
     );
   }
 }
@@ -190,11 +201,15 @@ class _TextEntryDialog extends StatefulWidget {
   const _TextEntryDialog({
     required this.title,
     required this.label,
+    required this.actionLabel,
+    required this.initialValue,
     required this.onSubmit,
   });
 
   final String title;
   final String label;
+  final String actionLabel;
+  final String initialValue;
   final Future<Object?> Function(String value) onSubmit;
 
   @override
@@ -208,7 +223,8 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
+    _textController = TextEditingController(text: widget.initialValue);
+    _canSubmit = widget.initialValue.trim().isNotEmpty;
   }
 
   @override
@@ -238,7 +254,7 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
         ),
         FilledButton(
           onPressed: _canSubmit ? () => _submit(_textController.text) : null,
-          child: const Text('Create'),
+          child: Text(widget.actionLabel),
         ),
       ],
     );
@@ -253,9 +269,9 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
 }
 
 class _AreaSection extends StatelessWidget {
-  const _AreaSection({required this.areas});
+  const _AreaSection({required this.snapshot});
 
-  final List<Area> areas;
+  final HierarchySnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -263,14 +279,28 @@ class _AreaSection extends StatelessWidget {
       title: 'Areas',
       emptyMessage: 'No areas yet.',
       children: [
-        for (final area in areas)
+        for (final area in snapshot.areas)
           _HierarchyTile(
             title: area.name,
-            subtitle: area.isArchived ? 'Archived area' : 'Active area',
+            subtitle: area.isArchived
+                ? 'Archived area'
+                : '${snapshot.goals.where((goal) => goal.areaId == area.id).length} goals, ${snapshot.projects.where((project) => project.areaId == area.id).length} projects',
             icon: Icons.layers_outlined,
             archived: area.isArchived,
+            onEdit: () => _showHierarchyTextDialog(
+              context: context,
+              title: 'Edit area',
+              label: 'Area name',
+              initialValue: area.name,
+              onSubmit: (name) => context.readHierarchyController().updateArea(
+                area.id,
+                AreaDraft(name: name),
+              ),
+            ),
             onArchive: () =>
                 context.readHierarchyController().archiveArea(area.id),
+            onRestore: () =>
+                context.readHierarchyController().restoreArea(area.id),
           ),
       ],
     );
@@ -278,9 +308,9 @@ class _AreaSection extends StatelessWidget {
 }
 
 class _GoalSection extends StatelessWidget {
-  const _GoalSection({required this.goals});
+  const _GoalSection({required this.snapshot});
 
-  final List<Goal> goals;
+  final HierarchySnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -288,16 +318,49 @@ class _GoalSection extends StatelessWidget {
       title: 'Goals',
       emptyMessage: 'No goals yet.',
       children: [
-        for (final goal in goals)
+        for (final goal in snapshot.goals)
           _HierarchyTile(
             title: goal.title,
             subtitle: goal.isArchived
                 ? 'Archived goal'
-                : 'Status: ${goal.status.name}',
+                : 'Status: ${goal.status.name}; ${snapshot.projects.where((project) => project.goalId == goal.id).length} projects, ${snapshot.milestones.where((milestone) => milestone.goalId == goal.id).length} milestones',
             icon: Icons.flag_outlined,
             archived: goal.isArchived,
+            onEdit: () => _showHierarchyTextDialog(
+              context: context,
+              title: 'Edit goal',
+              label: 'Goal title',
+              initialValue: goal.title,
+              onSubmit: (title) => context.readHierarchyController().updateGoal(
+                goal.id,
+                GoalDraft(
+                  title: title,
+                  description: goal.description,
+                  areaId: goal.areaId,
+                  parentGoalId: goal.parentGoalId,
+                  goalType: goal.goalType,
+                  timeHorizon: goal.timeHorizon,
+                  measurementType: goal.measurementType,
+                  targetValue: goal.targetValue,
+                  currentValue: goal.currentValue,
+                  unit: goal.unit,
+                  startAt: goal.startAt,
+                  deadlineAt: goal.deadlineAt,
+                  priority: goal.priority,
+                  status: goal.status,
+                  motivation: goal.motivation,
+                  reviewFrequency: goal.reviewFrequency,
+                  lastReviewAt: goal.lastReviewAt,
+                  nextReviewAt: goal.nextReviewAt,
+                  notes: goal.notes,
+                  customFieldsJson: goal.customFieldsJson,
+                ),
+              ),
+            ),
             onArchive: () =>
                 context.readHierarchyController().archiveGoal(goal.id),
+            onRestore: () =>
+                context.readHierarchyController().restoreGoal(goal.id),
           ),
       ],
     );
@@ -305,9 +368,9 @@ class _GoalSection extends StatelessWidget {
 }
 
 class _ProjectSection extends StatelessWidget {
-  const _ProjectSection({required this.projects});
+  const _ProjectSection({required this.snapshot});
 
-  final List<Project> projects;
+  final HierarchySnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -315,16 +378,40 @@ class _ProjectSection extends StatelessWidget {
       title: 'Projects',
       emptyMessage: 'No projects yet.',
       children: [
-        for (final project in projects)
+        for (final project in snapshot.projects)
           _HierarchyTile(
             title: project.title,
             subtitle: project.isArchived
                 ? 'Archived project'
-                : 'Status: ${project.status.name}',
+                : 'Status: ${project.status.name}; ${snapshot.milestones.where((milestone) => milestone.projectId == project.id).length} milestones',
             icon: Icons.account_tree_outlined,
             archived: project.isArchived,
+            onEdit: () => _showHierarchyTextDialog(
+              context: context,
+              title: 'Edit project',
+              label: 'Project title',
+              initialValue: project.title,
+              onSubmit: (title) =>
+                  context.readHierarchyController().updateProject(
+                    project.id,
+                    ProjectDraft(
+                      title: title,
+                      areaId: project.areaId,
+                      goalId: project.goalId,
+                      status: project.status,
+                      description: project.description,
+                      startAt: project.startAt,
+                      deadlineAt: project.deadlineAt,
+                      progress: project.progress,
+                      notes: project.notes,
+                      customFieldsJson: project.customFieldsJson,
+                    ),
+                  ),
+            ),
             onArchive: () =>
                 context.readHierarchyController().archiveProject(project.id),
+            onRestore: () =>
+                context.readHierarchyController().restoreProject(project.id),
           ),
       ],
     );
@@ -332,9 +419,9 @@ class _ProjectSection extends StatelessWidget {
 }
 
 class _MilestoneSection extends StatelessWidget {
-  const _MilestoneSection({required this.milestones});
+  const _MilestoneSection({required this.snapshot});
 
-  final List<Milestone> milestones;
+  final HierarchySnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -342,15 +429,39 @@ class _MilestoneSection extends StatelessWidget {
       title: 'Milestones',
       emptyMessage: 'No milestones yet.',
       children: [
-        for (final milestone in milestones)
+        for (final milestone in snapshot.milestones)
           _HierarchyTile(
             title: milestone.title,
             subtitle: milestone.isArchived
                 ? 'Archived milestone'
-                : 'Status: ${milestone.status.name}',
+                : 'Status: ${milestone.status.name}; ${milestone.goalId != null ? 'goal-linked' : 'project-linked'}',
             icon: Icons.check_circle_outline,
             archived: milestone.isArchived,
+            onEdit: () => _showHierarchyTextDialog(
+              context: context,
+              title: 'Edit milestone',
+              label: 'Milestone title',
+              initialValue: milestone.title,
+              onSubmit: (title) =>
+                  context.readHierarchyController().updateMilestone(
+                    milestone.id,
+                    MilestoneDraft(
+                      title: title,
+                      description: milestone.description,
+                      goalId: milestone.goalId,
+                      projectId: milestone.projectId,
+                      dueAt: milestone.dueAt,
+                      status: milestone.status,
+                      completedAt: milestone.completedAt,
+                      sortOrder: milestone.sortOrder,
+                      notes: milestone.notes,
+                    ),
+                  ),
+            ),
             onArchive: () => context.readHierarchyController().archiveMilestone(
+              milestone.id,
+            ),
+            onRestore: () => context.readHierarchyController().restoreMilestone(
               milestone.id,
             ),
           ),
@@ -402,14 +513,18 @@ class _HierarchyTile extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     required this.archived,
+    required this.onEdit,
     required this.onArchive,
+    required this.onRestore,
   });
 
   final String title;
   final String subtitle;
   final IconData icon;
   final bool archived;
+  final VoidCallback onEdit;
   final Future<void> Function() onArchive;
+  final Future<void> Function() onRestore;
 
   @override
   Widget build(BuildContext context) {
@@ -418,16 +533,45 @@ class _HierarchyTile extends StatelessWidget {
         leading: Icon(icon),
         title: Text(title),
         subtitle: Text(subtitle),
-        trailing: archived
-            ? const Icon(Icons.inventory_2_outlined)
-            : IconButton(
-                tooltip: 'Archive $title',
-                onPressed: onArchive,
-                icon: const Icon(Icons.archive_outlined),
+        trailing: Wrap(
+          spacing: AppSpacing.x1,
+          children: [
+            IconButton(
+              tooltip: 'Edit $title',
+              onPressed: onEdit,
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            IconButton(
+              tooltip: archived ? 'Restore $title' : 'Archive $title',
+              onPressed: archived ? onRestore : onArchive,
+              icon: Icon(
+                archived ? Icons.unarchive_outlined : Icons.archive_outlined,
               ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+Future<void> _showHierarchyTextDialog({
+  required BuildContext context,
+  required String title,
+  required String label,
+  required String initialValue,
+  required Future<Object?> Function(String value) onSubmit,
+}) {
+  return showDialog<void>(
+    context: context,
+    builder: (context) => _TextEntryDialog(
+      title: title,
+      label: label,
+      actionLabel: 'Save',
+      initialValue: initialValue,
+      onSubmit: onSubmit,
+    ),
+  );
 }
 
 extension on BuildContext {

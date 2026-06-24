@@ -2,64 +2,63 @@
 
 ## Task ID
 
-`PHASE-3C-PRODUCTIVITY-CORE-COMPLETE`
+`PHASE-4A-PLANNER-FOUNDATION`
 
 ## Goal
 
-Complete the Phase 3 productivity-core foundation without adding Planner events or later-phase systems.
+Add the initial Planner scheduling foundation without implementing later Spaces, Templates, AI, Analytics, Backup, or Cloud systems.
 
-Focus on integration, edit flows, relationship visibility, accessibility polish, and test coverage for the already implemented Phase 3A and Phase 3B entities.
+Focus on event and time-block persistence boundaries, basic day/week/month/agenda surfaces, and scheduling relationships with existing tasks.
 
 ## Scope
 
 Included:
 
-- Area, Goal, Project, Milestone, Task, Tag, and Note integration polish
-- Edit flows for implemented entities where missing
-- Restore flows where archive is already supported
-- Clear relationship visibility between hierarchy records, tasks, tags, and notes
-- Empty, loading, content, and error state consistency across Goals and Planner
-- Validation-message polish for implemented forms
-- Repository query helpers needed by the implemented UI only
-- Focused tests for edit, restore, relationship visibility, and validation UX
+- Event and meeting domain models, repository contract, Drift tables, and migration
+- Time-block domain model, repository contract, Drift tables, and migration
+- Basic day, week, month, and agenda Planner views using implemented records only
+- Task scheduling fields surfaced through repository/controller boundaries where already present
+- Initial conflict and free-window helpers needed by the basic Planner UI
+- Recurrence and reminder contracts only, without platform notification scheduling
+- Focus-session contract only if needed to preserve Phase 4 architecture boundaries
+- Loading, empty, content, and error states for Planner views
+- Focused database, repository, migration, controller, and widget tests
 - Documentation updates
 
 Excluded:
 
-- Calendar events
-- Planner day/week/month views
-- Recurrence engine
-- Reminders and notifications
-- Focus sessions
+- Local notification scheduling
+- Background jobs
+- Full recurrence engine
 - Spaces engine
 - Templates
-- AI persistence
+- AI persistence or real AI provider
 - Search indexing
-- Analytics
+- Analytics dashboards or charts
 - Backup files or restore flows
 - Cloud synchronization
 
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve schema version 3 unless a documented bug requires a schema change.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, and Phase 3 productivity-core behavior.
 - Keep widgets and screens away from Drift.
 - Keep domain contracts free of Drift and presentation packages.
-- Preserve Phase 1 navigation, Phase 2 settings behavior, Phase 3A hierarchy behavior, and Phase 3B task-core behavior.
-- Do not implement Planner events, Spaces, templates, AI, search indexing, notifications, analytics, backup/restore, or cloud features.
+- Use repository/controller boundaries for Planner persistence and scheduling behavior.
+- Do not add platform notification scheduling, Spaces, templates, AI, search indexing, analytics, backup/restore, or cloud features.
 
 ## Files likely affected
 
-- `lib/features/goals/`
 - `lib/features/planner/`
-- `lib/features/tasks/`
+- `lib/core/database/`
 - `test/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
 - `docs/FEATURE_MATRIX.md`
 - `docs/TEST_PLAN.md`
+- `docs/DATA_MODEL.md`
+- `docs/ARCHITECTURE.md` only if contracts change
 - `CHANGELOG.md`
-- Architecture and data-model documents only if contracts change
 
 ## Required validation
 
@@ -77,11 +76,10 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Phase 3 productivity-core screens expose usable create, edit, archive, restore, complete, tag, and note-link behavior where supported by existing repositories.
-- Relationship visibility is clear and generic.
-- Repository boundaries remain intact.
-- No excluded Phase 4+ feature is implemented.
-- Generated code and schema snapshots remain current.
+- Planner events and time blocks are persisted through repository boundaries.
+- Basic day, week, month, and agenda views render implemented records with accessible empty/error/loading states.
+- Existing tasks can be displayed in scheduling context without breaking Phase 3 task-core behavior.
+- Generated code and schema snapshots are current.
 - `flutter analyze` reports no issues.
 - All tests pass.
 - Debug APK builds.
@@ -89,6 +87,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 3C productivity-core completion passes validation and documentation is current.
+Stop after Phase 4A Planner foundation passes validation and documentation is current.
 
-Do not implement Planner events, recurrence, reminders, Spaces, Templates, AI, Search indexing, Notifications, Analytics, Backup/Restore, or Cloud functionality.
+Do not implement full recurrence, platform notifications, Spaces, Templates, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.

@@ -87,6 +87,33 @@ void main() {
     expect((await repository.current()).areas, isEmpty);
   });
 
+  test(
+    'updates and restores hierarchy records without clearing links',
+    () async {
+      final area = await repository.createArea(const AreaDraft(name: 'Area'));
+      final goal = await repository.createGoal(
+        GoalDraft(title: 'Goal', areaId: area.id),
+      );
+      final project = await repository.createProject(
+        ProjectDraft(title: 'Project', areaId: area.id, goalId: goal.id),
+      );
+
+      await repository.updateGoal(
+        goal.id,
+        GoalDraft(title: 'Updated goal', areaId: area.id),
+      );
+      await repository.archiveGoal(goal.id);
+      await repository.restoreGoal(goal.id);
+
+      final snapshot = await repository.current();
+
+      expect(snapshot.goals.single.title, 'Updated goal');
+      expect(snapshot.goals.single.areaId, area.id);
+      expect(snapshot.goals.single.isArchived, isFalse);
+      expect(snapshot.projects.single.goalId, project.goalId);
+    },
+  );
+
   test('rejects milestones without exactly one owner', () async {
     await expectLater(
       repository.createMilestone(const MilestoneDraft(title: 'Milestone')),

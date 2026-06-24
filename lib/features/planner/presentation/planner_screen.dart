@@ -83,17 +83,75 @@ class _PlannerContent extends ConsumerWidget {
                     subtitle: Text(
                       task.isArchived
                           ? 'Archived task'
-                          : 'Status: ${task.status.name}',
+                          : 'Status: ${task.status.name}; ${snapshot.entityTags.where((entityTag) => entityTag.entityType == 'task' && entityTag.entityId == task.id).length} tags, ${snapshot.noteLinks.where((link) => link.entityType == 'task' && link.entityId == task.id).length} notes',
                     ),
-                    trailing: task.isCompleted
-                        ? null
-                        : IconButton(
+                    trailing: Wrap(
+                      spacing: AppSpacing.x1,
+                      children: [
+                        IconButton(
+                          tooltip: 'Edit ${task.title}',
+                          onPressed: () => _showTaskCoreTextDialog(
+                            context: context,
+                            title: 'Edit task',
+                            label: 'Task title',
+                            initialValue: task.title,
+                            onSubmit: (title) => ref
+                                .read(taskCoreControllerProvider)
+                                .updateTask(
+                                  task.id,
+                                  TaskDraft(
+                                    title: title,
+                                    description: task.description,
+                                    areaId: task.areaId,
+                                    goalId: task.goalId,
+                                    projectId: task.projectId,
+                                    milestoneId: task.milestoneId,
+                                    status: task.status,
+                                    priority: task.priority,
+                                    energyRequirement: task.energyRequirement,
+                                    estimatedDurationMinutes:
+                                        task.estimatedDurationMinutes,
+                                    actualDurationMinutes:
+                                        task.actualDurationMinutes,
+                                    dueAt: task.dueAt,
+                                    scheduledStartAt: task.scheduledStartAt,
+                                    scheduledEndAt: task.scheduledEndAt,
+                                    preferredTimeOfDay: task.preferredTimeOfDay,
+                                    completedAt: task.completedAt,
+                                    parentTaskId: task.parentTaskId,
+                                    notes: task.notes,
+                                  ),
+                                ),
+                          ),
+                          icon: const Icon(Icons.edit_outlined),
+                        ),
+                        if (!task.isCompleted)
+                          IconButton(
                             tooltip: 'Complete ${task.title}',
                             onPressed: () => ref
                                 .read(taskCoreControllerProvider)
                                 .completeTask(task.id),
                             icon: const Icon(Icons.done),
                           ),
+                        IconButton(
+                          tooltip: task.isArchived
+                              ? 'Restore ${task.title}'
+                              : 'Archive ${task.title}',
+                          onPressed: task.isArchived
+                              ? () => ref
+                                    .read(taskCoreControllerProvider)
+                                    .restoreTask(task.id)
+                              : () => ref
+                                    .read(taskCoreControllerProvider)
+                                    .archiveTask(task.id),
+                          icon: Icon(
+                            task.isArchived
+                                ? Icons.unarchive_outlined
+                                : Icons.archive_outlined,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
             ],
@@ -107,7 +165,44 @@ class _PlannerContent extends ConsumerWidget {
                   leading: const Icon(Icons.sell_outlined),
                   title: Text(tag.name),
                   subtitle: Text(
-                    tag.isArchived ? 'Archived tag' : 'Active tag',
+                    tag.isArchived
+                        ? 'Archived tag'
+                        : 'Used on ${snapshot.entityTags.where((entityTag) => entityTag.tagId == tag.id).length} records',
+                  ),
+                  trailing: Wrap(
+                    spacing: AppSpacing.x1,
+                    children: [
+                      IconButton(
+                        tooltip: 'Edit ${tag.name}',
+                        onPressed: () => _showTaskCoreTextDialog(
+                          context: context,
+                          title: 'Edit tag',
+                          label: 'Tag name',
+                          initialValue: tag.name,
+                          onSubmit: (name) => ref
+                              .read(taskCoreControllerProvider)
+                              .updateTag(tag.id, TagDraft(name: name)),
+                        ),
+                        icon: const Icon(Icons.edit_outlined),
+                      ),
+                      IconButton(
+                        tooltip: tag.isArchived
+                            ? 'Restore ${tag.name}'
+                            : 'Archive ${tag.name}',
+                        onPressed: tag.isArchived
+                            ? () => ref
+                                  .read(taskCoreControllerProvider)
+                                  .restoreTag(tag.id)
+                            : () => ref
+                                  .read(taskCoreControllerProvider)
+                                  .archiveTag(tag.id),
+                        icon: Icon(
+                          tag.isArchived
+                              ? Icons.unarchive_outlined
+                              : Icons.archive_outlined,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
             ],
@@ -120,7 +215,54 @@ class _PlannerContent extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.note_outlined),
                   title: Text(note.title),
-                  subtitle: Text(note.isPinned ? 'Pinned note' : 'Note'),
+                  subtitle: Text(
+                    note.isArchived
+                        ? 'Archived note'
+                        : '${note.isPinned ? 'Pinned note' : 'Note'}; linked to ${snapshot.noteLinks.where((link) => link.noteId == note.id).length} records',
+                  ),
+                  trailing: Wrap(
+                    spacing: AppSpacing.x1,
+                    children: [
+                      IconButton(
+                        tooltip: 'Edit ${note.title}',
+                        onPressed: () => _showTaskCoreTextDialog(
+                          context: context,
+                          title: 'Edit note',
+                          label: 'Note title',
+                          initialValue: note.title,
+                          onSubmit: (title) => ref
+                              .read(taskCoreControllerProvider)
+                              .updateNote(
+                                note.id,
+                                NoteDraft(
+                                  title: title,
+                                  content: note.content,
+                                  contentFormat: note.contentFormat,
+                                  isPinned: note.isPinned,
+                                ),
+                              ),
+                        ),
+                        icon: const Icon(Icons.edit_outlined),
+                      ),
+                      IconButton(
+                        tooltip: note.isArchived
+                            ? 'Restore ${note.title}'
+                            : 'Archive ${note.title}',
+                        onPressed: note.isArchived
+                            ? () => ref
+                                  .read(taskCoreControllerProvider)
+                                  .restoreNote(note.id)
+                            : () => ref
+                                  .read(taskCoreControllerProvider)
+                                  .archiveNote(note.id),
+                        icon: Icon(
+                          note.isArchived
+                              ? Icons.unarchive_outlined
+                              : Icons.archive_outlined,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
             ],
           ),
@@ -128,6 +270,25 @@ class _PlannerContent extends ConsumerWidget {
       ],
     );
   }
+}
+
+Future<void> _showTaskCoreTextDialog({
+  required BuildContext context,
+  required String title,
+  required String label,
+  required String initialValue,
+  required Future<Object?> Function(String value) onSubmit,
+}) {
+  return showDialog<void>(
+    context: context,
+    builder: (context) => _TextEntryDialog(
+      title: title,
+      label: label,
+      actionLabel: 'Save',
+      initialValue: initialValue,
+      onSubmit: onSubmit,
+    ),
+  );
 }
 
 class _CreateActions extends ConsumerWidget {
@@ -149,6 +310,7 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create task',
             label: 'Task title',
+            actionLabel: 'Create',
             onSubmit: (title) => controller.createTask(TaskDraft(title: title)),
           ),
           icon: const Icon(Icons.add_task),
@@ -160,6 +322,7 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create tag',
             label: 'Tag name',
+            actionLabel: 'Create',
             onSubmit: (name) => controller.createTag(TagDraft(name: name)),
           ),
           icon: const Icon(Icons.sell_outlined),
@@ -171,11 +334,36 @@ class _CreateActions extends ConsumerWidget {
             context: context,
             title: 'Create note',
             label: 'Note title',
+            actionLabel: 'Create',
             onSubmit: (title) =>
                 controller.createNote(NoteDraft(title: title, content: '')),
           ),
           icon: const Icon(Icons.note_add_outlined),
           label: const Text('Note'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('tagFirstTaskButton'),
+          onPressed: snapshot.tasks.isEmpty || snapshot.tags.isEmpty
+              ? null
+              : () => controller.tagEntity(
+                  entityType: 'task',
+                  entityId: snapshot.tasks.first.id,
+                  tagId: snapshot.tags.first.id,
+                ),
+          icon: const Icon(Icons.label_outline),
+          label: const Text('Tag first task'),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('linkFirstNoteButton'),
+          onPressed: snapshot.tasks.isEmpty || snapshot.notes.isEmpty
+              ? null
+              : () => controller.linkNote(
+                  noteId: snapshot.notes.first.id,
+                  entityType: 'task',
+                  entityId: snapshot.tasks.first.id,
+                ),
+          icon: const Icon(Icons.link),
+          label: const Text('Link first note'),
         ),
       ],
     );
@@ -185,12 +373,19 @@ class _CreateActions extends ConsumerWidget {
     required BuildContext context,
     required String title,
     required String label,
+    required String actionLabel,
+    String initialValue = '',
     required Future<Object?> Function(String value) onSubmit,
   }) {
     return showDialog<void>(
       context: context,
-      builder: (context) =>
-          _TextEntryDialog(title: title, label: label, onSubmit: onSubmit),
+      builder: (context) => _TextEntryDialog(
+        title: title,
+        label: label,
+        actionLabel: actionLabel,
+        initialValue: initialValue,
+        onSubmit: onSubmit,
+      ),
     );
   }
 }
@@ -199,11 +394,15 @@ class _TextEntryDialog extends StatefulWidget {
   const _TextEntryDialog({
     required this.title,
     required this.label,
+    required this.actionLabel,
+    required this.initialValue,
     required this.onSubmit,
   });
 
   final String title;
   final String label;
+  final String actionLabel;
+  final String initialValue;
   final Future<Object?> Function(String value) onSubmit;
 
   @override
@@ -217,7 +416,8 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
+    _textController = TextEditingController(text: widget.initialValue);
+    _canSubmit = widget.initialValue.trim().isNotEmpty;
   }
 
   @override
@@ -245,7 +445,7 @@ class _TextEntryDialogState extends State<_TextEntryDialog> {
         ),
         FilledButton(
           onPressed: _canSubmit ? () => _submit(_textController.text) : null,
-          child: const Text('Create'),
+          child: Text(widget.actionLabel),
         ),
       ],
     );
