@@ -286,6 +286,8 @@ Notification scheduling and background work must remain behind replaceable servi
 - Persistent reminder records permit rescheduling after restart or timezone changes.
 - Background jobs must be idempotent.
 
+Phase 7A adds the replaceable notification service contract, generic notification intent model, permission-state model, local placeholder implementation, and provider boundary. It intentionally does not schedule operating-system notifications or persist notification inbox/reminder records.
+
 ## 14. Future synchronization boundary
 
 Future cloud synchronization should be introduced beneath repository boundaries.

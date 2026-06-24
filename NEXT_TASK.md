@@ -2,38 +2,36 @@
 
 ## Task ID
 
-`PHASE-7A-NOTIFICATION-FOUNDATION`
+`PHASE-7B-REMINDER-SCHEDULING`
 
 ## Goal
 
-Add local notification infrastructure without scheduling real feature reminders yet.
+Add local reminder scheduling behind the Phase 7A notification service boundary.
 
-Focus on replaceable notification service contracts, permission-state modeling, notification intent validation, and safe repository boundaries.
+Focus on a replaceable platform-adapter shape, safe scheduling and cancellation contracts, permission-denial handling, and tests that prove scheduling behavior without wiring feature data into reminders yet.
 
 ## Scope
 
 Included:
 
-- Notification domain models for generic notification intents
-- Replaceable notification service contract
-- Local placeholder implementation suitable for tests before platform scheduling is wired
-- Permission-state model and validation behavior
-- Repository or controller boundary only if persistence is needed for foundation state
-- Safe failure types and structured logging for notification operations
-- Loading, empty, content, and error states for any new notification UI
-- Focused unit, provider, and widget tests
+- Platform-notification adapter abstraction for scheduling and canceling generic notification intents
+- Local notification service implementation that delegates to the adapter only after validation
+- Deterministic notification identifier strategy for scheduled intents
+- Permission-denied and unavailable-platform behavior
+- Schedule, cancel, and reschedule operations for generic intents
+- Safe failure types and structured logging for scheduling operations
+- Tests using injected fake adapters; do not depend on console output
 - Documentation updates
 
 Excluded:
 
-- Platform notification scheduling from tasks, events, goals, templates, AI, or automations
+- Task, event, goal, template, Space, AI, or automation reminders
+- Reminder rules table
+- Notification inbox persistence
 - Background jobs
 - Snooze behavior
 - Quiet hours
-- Notification inbox persistence
-- Reminder rules table
 - Automation rules or runs
-- AI
 - Search indexing
 - Analytics dashboards or charts
 - Backup files or restore flows
@@ -42,17 +40,19 @@ Excluded:
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, Phase 5 Spaces behavior, and Phase 6 template behavior.
+- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, Phase 5 Spaces behavior, Phase 6 template behavior, and Phase 7A notification foundation behavior.
 - Keep widgets and screens away from platform APIs.
 - Keep domain contracts free of Flutter presentation packages.
-- Use replaceable service/provider boundaries for notification operations.
-- Do not schedule real platform notifications from feature data in this phase.
+- Keep scheduling behind replaceable service/provider boundaries.
+- Do not schedule reminders from feature records in this phase.
+- Do not add persistence unless the task is explicitly updated to include reminder rules or notification inbox storage.
 
 ## Files likely affected
 
 - `lib/core/notifications/`
 - `lib/features/notifications/`
-- `test/`
+- `test/core/`
+- `test/features/notifications/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
 - `docs/FEATURE_MATRIX.md`
@@ -77,10 +77,10 @@ Run from the Flutter project root:
 
 ## Acceptance criteria
 
-- Notification intent and permission contracts are testable without platform scheduling.
-- Notification operations are replaceable behind providers.
-- Invalid intents fail safely and log through structured logging.
-- No task/event/goal/template data schedules platform notifications yet.
+- Generic notification intents can be scheduled, canceled, and rescheduled through a replaceable boundary.
+- Invalid intents and permission-denied states fail safely and log through structured logging.
+- Tests prove adapter calls without depending on real platform notifications.
+- No task/event/goal/template/Space data schedules reminders yet.
 - `flutter analyze` reports no issues.
 - All tests pass.
 - Debug APK builds.
@@ -88,6 +88,6 @@ Run from the Flutter project root:
 
 ## Stop condition
 
-Stop after Phase 7A notification foundation passes validation and documentation is current.
+Stop after Phase 7B reminder scheduling foundation passes validation and documentation is current.
 
-Do not implement real feature reminder scheduling, background jobs, snooze, quiet hours, automations, AI, Search indexing, Analytics, Backup/Restore, platform reminder scheduling, or Cloud functionality.
+Do not implement feature-driven reminders, reminder rules persistence, notification inbox persistence, background jobs, snooze, quiet hours, automations, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.

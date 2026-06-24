@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:momentum_os/core/database/app_database.dart';
 import 'package:momentum_os/core/logging/app_logger.dart';
+import 'package:momentum_os/core/notifications/notification_models.dart';
+import 'package:momentum_os/core/notifications/notification_service.dart';
 import 'package:momentum_os/core/preferences/drift_settings_repository.dart';
 import 'package:momentum_os/core/services/id_service.dart';
 import 'package:momentum_os/core/services/utc_clock.dart';
@@ -162,4 +164,25 @@ void main() {
     expect(snapshot.definitions, isNotEmpty);
     expect(snapshot.installations, isEmpty);
   });
+
+  test(
+    'notification service provider exposes the interface boundary',
+    () async {
+      final container = ProviderContainer(
+        overrides: [
+          appLoggerProvider.overrideWithValue(AppLogger(sink: (_) {})),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final service = container.read(notificationServiceProvider);
+
+      expect(service, isA<NotificationService>());
+      expect(service, isA<LocalPlaceholderNotificationService>());
+      expect(
+        (await service.permissionState()).status,
+        NotificationPermissionStatus.notDetermined,
+      );
+    },
+  );
 }

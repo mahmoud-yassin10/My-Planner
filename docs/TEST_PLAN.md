@@ -67,6 +67,8 @@ Phase 6A adds focused tests for schema version 7, template installation metadata
 
 Phase 6B adds focused tests for bundled template descriptor coverage, descriptor payload safety, metadata-only installation behavior, and zero-created-record guarantees.
 
+Phase 7A adds focused tests for generic notification intent validation, permission-state behavior, safe logging through the notification service boundary, provider replacement, and notification foundation screen loading/content/error states. Platform scheduling tests remain deferred until scheduling is implemented.
+
 ### Widget tests
 
 Cover:

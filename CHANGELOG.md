@@ -54,6 +54,7 @@ The project follows a phase-based development process. Version numbers will be i
 - Schema version 7 with template installation metadata
 - Template infrastructure with injectable registry, install metadata, uninstall choices, repository/provider boundary, and foundation panel states
 - Bundled template descriptors for the planned Phase 6 template categories without example records or created user data
+- Notification foundation contracts with generic intents, permission state, safe validation, structured logging, provider boundary, and placeholder UI without platform scheduling
 - Drift schema snapshots and migration verification tests through version 7
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors

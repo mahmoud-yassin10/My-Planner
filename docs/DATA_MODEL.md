@@ -50,6 +50,8 @@ Phase 6A implements template installation metadata in schema version 7. Template
 
 Phase 6B adds bundled descriptor definitions for the planned template categories without a schema change. Template descriptors remain metadata and configuration contracts only; installing one still stores template-installation metadata without creating user records or example data.
 
+Phase 7A adds notification intent and permission contracts without a schema change. Notification inbox rows, reminder rules, platform notification identifiers, snooze state, quiet hours, and automation runs remain planned model sections until later Phase 7 tasks.
+
 ## 3. Core productivity tables
 
 ### `areas`
