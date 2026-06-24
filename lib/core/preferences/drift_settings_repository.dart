@@ -36,7 +36,11 @@ class DriftSettingsRepository implements SettingsRepository {
     return _database
         .select(_database.appSettings)
         .watch()
-        .map(_preferencesFrom);
+        .map(_preferencesFrom)
+        .handleError((Object error, StackTrace stackTrace) {
+          _logFailure('watch', error, stackTrace);
+          throw const PersistenceReadFailure('Unable to watch app settings.');
+        });
   }
 
   @override

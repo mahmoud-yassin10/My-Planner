@@ -113,4 +113,26 @@ void main() {
 
     expect(repository.current, throwsA(isA<PersistenceReadFailure>()));
   });
+
+  test('translates watched query failures at repository boundary', () async {
+    final records = <AppLogRecord>[];
+    final watchedRepository = DriftSettingsRepository(
+      database: database,
+      clock: FixedUtcClock(fixedNow),
+      logger: AppLogger(sink: records.add),
+    );
+
+    await database.customStatement('DROP TABLE app_settings');
+
+    await expectLater(
+      watchedRepository.watch(),
+      emitsError(isA<PersistenceReadFailure>()),
+    );
+
+    expect(records, hasLength(1));
+    expect(records.single.operation, 'watch');
+    expect(records.single.metadata['errorType'], isNotNull);
+    expect(records.single.error, isNotNull);
+    expect(records.single.stackTrace, isNotNull);
+  });
 }

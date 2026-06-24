@@ -121,12 +121,12 @@ Implemented foundation behavior:
 
 Completed on 2026-06-24 from `C:\Mahmoud\Coding\My Planner`:
 
-- `flutter pub get` — Passed; 9 packages reported newer versions incompatible with current constraints.
+- `flutter pub get` — Passed; 12 packages reported newer versions incompatible with current constraints.
 - `dart run build_runner build --delete-conflicting-outputs` — Passed; generated Drift code. Current `build_runner` reports that `--delete-conflicting-outputs` is ignored.
 - `dart run drift_dev make-migrations` — Passed; generated `drift_schemas\app_database\drift_schema_v1.json`.
 - `dart format .` — Passed.
 - `flutter analyze` — Passed; no issues found.
-- `flutter test` — Passed; 51 tests passed.
+- `flutter test` — Passed; 52 tests passed.
 - `flutter build apk --debug` — Passed; built `build\app\outputs\flutter-apk\app-debug.apk`.
 - `git diff --check` — Passed; no whitespace errors.
 

@@ -202,7 +202,7 @@ Schema version 1 contains only foundation tables:
 - `app_settings`
 - `schema_metadata`
 
-The database provides production SQLite opening through `path_provider` and `sqlite3_flutter_libs`, in-memory opening for tests, foreign-key enablement for every connection, Riverpod lifecycle disposal, Drift generated code checked into the repository, and a schema snapshot in `drift_schemas/app_database/drift_schema_v1.json`.
+The database provides production SQLite opening through `path_provider` and Drift native databases, in-memory opening for tests, foreign-key enablement for every connection, Riverpod lifecycle disposal, Drift generated code checked into the repository, and a schema snapshot in `drift_schemas/app_database/drift_schema_v1.json`.
 
 Startup verifies database readiness through `DatabaseInitializer` and the existing recoverable `StartupHost`. Widgets and screens must continue to receive typed repositories or controllers rather than Drift objects.
 

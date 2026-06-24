@@ -31,6 +31,8 @@ The project follows a phase-based development process. Version numbers will be i
 - Minimal seed/template installation contract
 - Backup envelope serialization contract for Phase 2 settings payloads
 - Persistence convention and failure boundary helpers
+- Settings watch-stream persistence failures are translated at the repository boundary
+- Removed unused SQLite native bundle and JSON serialization/code-generation dependencies
 - Database, repository, provider, startup, service, contract, and migration-snapshot tests
 - Widget and unit tests for navigation, global actions, reusable states, logging, startup recovery, and route errors
 - Clean Flutter Android project using project name `momentum_os`
