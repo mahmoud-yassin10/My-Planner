@@ -7,11 +7,9 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite;
 
-import 'app_database.steps.dart';
-
 part 'app_database.g.dart';
 
-const appDatabaseSchemaVersion = 7;
+const appDatabaseSchemaVersion = 8;
 
 @DataClassName('AppSettingRow')
 class AppSettings extends Table {
@@ -397,6 +395,47 @@ class TemplateInstallations extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('ReminderRuleRow')
+class ReminderRules extends Table {
+  TextColumn get id => text()();
+  TextColumn get ownerType => text().nullable()();
+  TextColumn get ownerId => text().nullable()();
+  TextColumn get category => text()();
+  TextColumn get title => text()();
+  TextColumn get body => text()();
+  DateTimeColumn get scheduledAt => dateTime()();
+  BoolColumn get enabled => boolean()();
+  TextColumn get recurrenceValue => text().nullable()();
+  IntColumn get platformNotificationId => integer().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get canceledAt => dateTime().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('NotificationInboxRow')
+class NotificationInbox extends Table {
+  TextColumn get id => text()();
+  TextColumn get reminderRuleId => text().nullable()();
+  TextColumn get ownerType => text().nullable()();
+  TextColumn get ownerId => text().nullable()();
+  TextColumn get category => text()();
+  TextColumn get title => text()();
+  TextColumn get body => text()();
+  DateTimeColumn get scheduledAt => dateTime().nullable()();
+  DateTimeColumn get deliveredAt => dateTime().nullable()();
+  DateTimeColumn get readAt => dateTime().nullable()();
+  DateTimeColumn get canceledAt => dateTime().nullable()();
+  IntColumn get platformNotificationId => integer().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -422,12 +461,14 @@ class TemplateInstallations extends Table {
     SpaceSavedFilters,
     SpaceSavedViews,
     TemplateInstallations,
+    ReminderRules,
+    NotificationInbox,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  static const latestSchemaVersion = 7;
+  static const latestSchemaVersion = 8;
 
   factory AppDatabase.production() => AppDatabase(openProductionDatabase());
 
@@ -442,41 +483,43 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration {
     return MigrationStrategy(
       onUpgrade: (migrator, from, to) async {
-        await stepByStep(
-          from1To2: (migrator, schema) async {
-            await migrator.createTable(schema.areas);
-            await migrator.createTable(schema.goals);
-            await migrator.createTable(schema.projects);
-            await migrator.createTable(schema.milestones);
-          },
-          from2To3: (migrator, schema) async {
-            await migrator.createTable(schema.tasks);
-            await migrator.createTable(schema.tags);
-            await migrator.createTable(schema.entityTags);
-            await migrator.createTable(schema.notes);
-            await migrator.createTable(schema.noteLinks);
-          },
-          from3To4: (migrator, schema) async {
-            await migrator.createTable(schema.plannerEvents);
-            await migrator.createTable(schema.timeBlocks);
-          },
-          from4To5: (migrator, schema) async {
-            await migrator.createTable(schema.focusSessions);
-          },
-          from5To6: (migrator, schema) async {
-            await migrator.createTable(schema.spaces);
-            await migrator.createTable(schema.spaceRecordTypes);
-            await migrator.createTable(schema.spaceFields);
-            await migrator.createTable(schema.spaceStatuses);
-            await migrator.createTable(schema.spaceRecords);
-            await migrator.createTable(schema.spaceRecordLinks);
-            await migrator.createTable(schema.spaceSavedFilters);
-            await migrator.createTable(schema.spaceSavedViews);
-          },
-          from6To7: (migrator, schema) async {
-            await migrator.createTable(schema.templateInstallations);
-          },
-        )(migrator, from, to);
+        if (from < 2) {
+          await migrator.createTable(areas);
+          await migrator.createTable(goals);
+          await migrator.createTable(projects);
+          await migrator.createTable(milestones);
+        }
+        if (from < 3) {
+          await migrator.createTable(tasks);
+          await migrator.createTable(tags);
+          await migrator.createTable(entityTags);
+          await migrator.createTable(notes);
+          await migrator.createTable(noteLinks);
+        }
+        if (from < 4) {
+          await migrator.createTable(plannerEvents);
+          await migrator.createTable(timeBlocks);
+        }
+        if (from < 5) {
+          await migrator.createTable(focusSessions);
+        }
+        if (from < 6) {
+          await migrator.createTable(spaces);
+          await migrator.createTable(spaceRecordTypes);
+          await migrator.createTable(spaceFields);
+          await migrator.createTable(spaceStatuses);
+          await migrator.createTable(spaceRecords);
+          await migrator.createTable(spaceRecordLinks);
+          await migrator.createTable(spaceSavedFilters);
+          await migrator.createTable(spaceSavedViews);
+        }
+        if (from < 7) {
+          await migrator.createTable(templateInstallations);
+        }
+        if (from < 8) {
+          await migrator.createTable(reminderRules);
+          await migrator.createTable(notificationInbox);
+        }
       },
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');

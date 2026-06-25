@@ -14074,6 +14074,1622 @@ class TemplateInstallationsCompanion
   }
 }
 
+class $ReminderRulesTable extends ReminderRules
+    with TableInfo<$ReminderRulesTable, ReminderRuleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReminderRulesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ownerTypeMeta = const VerificationMeta(
+    'ownerType',
+  );
+  @override
+  late final GeneratedColumn<String> ownerType = GeneratedColumn<String>(
+    'owner_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ownerIdMeta = const VerificationMeta(
+    'ownerId',
+  );
+  @override
+  late final GeneratedColumn<String> ownerId = GeneratedColumn<String>(
+    'owner_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scheduledAtMeta = const VerificationMeta(
+    'scheduledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> scheduledAt = GeneratedColumn<DateTime>(
+    'scheduled_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _enabledMeta = const VerificationMeta(
+    'enabled',
+  );
+  @override
+  late final GeneratedColumn<bool> enabled = GeneratedColumn<bool>(
+    'enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enabled" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _recurrenceValueMeta = const VerificationMeta(
+    'recurrenceValue',
+  );
+  @override
+  late final GeneratedColumn<String> recurrenceValue = GeneratedColumn<String>(
+    'recurrence_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _platformNotificationIdMeta =
+      const VerificationMeta('platformNotificationId');
+  @override
+  late final GeneratedColumn<int> platformNotificationId = GeneratedColumn<int>(
+    'platform_notification_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _canceledAtMeta = const VerificationMeta(
+    'canceledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> canceledAt = GeneratedColumn<DateTime>(
+    'canceled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    ownerType,
+    ownerId,
+    category,
+    title,
+    body,
+    scheduledAt,
+    enabled,
+    recurrenceValue,
+    platformNotificationId,
+    createdAt,
+    updatedAt,
+    canceledAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reminder_rules';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReminderRuleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('owner_type')) {
+      context.handle(
+        _ownerTypeMeta,
+        ownerType.isAcceptableOrUnknown(data['owner_type']!, _ownerTypeMeta),
+      );
+    }
+    if (data.containsKey('owner_id')) {
+      context.handle(
+        _ownerIdMeta,
+        ownerId.isAcceptableOrUnknown(data['owner_id']!, _ownerIdMeta),
+      );
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('scheduled_at')) {
+      context.handle(
+        _scheduledAtMeta,
+        scheduledAt.isAcceptableOrUnknown(
+          data['scheduled_at']!,
+          _scheduledAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_scheduledAtMeta);
+    }
+    if (data.containsKey('enabled')) {
+      context.handle(
+        _enabledMeta,
+        enabled.isAcceptableOrUnknown(data['enabled']!, _enabledMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_enabledMeta);
+    }
+    if (data.containsKey('recurrence_value')) {
+      context.handle(
+        _recurrenceValueMeta,
+        recurrenceValue.isAcceptableOrUnknown(
+          data['recurrence_value']!,
+          _recurrenceValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('platform_notification_id')) {
+      context.handle(
+        _platformNotificationIdMeta,
+        platformNotificationId.isAcceptableOrUnknown(
+          data['platform_notification_id']!,
+          _platformNotificationIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('canceled_at')) {
+      context.handle(
+        _canceledAtMeta,
+        canceledAt.isAcceptableOrUnknown(data['canceled_at']!, _canceledAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReminderRuleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReminderRuleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      ownerType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_type'],
+      ),
+      ownerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_id'],
+      ),
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      scheduledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}scheduled_at'],
+      )!,
+      enabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enabled'],
+      )!,
+      recurrenceValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recurrence_value'],
+      ),
+      platformNotificationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}platform_notification_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      canceledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}canceled_at'],
+      ),
+    );
+  }
+
+  @override
+  $ReminderRulesTable createAlias(String alias) {
+    return $ReminderRulesTable(attachedDatabase, alias);
+  }
+}
+
+class ReminderRuleRow extends DataClass implements Insertable<ReminderRuleRow> {
+  final String id;
+  final String? ownerType;
+  final String? ownerId;
+  final String category;
+  final String title;
+  final String body;
+  final DateTime scheduledAt;
+  final bool enabled;
+  final String? recurrenceValue;
+  final int? platformNotificationId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? canceledAt;
+  const ReminderRuleRow({
+    required this.id,
+    this.ownerType,
+    this.ownerId,
+    required this.category,
+    required this.title,
+    required this.body,
+    required this.scheduledAt,
+    required this.enabled,
+    this.recurrenceValue,
+    this.platformNotificationId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.canceledAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || ownerType != null) {
+      map['owner_type'] = Variable<String>(ownerType);
+    }
+    if (!nullToAbsent || ownerId != null) {
+      map['owner_id'] = Variable<String>(ownerId);
+    }
+    map['category'] = Variable<String>(category);
+    map['title'] = Variable<String>(title);
+    map['body'] = Variable<String>(body);
+    map['scheduled_at'] = Variable<DateTime>(scheduledAt);
+    map['enabled'] = Variable<bool>(enabled);
+    if (!nullToAbsent || recurrenceValue != null) {
+      map['recurrence_value'] = Variable<String>(recurrenceValue);
+    }
+    if (!nullToAbsent || platformNotificationId != null) {
+      map['platform_notification_id'] = Variable<int>(platformNotificationId);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || canceledAt != null) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt);
+    }
+    return map;
+  }
+
+  ReminderRulesCompanion toCompanion(bool nullToAbsent) {
+    return ReminderRulesCompanion(
+      id: Value(id),
+      ownerType: ownerType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerType),
+      ownerId: ownerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerId),
+      category: Value(category),
+      title: Value(title),
+      body: Value(body),
+      scheduledAt: Value(scheduledAt),
+      enabled: Value(enabled),
+      recurrenceValue: recurrenceValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(recurrenceValue),
+      platformNotificationId: platformNotificationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(platformNotificationId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      canceledAt: canceledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(canceledAt),
+    );
+  }
+
+  factory ReminderRuleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReminderRuleRow(
+      id: serializer.fromJson<String>(json['id']),
+      ownerType: serializer.fromJson<String?>(json['ownerType']),
+      ownerId: serializer.fromJson<String?>(json['ownerId']),
+      category: serializer.fromJson<String>(json['category']),
+      title: serializer.fromJson<String>(json['title']),
+      body: serializer.fromJson<String>(json['body']),
+      scheduledAt: serializer.fromJson<DateTime>(json['scheduledAt']),
+      enabled: serializer.fromJson<bool>(json['enabled']),
+      recurrenceValue: serializer.fromJson<String?>(json['recurrenceValue']),
+      platformNotificationId: serializer.fromJson<int?>(
+        json['platformNotificationId'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      canceledAt: serializer.fromJson<DateTime?>(json['canceledAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'ownerType': serializer.toJson<String?>(ownerType),
+      'ownerId': serializer.toJson<String?>(ownerId),
+      'category': serializer.toJson<String>(category),
+      'title': serializer.toJson<String>(title),
+      'body': serializer.toJson<String>(body),
+      'scheduledAt': serializer.toJson<DateTime>(scheduledAt),
+      'enabled': serializer.toJson<bool>(enabled),
+      'recurrenceValue': serializer.toJson<String?>(recurrenceValue),
+      'platformNotificationId': serializer.toJson<int?>(platformNotificationId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'canceledAt': serializer.toJson<DateTime?>(canceledAt),
+    };
+  }
+
+  ReminderRuleRow copyWith({
+    String? id,
+    Value<String?> ownerType = const Value.absent(),
+    Value<String?> ownerId = const Value.absent(),
+    String? category,
+    String? title,
+    String? body,
+    DateTime? scheduledAt,
+    bool? enabled,
+    Value<String?> recurrenceValue = const Value.absent(),
+    Value<int?> platformNotificationId = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> canceledAt = const Value.absent(),
+  }) => ReminderRuleRow(
+    id: id ?? this.id,
+    ownerType: ownerType.present ? ownerType.value : this.ownerType,
+    ownerId: ownerId.present ? ownerId.value : this.ownerId,
+    category: category ?? this.category,
+    title: title ?? this.title,
+    body: body ?? this.body,
+    scheduledAt: scheduledAt ?? this.scheduledAt,
+    enabled: enabled ?? this.enabled,
+    recurrenceValue: recurrenceValue.present
+        ? recurrenceValue.value
+        : this.recurrenceValue,
+    platformNotificationId: platformNotificationId.present
+        ? platformNotificationId.value
+        : this.platformNotificationId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    canceledAt: canceledAt.present ? canceledAt.value : this.canceledAt,
+  );
+  ReminderRuleRow copyWithCompanion(ReminderRulesCompanion data) {
+    return ReminderRuleRow(
+      id: data.id.present ? data.id.value : this.id,
+      ownerType: data.ownerType.present ? data.ownerType.value : this.ownerType,
+      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
+      category: data.category.present ? data.category.value : this.category,
+      title: data.title.present ? data.title.value : this.title,
+      body: data.body.present ? data.body.value : this.body,
+      scheduledAt: data.scheduledAt.present
+          ? data.scheduledAt.value
+          : this.scheduledAt,
+      enabled: data.enabled.present ? data.enabled.value : this.enabled,
+      recurrenceValue: data.recurrenceValue.present
+          ? data.recurrenceValue.value
+          : this.recurrenceValue,
+      platformNotificationId: data.platformNotificationId.present
+          ? data.platformNotificationId.value
+          : this.platformNotificationId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      canceledAt: data.canceledAt.present
+          ? data.canceledAt.value
+          : this.canceledAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReminderRuleRow(')
+          ..write('id: $id, ')
+          ..write('ownerType: $ownerType, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('enabled: $enabled, ')
+          ..write('recurrenceValue: $recurrenceValue, ')
+          ..write('platformNotificationId: $platformNotificationId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('canceledAt: $canceledAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    ownerType,
+    ownerId,
+    category,
+    title,
+    body,
+    scheduledAt,
+    enabled,
+    recurrenceValue,
+    platformNotificationId,
+    createdAt,
+    updatedAt,
+    canceledAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReminderRuleRow &&
+          other.id == this.id &&
+          other.ownerType == this.ownerType &&
+          other.ownerId == this.ownerId &&
+          other.category == this.category &&
+          other.title == this.title &&
+          other.body == this.body &&
+          other.scheduledAt == this.scheduledAt &&
+          other.enabled == this.enabled &&
+          other.recurrenceValue == this.recurrenceValue &&
+          other.platformNotificationId == this.platformNotificationId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.canceledAt == this.canceledAt);
+}
+
+class ReminderRulesCompanion extends UpdateCompanion<ReminderRuleRow> {
+  final Value<String> id;
+  final Value<String?> ownerType;
+  final Value<String?> ownerId;
+  final Value<String> category;
+  final Value<String> title;
+  final Value<String> body;
+  final Value<DateTime> scheduledAt;
+  final Value<bool> enabled;
+  final Value<String?> recurrenceValue;
+  final Value<int?> platformNotificationId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> canceledAt;
+  final Value<int> rowid;
+  const ReminderRulesCompanion({
+    this.id = const Value.absent(),
+    this.ownerType = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    this.category = const Value.absent(),
+    this.title = const Value.absent(),
+    this.body = const Value.absent(),
+    this.scheduledAt = const Value.absent(),
+    this.enabled = const Value.absent(),
+    this.recurrenceValue = const Value.absent(),
+    this.platformNotificationId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReminderRulesCompanion.insert({
+    required String id,
+    this.ownerType = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    required String category,
+    required String title,
+    required String body,
+    required DateTime scheduledAt,
+    required bool enabled,
+    this.recurrenceValue = const Value.absent(),
+    this.platformNotificationId = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.canceledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       category = Value(category),
+       title = Value(title),
+       body = Value(body),
+       scheduledAt = Value(scheduledAt),
+       enabled = Value(enabled),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<ReminderRuleRow> custom({
+    Expression<String>? id,
+    Expression<String>? ownerType,
+    Expression<String>? ownerId,
+    Expression<String>? category,
+    Expression<String>? title,
+    Expression<String>? body,
+    Expression<DateTime>? scheduledAt,
+    Expression<bool>? enabled,
+    Expression<String>? recurrenceValue,
+    Expression<int>? platformNotificationId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? canceledAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ownerType != null) 'owner_type': ownerType,
+      if (ownerId != null) 'owner_id': ownerId,
+      if (category != null) 'category': category,
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (scheduledAt != null) 'scheduled_at': scheduledAt,
+      if (enabled != null) 'enabled': enabled,
+      if (recurrenceValue != null) 'recurrence_value': recurrenceValue,
+      if (platformNotificationId != null)
+        'platform_notification_id': platformNotificationId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (canceledAt != null) 'canceled_at': canceledAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReminderRulesCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? ownerType,
+    Value<String?>? ownerId,
+    Value<String>? category,
+    Value<String>? title,
+    Value<String>? body,
+    Value<DateTime>? scheduledAt,
+    Value<bool>? enabled,
+    Value<String?>? recurrenceValue,
+    Value<int?>? platformNotificationId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? canceledAt,
+    Value<int>? rowid,
+  }) {
+    return ReminderRulesCompanion(
+      id: id ?? this.id,
+      ownerType: ownerType ?? this.ownerType,
+      ownerId: ownerId ?? this.ownerId,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      scheduledAt: scheduledAt ?? this.scheduledAt,
+      enabled: enabled ?? this.enabled,
+      recurrenceValue: recurrenceValue ?? this.recurrenceValue,
+      platformNotificationId:
+          platformNotificationId ?? this.platformNotificationId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      canceledAt: canceledAt ?? this.canceledAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (ownerType.present) {
+      map['owner_type'] = Variable<String>(ownerType.value);
+    }
+    if (ownerId.present) {
+      map['owner_id'] = Variable<String>(ownerId.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (scheduledAt.present) {
+      map['scheduled_at'] = Variable<DateTime>(scheduledAt.value);
+    }
+    if (enabled.present) {
+      map['enabled'] = Variable<bool>(enabled.value);
+    }
+    if (recurrenceValue.present) {
+      map['recurrence_value'] = Variable<String>(recurrenceValue.value);
+    }
+    if (platformNotificationId.present) {
+      map['platform_notification_id'] = Variable<int>(
+        platformNotificationId.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (canceledAt.present) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReminderRulesCompanion(')
+          ..write('id: $id, ')
+          ..write('ownerType: $ownerType, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('enabled: $enabled, ')
+          ..write('recurrenceValue: $recurrenceValue, ')
+          ..write('platformNotificationId: $platformNotificationId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('canceledAt: $canceledAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NotificationInboxTable extends NotificationInbox
+    with TableInfo<$NotificationInboxTable, NotificationInboxRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotificationInboxTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reminderRuleIdMeta = const VerificationMeta(
+    'reminderRuleId',
+  );
+  @override
+  late final GeneratedColumn<String> reminderRuleId = GeneratedColumn<String>(
+    'reminder_rule_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ownerTypeMeta = const VerificationMeta(
+    'ownerType',
+  );
+  @override
+  late final GeneratedColumn<String> ownerType = GeneratedColumn<String>(
+    'owner_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ownerIdMeta = const VerificationMeta(
+    'ownerId',
+  );
+  @override
+  late final GeneratedColumn<String> ownerId = GeneratedColumn<String>(
+    'owner_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scheduledAtMeta = const VerificationMeta(
+    'scheduledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> scheduledAt = GeneratedColumn<DateTime>(
+    'scheduled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deliveredAtMeta = const VerificationMeta(
+    'deliveredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deliveredAt = GeneratedColumn<DateTime>(
+    'delivered_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _readAtMeta = const VerificationMeta('readAt');
+  @override
+  late final GeneratedColumn<DateTime> readAt = GeneratedColumn<DateTime>(
+    'read_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _canceledAtMeta = const VerificationMeta(
+    'canceledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> canceledAt = GeneratedColumn<DateTime>(
+    'canceled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _platformNotificationIdMeta =
+      const VerificationMeta('platformNotificationId');
+  @override
+  late final GeneratedColumn<int> platformNotificationId = GeneratedColumn<int>(
+    'platform_notification_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    reminderRuleId,
+    ownerType,
+    ownerId,
+    category,
+    title,
+    body,
+    scheduledAt,
+    deliveredAt,
+    readAt,
+    canceledAt,
+    platformNotificationId,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'notification_inbox';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NotificationInboxRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('reminder_rule_id')) {
+      context.handle(
+        _reminderRuleIdMeta,
+        reminderRuleId.isAcceptableOrUnknown(
+          data['reminder_rule_id']!,
+          _reminderRuleIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('owner_type')) {
+      context.handle(
+        _ownerTypeMeta,
+        ownerType.isAcceptableOrUnknown(data['owner_type']!, _ownerTypeMeta),
+      );
+    }
+    if (data.containsKey('owner_id')) {
+      context.handle(
+        _ownerIdMeta,
+        ownerId.isAcceptableOrUnknown(data['owner_id']!, _ownerIdMeta),
+      );
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('scheduled_at')) {
+      context.handle(
+        _scheduledAtMeta,
+        scheduledAt.isAcceptableOrUnknown(
+          data['scheduled_at']!,
+          _scheduledAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('delivered_at')) {
+      context.handle(
+        _deliveredAtMeta,
+        deliveredAt.isAcceptableOrUnknown(
+          data['delivered_at']!,
+          _deliveredAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('read_at')) {
+      context.handle(
+        _readAtMeta,
+        readAt.isAcceptableOrUnknown(data['read_at']!, _readAtMeta),
+      );
+    }
+    if (data.containsKey('canceled_at')) {
+      context.handle(
+        _canceledAtMeta,
+        canceledAt.isAcceptableOrUnknown(data['canceled_at']!, _canceledAtMeta),
+      );
+    }
+    if (data.containsKey('platform_notification_id')) {
+      context.handle(
+        _platformNotificationIdMeta,
+        platformNotificationId.isAcceptableOrUnknown(
+          data['platform_notification_id']!,
+          _platformNotificationIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NotificationInboxRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NotificationInboxRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      reminderRuleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reminder_rule_id'],
+      ),
+      ownerType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_type'],
+      ),
+      ownerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_id'],
+      ),
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      scheduledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}scheduled_at'],
+      ),
+      deliveredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}delivered_at'],
+      ),
+      readAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}read_at'],
+      ),
+      canceledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}canceled_at'],
+      ),
+      platformNotificationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}platform_notification_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $NotificationInboxTable createAlias(String alias) {
+    return $NotificationInboxTable(attachedDatabase, alias);
+  }
+}
+
+class NotificationInboxRow extends DataClass
+    implements Insertable<NotificationInboxRow> {
+  final String id;
+  final String? reminderRuleId;
+  final String? ownerType;
+  final String? ownerId;
+  final String category;
+  final String title;
+  final String body;
+  final DateTime? scheduledAt;
+  final DateTime? deliveredAt;
+  final DateTime? readAt;
+  final DateTime? canceledAt;
+  final int? platformNotificationId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const NotificationInboxRow({
+    required this.id,
+    this.reminderRuleId,
+    this.ownerType,
+    this.ownerId,
+    required this.category,
+    required this.title,
+    required this.body,
+    this.scheduledAt,
+    this.deliveredAt,
+    this.readAt,
+    this.canceledAt,
+    this.platformNotificationId,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    if (!nullToAbsent || reminderRuleId != null) {
+      map['reminder_rule_id'] = Variable<String>(reminderRuleId);
+    }
+    if (!nullToAbsent || ownerType != null) {
+      map['owner_type'] = Variable<String>(ownerType);
+    }
+    if (!nullToAbsent || ownerId != null) {
+      map['owner_id'] = Variable<String>(ownerId);
+    }
+    map['category'] = Variable<String>(category);
+    map['title'] = Variable<String>(title);
+    map['body'] = Variable<String>(body);
+    if (!nullToAbsent || scheduledAt != null) {
+      map['scheduled_at'] = Variable<DateTime>(scheduledAt);
+    }
+    if (!nullToAbsent || deliveredAt != null) {
+      map['delivered_at'] = Variable<DateTime>(deliveredAt);
+    }
+    if (!nullToAbsent || readAt != null) {
+      map['read_at'] = Variable<DateTime>(readAt);
+    }
+    if (!nullToAbsent || canceledAt != null) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt);
+    }
+    if (!nullToAbsent || platformNotificationId != null) {
+      map['platform_notification_id'] = Variable<int>(platformNotificationId);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  NotificationInboxCompanion toCompanion(bool nullToAbsent) {
+    return NotificationInboxCompanion(
+      id: Value(id),
+      reminderRuleId: reminderRuleId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminderRuleId),
+      ownerType: ownerType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerType),
+      ownerId: ownerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerId),
+      category: Value(category),
+      title: Value(title),
+      body: Value(body),
+      scheduledAt: scheduledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(scheduledAt),
+      deliveredAt: deliveredAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deliveredAt),
+      readAt: readAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readAt),
+      canceledAt: canceledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(canceledAt),
+      platformNotificationId: platformNotificationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(platformNotificationId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory NotificationInboxRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NotificationInboxRow(
+      id: serializer.fromJson<String>(json['id']),
+      reminderRuleId: serializer.fromJson<String?>(json['reminderRuleId']),
+      ownerType: serializer.fromJson<String?>(json['ownerType']),
+      ownerId: serializer.fromJson<String?>(json['ownerId']),
+      category: serializer.fromJson<String>(json['category']),
+      title: serializer.fromJson<String>(json['title']),
+      body: serializer.fromJson<String>(json['body']),
+      scheduledAt: serializer.fromJson<DateTime?>(json['scheduledAt']),
+      deliveredAt: serializer.fromJson<DateTime?>(json['deliveredAt']),
+      readAt: serializer.fromJson<DateTime?>(json['readAt']),
+      canceledAt: serializer.fromJson<DateTime?>(json['canceledAt']),
+      platformNotificationId: serializer.fromJson<int?>(
+        json['platformNotificationId'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'reminderRuleId': serializer.toJson<String?>(reminderRuleId),
+      'ownerType': serializer.toJson<String?>(ownerType),
+      'ownerId': serializer.toJson<String?>(ownerId),
+      'category': serializer.toJson<String>(category),
+      'title': serializer.toJson<String>(title),
+      'body': serializer.toJson<String>(body),
+      'scheduledAt': serializer.toJson<DateTime?>(scheduledAt),
+      'deliveredAt': serializer.toJson<DateTime?>(deliveredAt),
+      'readAt': serializer.toJson<DateTime?>(readAt),
+      'canceledAt': serializer.toJson<DateTime?>(canceledAt),
+      'platformNotificationId': serializer.toJson<int?>(platformNotificationId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  NotificationInboxRow copyWith({
+    String? id,
+    Value<String?> reminderRuleId = const Value.absent(),
+    Value<String?> ownerType = const Value.absent(),
+    Value<String?> ownerId = const Value.absent(),
+    String? category,
+    String? title,
+    String? body,
+    Value<DateTime?> scheduledAt = const Value.absent(),
+    Value<DateTime?> deliveredAt = const Value.absent(),
+    Value<DateTime?> readAt = const Value.absent(),
+    Value<DateTime?> canceledAt = const Value.absent(),
+    Value<int?> platformNotificationId = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => NotificationInboxRow(
+    id: id ?? this.id,
+    reminderRuleId: reminderRuleId.present
+        ? reminderRuleId.value
+        : this.reminderRuleId,
+    ownerType: ownerType.present ? ownerType.value : this.ownerType,
+    ownerId: ownerId.present ? ownerId.value : this.ownerId,
+    category: category ?? this.category,
+    title: title ?? this.title,
+    body: body ?? this.body,
+    scheduledAt: scheduledAt.present ? scheduledAt.value : this.scheduledAt,
+    deliveredAt: deliveredAt.present ? deliveredAt.value : this.deliveredAt,
+    readAt: readAt.present ? readAt.value : this.readAt,
+    canceledAt: canceledAt.present ? canceledAt.value : this.canceledAt,
+    platformNotificationId: platformNotificationId.present
+        ? platformNotificationId.value
+        : this.platformNotificationId,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  NotificationInboxRow copyWithCompanion(NotificationInboxCompanion data) {
+    return NotificationInboxRow(
+      id: data.id.present ? data.id.value : this.id,
+      reminderRuleId: data.reminderRuleId.present
+          ? data.reminderRuleId.value
+          : this.reminderRuleId,
+      ownerType: data.ownerType.present ? data.ownerType.value : this.ownerType,
+      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
+      category: data.category.present ? data.category.value : this.category,
+      title: data.title.present ? data.title.value : this.title,
+      body: data.body.present ? data.body.value : this.body,
+      scheduledAt: data.scheduledAt.present
+          ? data.scheduledAt.value
+          : this.scheduledAt,
+      deliveredAt: data.deliveredAt.present
+          ? data.deliveredAt.value
+          : this.deliveredAt,
+      readAt: data.readAt.present ? data.readAt.value : this.readAt,
+      canceledAt: data.canceledAt.present
+          ? data.canceledAt.value
+          : this.canceledAt,
+      platformNotificationId: data.platformNotificationId.present
+          ? data.platformNotificationId.value
+          : this.platformNotificationId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationInboxRow(')
+          ..write('id: $id, ')
+          ..write('reminderRuleId: $reminderRuleId, ')
+          ..write('ownerType: $ownerType, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('deliveredAt: $deliveredAt, ')
+          ..write('readAt: $readAt, ')
+          ..write('canceledAt: $canceledAt, ')
+          ..write('platformNotificationId: $platformNotificationId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    reminderRuleId,
+    ownerType,
+    ownerId,
+    category,
+    title,
+    body,
+    scheduledAt,
+    deliveredAt,
+    readAt,
+    canceledAt,
+    platformNotificationId,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NotificationInboxRow &&
+          other.id == this.id &&
+          other.reminderRuleId == this.reminderRuleId &&
+          other.ownerType == this.ownerType &&
+          other.ownerId == this.ownerId &&
+          other.category == this.category &&
+          other.title == this.title &&
+          other.body == this.body &&
+          other.scheduledAt == this.scheduledAt &&
+          other.deliveredAt == this.deliveredAt &&
+          other.readAt == this.readAt &&
+          other.canceledAt == this.canceledAt &&
+          other.platformNotificationId == this.platformNotificationId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class NotificationInboxCompanion extends UpdateCompanion<NotificationInboxRow> {
+  final Value<String> id;
+  final Value<String?> reminderRuleId;
+  final Value<String?> ownerType;
+  final Value<String?> ownerId;
+  final Value<String> category;
+  final Value<String> title;
+  final Value<String> body;
+  final Value<DateTime?> scheduledAt;
+  final Value<DateTime?> deliveredAt;
+  final Value<DateTime?> readAt;
+  final Value<DateTime?> canceledAt;
+  final Value<int?> platformNotificationId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const NotificationInboxCompanion({
+    this.id = const Value.absent(),
+    this.reminderRuleId = const Value.absent(),
+    this.ownerType = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    this.category = const Value.absent(),
+    this.title = const Value.absent(),
+    this.body = const Value.absent(),
+    this.scheduledAt = const Value.absent(),
+    this.deliveredAt = const Value.absent(),
+    this.readAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
+    this.platformNotificationId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NotificationInboxCompanion.insert({
+    required String id,
+    this.reminderRuleId = const Value.absent(),
+    this.ownerType = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    required String category,
+    required String title,
+    required String body,
+    this.scheduledAt = const Value.absent(),
+    this.deliveredAt = const Value.absent(),
+    this.readAt = const Value.absent(),
+    this.canceledAt = const Value.absent(),
+    this.platformNotificationId = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       category = Value(category),
+       title = Value(title),
+       body = Value(body),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<NotificationInboxRow> custom({
+    Expression<String>? id,
+    Expression<String>? reminderRuleId,
+    Expression<String>? ownerType,
+    Expression<String>? ownerId,
+    Expression<String>? category,
+    Expression<String>? title,
+    Expression<String>? body,
+    Expression<DateTime>? scheduledAt,
+    Expression<DateTime>? deliveredAt,
+    Expression<DateTime>? readAt,
+    Expression<DateTime>? canceledAt,
+    Expression<int>? platformNotificationId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (reminderRuleId != null) 'reminder_rule_id': reminderRuleId,
+      if (ownerType != null) 'owner_type': ownerType,
+      if (ownerId != null) 'owner_id': ownerId,
+      if (category != null) 'category': category,
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (scheduledAt != null) 'scheduled_at': scheduledAt,
+      if (deliveredAt != null) 'delivered_at': deliveredAt,
+      if (readAt != null) 'read_at': readAt,
+      if (canceledAt != null) 'canceled_at': canceledAt,
+      if (platformNotificationId != null)
+        'platform_notification_id': platformNotificationId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NotificationInboxCompanion copyWith({
+    Value<String>? id,
+    Value<String?>? reminderRuleId,
+    Value<String?>? ownerType,
+    Value<String?>? ownerId,
+    Value<String>? category,
+    Value<String>? title,
+    Value<String>? body,
+    Value<DateTime?>? scheduledAt,
+    Value<DateTime?>? deliveredAt,
+    Value<DateTime?>? readAt,
+    Value<DateTime?>? canceledAt,
+    Value<int?>? platformNotificationId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return NotificationInboxCompanion(
+      id: id ?? this.id,
+      reminderRuleId: reminderRuleId ?? this.reminderRuleId,
+      ownerType: ownerType ?? this.ownerType,
+      ownerId: ownerId ?? this.ownerId,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      scheduledAt: scheduledAt ?? this.scheduledAt,
+      deliveredAt: deliveredAt ?? this.deliveredAt,
+      readAt: readAt ?? this.readAt,
+      canceledAt: canceledAt ?? this.canceledAt,
+      platformNotificationId:
+          platformNotificationId ?? this.platformNotificationId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (reminderRuleId.present) {
+      map['reminder_rule_id'] = Variable<String>(reminderRuleId.value);
+    }
+    if (ownerType.present) {
+      map['owner_type'] = Variable<String>(ownerType.value);
+    }
+    if (ownerId.present) {
+      map['owner_id'] = Variable<String>(ownerId.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (scheduledAt.present) {
+      map['scheduled_at'] = Variable<DateTime>(scheduledAt.value);
+    }
+    if (deliveredAt.present) {
+      map['delivered_at'] = Variable<DateTime>(deliveredAt.value);
+    }
+    if (readAt.present) {
+      map['read_at'] = Variable<DateTime>(readAt.value);
+    }
+    if (canceledAt.present) {
+      map['canceled_at'] = Variable<DateTime>(canceledAt.value);
+    }
+    if (platformNotificationId.present) {
+      map['platform_notification_id'] = Variable<int>(
+        platformNotificationId.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotificationInboxCompanion(')
+          ..write('id: $id, ')
+          ..write('reminderRuleId: $reminderRuleId, ')
+          ..write('ownerType: $ownerType, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('deliveredAt: $deliveredAt, ')
+          ..write('readAt: $readAt, ')
+          ..write('canceledAt: $canceledAt, ')
+          ..write('platformNotificationId: $platformNotificationId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -14108,6 +15724,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $TemplateInstallationsTable templateInstallations =
       $TemplateInstallationsTable(this);
+  late final $ReminderRulesTable reminderRules = $ReminderRulesTable(this);
+  late final $NotificationInboxTable notificationInbox =
+      $NotificationInboxTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -14136,6 +15755,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     spaceSavedFilters,
     spaceSavedViews,
     templateInstallations,
+    reminderRules,
+    notificationInbox,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -25732,6 +27353,760 @@ typedef $$TemplateInstallationsTableProcessedTableManager =
       TemplateInstallationRow,
       PrefetchHooks Function()
     >;
+typedef $$ReminderRulesTableCreateCompanionBuilder =
+    ReminderRulesCompanion Function({
+      required String id,
+      Value<String?> ownerType,
+      Value<String?> ownerId,
+      required String category,
+      required String title,
+      required String body,
+      required DateTime scheduledAt,
+      required bool enabled,
+      Value<String?> recurrenceValue,
+      Value<int?> platformNotificationId,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> canceledAt,
+      Value<int> rowid,
+    });
+typedef $$ReminderRulesTableUpdateCompanionBuilder =
+    ReminderRulesCompanion Function({
+      Value<String> id,
+      Value<String?> ownerType,
+      Value<String?> ownerId,
+      Value<String> category,
+      Value<String> title,
+      Value<String> body,
+      Value<DateTime> scheduledAt,
+      Value<bool> enabled,
+      Value<String?> recurrenceValue,
+      Value<int?> platformNotificationId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> canceledAt,
+      Value<int> rowid,
+    });
+
+class $$ReminderRulesTableFilterComposer
+    extends Composer<_$AppDatabase, $ReminderRulesTable> {
+  $$ReminderRulesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerType => $composableBuilder(
+    column: $table.ownerType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recurrenceValue => $composableBuilder(
+    column: $table.recurrenceValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReminderRulesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReminderRulesTable> {
+  $$ReminderRulesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerType => $composableBuilder(
+    column: $table.ownerType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recurrenceValue => $composableBuilder(
+    column: $table.recurrenceValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReminderRulesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReminderRulesTable> {
+  $$ReminderRulesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get ownerType =>
+      $composableBuilder(column: $table.ownerType, builder: (column) => column);
+
+  GeneratedColumn<String> get ownerId =>
+      $composableBuilder(column: $table.ownerId, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get enabled =>
+      $composableBuilder(column: $table.enabled, builder: (column) => column);
+
+  GeneratedColumn<String> get recurrenceValue => $composableBuilder(
+    column: $table.recurrenceValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => column,
+  );
+}
+
+class $$ReminderRulesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReminderRulesTable,
+          ReminderRuleRow,
+          $$ReminderRulesTableFilterComposer,
+          $$ReminderRulesTableOrderingComposer,
+          $$ReminderRulesTableAnnotationComposer,
+          $$ReminderRulesTableCreateCompanionBuilder,
+          $$ReminderRulesTableUpdateCompanionBuilder,
+          (
+            ReminderRuleRow,
+            BaseReferences<_$AppDatabase, $ReminderRulesTable, ReminderRuleRow>,
+          ),
+          ReminderRuleRow,
+          PrefetchHooks Function()
+        > {
+  $$ReminderRulesTableTableManager(_$AppDatabase db, $ReminderRulesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReminderRulesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReminderRulesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReminderRulesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> ownerType = const Value.absent(),
+                Value<String?> ownerId = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<DateTime> scheduledAt = const Value.absent(),
+                Value<bool> enabled = const Value.absent(),
+                Value<String?> recurrenceValue = const Value.absent(),
+                Value<int?> platformNotificationId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReminderRulesCompanion(
+                id: id,
+                ownerType: ownerType,
+                ownerId: ownerId,
+                category: category,
+                title: title,
+                body: body,
+                scheduledAt: scheduledAt,
+                enabled: enabled,
+                recurrenceValue: recurrenceValue,
+                platformNotificationId: platformNotificationId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                canceledAt: canceledAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> ownerType = const Value.absent(),
+                Value<String?> ownerId = const Value.absent(),
+                required String category,
+                required String title,
+                required String body,
+                required DateTime scheduledAt,
+                required bool enabled,
+                Value<String?> recurrenceValue = const Value.absent(),
+                Value<int?> platformNotificationId = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> canceledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReminderRulesCompanion.insert(
+                id: id,
+                ownerType: ownerType,
+                ownerId: ownerId,
+                category: category,
+                title: title,
+                body: body,
+                scheduledAt: scheduledAt,
+                enabled: enabled,
+                recurrenceValue: recurrenceValue,
+                platformNotificationId: platformNotificationId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                canceledAt: canceledAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReminderRulesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReminderRulesTable,
+      ReminderRuleRow,
+      $$ReminderRulesTableFilterComposer,
+      $$ReminderRulesTableOrderingComposer,
+      $$ReminderRulesTableAnnotationComposer,
+      $$ReminderRulesTableCreateCompanionBuilder,
+      $$ReminderRulesTableUpdateCompanionBuilder,
+      (
+        ReminderRuleRow,
+        BaseReferences<_$AppDatabase, $ReminderRulesTable, ReminderRuleRow>,
+      ),
+      ReminderRuleRow,
+      PrefetchHooks Function()
+    >;
+typedef $$NotificationInboxTableCreateCompanionBuilder =
+    NotificationInboxCompanion Function({
+      required String id,
+      Value<String?> reminderRuleId,
+      Value<String?> ownerType,
+      Value<String?> ownerId,
+      required String category,
+      required String title,
+      required String body,
+      Value<DateTime?> scheduledAt,
+      Value<DateTime?> deliveredAt,
+      Value<DateTime?> readAt,
+      Value<DateTime?> canceledAt,
+      Value<int?> platformNotificationId,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$NotificationInboxTableUpdateCompanionBuilder =
+    NotificationInboxCompanion Function({
+      Value<String> id,
+      Value<String?> reminderRuleId,
+      Value<String?> ownerType,
+      Value<String?> ownerId,
+      Value<String> category,
+      Value<String> title,
+      Value<String> body,
+      Value<DateTime?> scheduledAt,
+      Value<DateTime?> deliveredAt,
+      Value<DateTime?> readAt,
+      Value<DateTime?> canceledAt,
+      Value<int?> platformNotificationId,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$NotificationInboxTableFilterComposer
+    extends Composer<_$AppDatabase, $NotificationInboxTable> {
+  $$NotificationInboxTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reminderRuleId => $composableBuilder(
+    column: $table.reminderRuleId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerType => $composableBuilder(
+    column: $table.ownerType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deliveredAt => $composableBuilder(
+    column: $table.deliveredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get readAt => $composableBuilder(
+    column: $table.readAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NotificationInboxTableOrderingComposer
+    extends Composer<_$AppDatabase, $NotificationInboxTable> {
+  $$NotificationInboxTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reminderRuleId => $composableBuilder(
+    column: $table.reminderRuleId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerType => $composableBuilder(
+    column: $table.ownerType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deliveredAt => $composableBuilder(
+    column: $table.deliveredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get readAt => $composableBuilder(
+    column: $table.readAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NotificationInboxTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NotificationInboxTable> {
+  $$NotificationInboxTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get reminderRuleId => $composableBuilder(
+    column: $table.reminderRuleId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get ownerType =>
+      $composableBuilder(column: $table.ownerType, builder: (column) => column);
+
+  GeneratedColumn<String> get ownerId =>
+      $composableBuilder(column: $table.ownerId, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get scheduledAt => $composableBuilder(
+    column: $table.scheduledAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deliveredAt => $composableBuilder(
+    column: $table.deliveredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get readAt =>
+      $composableBuilder(column: $table.readAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get canceledAt => $composableBuilder(
+    column: $table.canceledAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get platformNotificationId => $composableBuilder(
+    column: $table.platformNotificationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$NotificationInboxTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NotificationInboxTable,
+          NotificationInboxRow,
+          $$NotificationInboxTableFilterComposer,
+          $$NotificationInboxTableOrderingComposer,
+          $$NotificationInboxTableAnnotationComposer,
+          $$NotificationInboxTableCreateCompanionBuilder,
+          $$NotificationInboxTableUpdateCompanionBuilder,
+          (
+            NotificationInboxRow,
+            BaseReferences<
+              _$AppDatabase,
+              $NotificationInboxTable,
+              NotificationInboxRow
+            >,
+          ),
+          NotificationInboxRow,
+          PrefetchHooks Function()
+        > {
+  $$NotificationInboxTableTableManager(
+    _$AppDatabase db,
+    $NotificationInboxTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NotificationInboxTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NotificationInboxTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NotificationInboxTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String?> reminderRuleId = const Value.absent(),
+                Value<String?> ownerType = const Value.absent(),
+                Value<String?> ownerId = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<DateTime?> scheduledAt = const Value.absent(),
+                Value<DateTime?> deliveredAt = const Value.absent(),
+                Value<DateTime?> readAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
+                Value<int?> platformNotificationId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NotificationInboxCompanion(
+                id: id,
+                reminderRuleId: reminderRuleId,
+                ownerType: ownerType,
+                ownerId: ownerId,
+                category: category,
+                title: title,
+                body: body,
+                scheduledAt: scheduledAt,
+                deliveredAt: deliveredAt,
+                readAt: readAt,
+                canceledAt: canceledAt,
+                platformNotificationId: platformNotificationId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                Value<String?> reminderRuleId = const Value.absent(),
+                Value<String?> ownerType = const Value.absent(),
+                Value<String?> ownerId = const Value.absent(),
+                required String category,
+                required String title,
+                required String body,
+                Value<DateTime?> scheduledAt = const Value.absent(),
+                Value<DateTime?> deliveredAt = const Value.absent(),
+                Value<DateTime?> readAt = const Value.absent(),
+                Value<DateTime?> canceledAt = const Value.absent(),
+                Value<int?> platformNotificationId = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => NotificationInboxCompanion.insert(
+                id: id,
+                reminderRuleId: reminderRuleId,
+                ownerType: ownerType,
+                ownerId: ownerId,
+                category: category,
+                title: title,
+                body: body,
+                scheduledAt: scheduledAt,
+                deliveredAt: deliveredAt,
+                readAt: readAt,
+                canceledAt: canceledAt,
+                platformNotificationId: platformNotificationId,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NotificationInboxTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NotificationInboxTable,
+      NotificationInboxRow,
+      $$NotificationInboxTableFilterComposer,
+      $$NotificationInboxTableOrderingComposer,
+      $$NotificationInboxTableAnnotationComposer,
+      $$NotificationInboxTableCreateCompanionBuilder,
+      $$NotificationInboxTableUpdateCompanionBuilder,
+      (
+        NotificationInboxRow,
+        BaseReferences<
+          _$AppDatabase,
+          $NotificationInboxTable,
+          NotificationInboxRow
+        >,
+      ),
+      NotificationInboxRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -25781,4 +28156,8 @@ class $AppDatabaseManager {
       $$SpaceSavedViewsTableTableManager(_db, _db.spaceSavedViews);
   $$TemplateInstallationsTableTableManager get templateInstallations =>
       $$TemplateInstallationsTableTableManager(_db, _db.templateInstallations);
+  $$ReminderRulesTableTableManager get reminderRules =>
+      $$ReminderRulesTableTableManager(_db, _db.reminderRules);
+  $$NotificationInboxTableTableManager get notificationInbox =>
+      $$NotificationInboxTableTableManager(_db, _db.notificationInbox);
 }
