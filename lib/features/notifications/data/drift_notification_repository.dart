@@ -32,24 +32,26 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
     try {
       final now = _clock.now().toUtc();
       final id = _idService.newId();
-      
+
       // Use Drift Companion for insertion
-      await _database.into(_database.reminderRules).insert(
-        ReminderRulesCompanion.insert(
-          id: id,
-          ownerType: Value(request.ownerType),
-          ownerId: Value(request.ownerId),
-          category: request.category,
-          title: request.title,
-          body: request.body,
-          scheduledAt: request.scheduledAt,
-          enabled: request.enabled,
-          recurrenceValue: Value(request.recurrenceValue),
-          platformNotificationId: Value(request.platformNotificationId),
-          createdAt: now,
-          updatedAt: now,
-        ),
-      );
+      await _database
+          .into(_database.reminderRules)
+          .insert(
+            ReminderRulesCompanion.insert(
+              id: id,
+              ownerType: Value(request.ownerType),
+              ownerId: Value(request.ownerId),
+              category: request.category,
+              title: request.title,
+              body: request.body,
+              scheduledAt: request.scheduledAt,
+              enabled: request.enabled,
+              recurrenceValue: Value(request.recurrenceValue),
+              platformNotificationId: Value(request.platformNotificationId),
+              createdAt: now,
+              updatedAt: now,
+            ),
+          );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -59,16 +61,18 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to create reminder rule: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to create reminder rule: ${e.toString()}',
+      );
     }
   }
 
   @override
   Future<ReminderRule?> readReminderRule(String id) async {
     try {
-      final row = await (_database.select(_database.reminderRules)
-            ..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+      final row = await (_database.select(
+        _database.reminderRules,
+      )..where((t) => t.id.equals(id))).getSingleOrNull();
 
       if (row == null) {
         return null;
@@ -98,16 +102,17 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceReadFailure('Failed to read reminder rule: ${e.toString()}');
+      throw PersistenceReadFailure(
+        'Failed to read reminder rule: ${e.toString()}',
+      );
     }
   }
 
   @override
   Stream<ReminderRule?> watchReminderRule(String id) {
-    return (_database.select(_database.reminderRules)
-          ..where((t) => t.id.equals(id)))
-        .watchSingleOrNull()
-        .map((row) {
+    return (_database.select(
+      _database.reminderRules,
+    )..where((t) => t.id.equals(id))).watchSingleOrNull().map((row) {
       if (row == null) return null;
       return ReminderRule(
         id: row.id,
@@ -131,21 +136,23 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Stream<List<ReminderRule>> watchReminderRules() {
     return _database.select(_database.reminderRules).watch().map((rows) {
       return rows
-          .map((row) => ReminderRule(
-                id: row.id,
-                ownerType: row.ownerType,
-                ownerId: row.ownerId,
-                category: row.category,
-                title: row.title,
-                body: row.body,
-                scheduledAt: row.scheduledAt,
-                enabled: row.enabled,
-                recurrenceValue: row.recurrenceValue,
-                platformNotificationId: row.platformNotificationId,
-                createdAt: row.createdAt,
-                updatedAt: row.updatedAt,
-                canceledAt: row.canceledAt,
-              ))
+          .map(
+            (row) => ReminderRule(
+              id: row.id,
+              ownerType: row.ownerType,
+              ownerId: row.ownerId,
+              category: row.category,
+              title: row.title,
+              body: row.body,
+              scheduledAt: row.scheduledAt,
+              enabled: row.enabled,
+              recurrenceValue: row.recurrenceValue,
+              platformNotificationId: row.platformNotificationId,
+              createdAt: row.createdAt,
+              updatedAt: row.updatedAt,
+              canceledAt: row.canceledAt,
+            ),
+          )
           .toList();
     });
   }
@@ -154,15 +161,12 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Future<void> updateReminderRuleEnabled(String id, bool enabled) async {
     try {
       final now = _clock.now().toUtc();
-      
-      await (_database.update(_database.reminderRules)
-            ..where((t) => t.id.equals(id)))
-        .write(
-          ReminderRulesCompanion(
-            enabled: Value(enabled),
-            updatedAt: Value(now),
-          ),
-        );
+
+      await (_database.update(
+        _database.reminderRules,
+      )..where((t) => t.id.equals(id))).write(
+        ReminderRulesCompanion(enabled: Value(enabled), updatedAt: Value(now)),
+      );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -172,7 +176,9 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to update reminder rule: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to update reminder rule: ${e.toString()}',
+      );
     }
   }
 
@@ -180,15 +186,12 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Future<void> cancelReminderRule(String id) async {
     try {
       final now = _clock.now().toUtc();
-      
-      await (_database.update(_database.reminderRules)
-            ..where((t) => t.id.equals(id)))
-        .write(
-          ReminderRulesCompanion(
-            canceledAt: Value(now),
-            updatedAt: Value(now),
-          ),
-        );
+
+      await (_database.update(
+        _database.reminderRules,
+      )..where((t) => t.id.equals(id))).write(
+        ReminderRulesCompanion(canceledAt: Value(now), updatedAt: Value(now)),
+      );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -198,35 +201,41 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to cancel reminder rule: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to cancel reminder rule: ${e.toString()}',
+      );
     }
   }
 
   @override
-  Future<void> createNotificationInbox(CreateNotificationInboxItemRequest request) async {
+  Future<void> createNotificationInbox(
+    CreateNotificationInboxItemRequest request,
+  ) async {
     try {
       final now = _clock.now().toUtc();
       final id = _idService.newId();
-      
+
       // Use Drift Companion for insertion
-      await _database.into(_database.notificationInbox).insert(
-        NotificationInboxCompanion.insert(
-          id: id,
-          reminderRuleId: Value(request.reminderRuleId),
-          ownerType: Value(request.ownerType),
-          ownerId: Value(request.ownerId),
-          category: request.category,
-          title: request.title,
-          body: request.body,
-          scheduledAt: Value(request.scheduledAt),
-          deliveredAt: Value(request.deliveredAt),
-          readAt: Value(request.readAt),
-          canceledAt: Value(request.canceledAt),
-          platformNotificationId: Value(request.platformNotificationId),
-          createdAt: now,
-          updatedAt: now,
-        ),
-      );
+      await _database
+          .into(_database.notificationInbox)
+          .insert(
+            NotificationInboxCompanion.insert(
+              id: id,
+              reminderRuleId: Value(request.reminderRuleId),
+              ownerType: Value(request.ownerType),
+              ownerId: Value(request.ownerId),
+              category: request.category,
+              title: request.title,
+              body: request.body,
+              scheduledAt: Value(request.scheduledAt),
+              deliveredAt: Value(request.deliveredAt),
+              readAt: Value(request.readAt),
+              canceledAt: Value(request.canceledAt),
+              platformNotificationId: Value(request.platformNotificationId),
+              createdAt: now,
+              updatedAt: now,
+            ),
+          );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -236,16 +245,18 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to create notification inbox record: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to create notification inbox record: ${e.toString()}',
+      );
     }
   }
 
   @override
   Future<NotificationInboxItem?> readNotificationInbox(String id) async {
     try {
-      final row = await (_database.select(_database.notificationInbox)
-            ..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+      final row = await (_database.select(
+        _database.notificationInbox,
+      )..where((t) => t.id.equals(id))).getSingleOrNull();
 
       if (row == null) {
         return null;
@@ -276,16 +287,17 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceReadFailure('Failed to read notification inbox record: ${e.toString()}');
+      throw PersistenceReadFailure(
+        'Failed to read notification inbox record: ${e.toString()}',
+      );
     }
   }
 
   @override
   Stream<NotificationInboxItem?> watchNotificationInbox(String id) {
-    return (_database.select(_database.notificationInbox)
-          ..where((t) => t.id.equals(id)))
-        .watchSingleOrNull()
-        .map((row) {
+    return (_database.select(
+      _database.notificationInbox,
+    )..where((t) => t.id.equals(id))).watchSingleOrNull().map((row) {
       if (row == null) return null;
       return NotificationInboxItem(
         id: row.id,
@@ -308,27 +320,28 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
 
   @override
   Stream<List<NotificationInboxItem>> watchActiveInbox() {
-    return (_database.select(_database.notificationInbox)
-          ..where((t) => t.canceledAt.isNull()))
-        .watch()
-        .map((rows) {
+    return (_database.select(
+      _database.notificationInbox,
+    )..where((t) => t.canceledAt.isNull())).watch().map((rows) {
       return rows
-          .map((row) => NotificationInboxItem(
-                id: row.id,
-                reminderRuleId: row.reminderRuleId,
-                ownerType: row.ownerType,
-                ownerId: row.ownerId,
-                category: row.category,
-                title: row.title,
-                body: row.body,
-                scheduledAt: row.scheduledAt,
-                deliveredAt: row.deliveredAt,
-                readAt: row.readAt,
-                canceledAt: row.canceledAt,
-                platformNotificationId: row.platformNotificationId,
-                createdAt: row.createdAt,
-                updatedAt: row.updatedAt,
-              ))
+          .map(
+            (row) => NotificationInboxItem(
+              id: row.id,
+              reminderRuleId: row.reminderRuleId,
+              ownerType: row.ownerType,
+              ownerId: row.ownerId,
+              category: row.category,
+              title: row.title,
+              body: row.body,
+              scheduledAt: row.scheduledAt,
+              deliveredAt: row.deliveredAt,
+              readAt: row.readAt,
+              canceledAt: row.canceledAt,
+              platformNotificationId: row.platformNotificationId,
+              createdAt: row.createdAt,
+              updatedAt: row.updatedAt,
+            ),
+          )
           .toList();
     });
   }
@@ -337,22 +350,24 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Stream<List<NotificationInboxItem>> watchAllInbox() {
     return _database.select(_database.notificationInbox).watch().map((rows) {
       return rows
-          .map((row) => NotificationInboxItem(
-                id: row.id,
-                reminderRuleId: row.reminderRuleId,
-                ownerType: row.ownerType,
-                ownerId: row.ownerId,
-                category: row.category,
-                title: row.title,
-                body: row.body,
-                scheduledAt: row.scheduledAt,
-                deliveredAt: row.deliveredAt,
-                readAt: row.readAt,
-                canceledAt: row.canceledAt,
-                platformNotificationId: row.platformNotificationId,
-                createdAt: row.createdAt,
-                updatedAt: row.updatedAt,
-              ))
+          .map(
+            (row) => NotificationInboxItem(
+              id: row.id,
+              reminderRuleId: row.reminderRuleId,
+              ownerType: row.ownerType,
+              ownerId: row.ownerId,
+              category: row.category,
+              title: row.title,
+              body: row.body,
+              scheduledAt: row.scheduledAt,
+              deliveredAt: row.deliveredAt,
+              readAt: row.readAt,
+              canceledAt: row.canceledAt,
+              platformNotificationId: row.platformNotificationId,
+              createdAt: row.createdAt,
+              updatedAt: row.updatedAt,
+            ),
+          )
           .toList();
     });
   }
@@ -361,15 +376,12 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Future<void> markNotificationInboxRead(String id) async {
     try {
       final now = _clock.now().toUtc();
-      
-      await (_database.update(_database.notificationInbox)
-            ..where((t) => t.id.equals(id)))
-        .write(
-          NotificationInboxCompanion(
-            readAt: Value(now),
-            updatedAt: Value(now),
-          ),
-        );
+
+      await (_database.update(
+        _database.notificationInbox,
+      )..where((t) => t.id.equals(id))).write(
+        NotificationInboxCompanion(readAt: Value(now), updatedAt: Value(now)),
+      );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -379,7 +391,9 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to mark notification inbox as read: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to mark notification inbox as read: ${e.toString()}',
+      );
     }
   }
 
@@ -387,15 +401,12 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Future<void> markNotificationInboxUnread(String id) async {
     try {
       final now = _clock.now().toUtc();
-      
-      await (_database.update(_database.notificationInbox)
-            ..where((t) => t.id.equals(id)))
-        .write(
-          NotificationInboxCompanion(
-            readAt: Value(null),
-            updatedAt: Value(now),
-          ),
-        );
+
+      await (_database.update(
+        _database.notificationInbox,
+      )..where((t) => t.id.equals(id))).write(
+        NotificationInboxCompanion(readAt: Value(null), updatedAt: Value(now)),
+      );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -405,7 +416,9 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to mark notification inbox as unread: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to mark notification inbox as unread: ${e.toString()}',
+      );
     }
   }
 
@@ -413,15 +426,15 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
   Future<void> cancelNotificationInbox(String id) async {
     try {
       final now = _clock.now().toUtc();
-      
-      await (_database.update(_database.notificationInbox)
-            ..where((t) => t.id.equals(id)))
-        .write(
-          NotificationInboxCompanion(
-            canceledAt: Value(now),
-            updatedAt: Value(now),
-          ),
-        );
+
+      await (_database.update(
+        _database.notificationInbox,
+      )..where((t) => t.id.equals(id))).write(
+        NotificationInboxCompanion(
+          canceledAt: Value(now),
+          updatedAt: Value(now),
+        ),
+      );
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -431,16 +444,18 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to cancel notification inbox record: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to cancel notification inbox record: ${e.toString()}',
+      );
     }
   }
 
   @override
   Future<void> deleteNotificationInbox(String id) async {
     try {
-      await (_database.delete(_database.notificationInbox)
-            ..where((t) => t.id.equals(id)))
-        .go();
+      await (_database.delete(
+        _database.notificationInbox,
+      )..where((t) => t.id.equals(id))).go();
     } on Exception catch (e, stackTrace) {
       _logger.error(
         'notifications',
@@ -450,7 +465,9 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
         error: e,
         stackTrace: stackTrace,
       );
-      throw PersistenceWriteFailure('Failed to delete notification inbox record: ${e.toString()}');
+      throw PersistenceWriteFailure(
+        'Failed to delete notification inbox record: ${e.toString()}',
+      );
     }
   }
 }
@@ -459,11 +476,12 @@ class DriftNotificationRepository implements NotificationPersistenceRepository {
 ///
 /// This provider constructs DriftNotificationRepository with the required
 /// dependencies: database, ID service, clock, and logger.
-final notificationRepositoryProvider = Provider<NotificationPersistenceRepository>((ref) {
-  return DriftNotificationRepository(
-    database: ref.watch(appDatabaseProvider),
-    idService: ref.watch(idServiceProvider),
-    clock: ref.watch(utcClockProvider),
-    logger: ref.watch(appLoggerProvider),
-  );
-});
+final notificationRepositoryProvider =
+    Provider<NotificationPersistenceRepository>((ref) {
+      return DriftNotificationRepository(
+        database: ref.watch(appDatabaseProvider),
+        idService: ref.watch(idServiceProvider),
+        clock: ref.watch(utcClockProvider),
+        logger: ref.watch(appLoggerProvider),
+      );
+    });

@@ -200,6 +200,8 @@ void main() {
       expect(schema.toString(), contains('space_saved_filters'));
       expect(schema.toString(), contains('space_saved_views'));
       expect(schema.toString(), contains('template_installations'));
+      expect(schema.toString(), contains('reminder_rules'));
+      expect(schema.toString(), contains('notification_inbox'));
     },
   );
 }

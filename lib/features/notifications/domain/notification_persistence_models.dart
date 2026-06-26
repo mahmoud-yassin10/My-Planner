@@ -63,7 +63,8 @@ class ReminderRule {
       scheduledAt: scheduledAt ?? this.scheduledAt,
       enabled: enabled ?? this.enabled,
       recurrenceValue: recurrenceValue ?? this.recurrenceValue,
-      platformNotificationId: platformNotificationId ?? this.platformNotificationId,
+      platformNotificationId:
+          platformNotificationId ?? this.platformNotificationId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       canceledAt: canceledAt ?? this.canceledAt,

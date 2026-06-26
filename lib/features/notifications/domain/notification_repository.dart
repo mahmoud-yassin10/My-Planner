@@ -25,7 +25,9 @@ abstract interface class NotificationPersistenceRepository {
   Future<void> cancelReminderRule(String id);
 
   /// Create a notification inbox record.
-  Future<void> createNotificationInbox(CreateNotificationInboxItemRequest request);
+  Future<void> createNotificationInbox(
+    CreateNotificationInboxItemRequest request,
+  );
 
   /// Read a notification inbox record by ID.
   Future<NotificationInboxItem?> readNotificationInbox(String id);
