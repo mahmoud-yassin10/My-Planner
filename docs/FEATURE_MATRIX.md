@@ -103,7 +103,8 @@ Status values:
 | Feature | Phase | Status |
 |---|---:|---|
 | Local notification foundation | 7 | Complete |
-| Reminder scheduling | 7 | Planned |
+| Reminder scheduling | 7 | Complete |
+| Notification persistence schema | 8 | Complete |
 | Platform notification scheduling | 7 | Not started |
 | Background jobs | 7 | Not started |
 | Notification inbox | 7 | Not started |

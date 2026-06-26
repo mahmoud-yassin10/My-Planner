@@ -3219,7 +3219,9 @@
     },
     {
       "id": 24,
-      "references": [],
+      "references": [
+        23
+      ],
       "type": "table",
       "data": {
         "name": "notification_inbox",
@@ -3241,9 +3243,25 @@
             "moor_type": "string",
             "nullable": true,
             "customConstraints": null,
+            "defaultConstraints": "REFERENCES reminder_rules (id) ON DELETE SET NULL",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES reminder_rules (id) ON DELETE SET NULL"
+            },
             "default_dart": null,
             "default_client_dart": null,
-            "dsl_features": []
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "reminder_rules",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": "setNull"
+                }
+              }
+            ]
           },
           {
             "name": "owner_type",
@@ -3371,6 +3389,121 @@
         "constraints": [],
         "explicit_pk": [
           "id"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "references": [
+        23
+      ],
+      "type": "index",
+      "data": {
+        "on": 23,
+        "name": "idx_reminder_rules_enabled_scheduled_at",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "enabled",
+            "order_by": null
+          },
+          {
+            "column": "scheduled_at",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "references": [
+        23
+      ],
+      "type": "index",
+      "data": {
+        "on": 23,
+        "name": "idx_reminder_rules_owner",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "owner_type",
+            "order_by": null
+          },
+          {
+            "column": "owner_id",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "references": [
+        24
+      ],
+      "type": "index",
+      "data": {
+        "on": 24,
+        "name": "idx_notification_inbox_unread",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "read_at",
+            "order_by": null
+          },
+          {
+            "column": "canceled_at",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "references": [
+        24
+      ],
+      "type": "index",
+      "data": {
+        "on": 24,
+        "name": "idx_notification_inbox_owner",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "owner_type",
+            "order_by": null
+          },
+          {
+            "column": "owner_id",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "references": [
+        24
+      ],
+      "type": "index",
+      "data": {
+        "on": 24,
+        "name": "idx_notification_inbox_schedule_delivery",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "scheduled_at",
+            "order_by": null
+          },
+          {
+            "column": "delivered_at",
+            "order_by": null
+          }
         ]
       }
     }
@@ -3597,7 +3730,52 @@
       "sql": [
         {
           "dialect": "sqlite",
-          "sql": "CREATE TABLE IF NOT EXISTS \"notification_inbox\" (\"id\" TEXT NOT NULL, \"reminder_rule_id\" TEXT NULL, \"owner_type\" TEXT NULL, \"owner_id\" TEXT NULL, \"category\" TEXT NOT NULL, \"title\" TEXT NOT NULL, \"body\" TEXT NOT NULL, \"scheduled_at\" TEXT NULL, \"delivered_at\" TEXT NULL, \"read_at\" TEXT NULL, \"canceled_at\" TEXT NULL, \"platform_notification_id\" INTEGER NULL, \"created_at\" TEXT NOT NULL, \"updated_at\" TEXT NOT NULL, PRIMARY KEY (\"id\"));"
+          "sql": "CREATE TABLE IF NOT EXISTS \"notification_inbox\" (\"id\" TEXT NOT NULL, \"reminder_rule_id\" TEXT NULL REFERENCES reminder_rules (id) ON DELETE SET NULL, \"owner_type\" TEXT NULL, \"owner_id\" TEXT NULL, \"category\" TEXT NOT NULL, \"title\" TEXT NOT NULL, \"body\" TEXT NOT NULL, \"scheduled_at\" TEXT NULL, \"delivered_at\" TEXT NULL, \"read_at\" TEXT NULL, \"canceled_at\" TEXT NULL, \"platform_notification_id\" INTEGER NULL, \"created_at\" TEXT NOT NULL, \"updated_at\" TEXT NOT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "idx_reminder_rules_enabled_scheduled_at",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_reminder_rules_enabled_scheduled_at ON reminder_rules (enabled, scheduled_at)"
+        }
+      ]
+    },
+    {
+      "name": "idx_reminder_rules_owner",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_reminder_rules_owner ON reminder_rules (owner_type, owner_id)"
+        }
+      ]
+    },
+    {
+      "name": "idx_notification_inbox_unread",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_notification_inbox_unread ON notification_inbox (read_at, canceled_at)"
+        }
+      ]
+    },
+    {
+      "name": "idx_notification_inbox_owner",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_notification_inbox_owner ON notification_inbox (owner_type, owner_id)"
+        }
+      ]
+    },
+    {
+      "name": "idx_notification_inbox_schedule_delivery",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_notification_inbox_schedule_delivery ON notification_inbox (scheduled_at, delivered_at)"
         }
       ]
     }

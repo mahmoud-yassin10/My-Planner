@@ -14881,6 +14881,9 @@ class $NotificationInboxTable extends NotificationInbox
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES reminder_rules (id) ON DELETE SET NULL',
+    ),
   );
   static const VerificationMeta _ownerTypeMeta = const VerificationMeta(
     'ownerType',
@@ -15727,6 +15730,26 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ReminderRulesTable reminderRules = $ReminderRulesTable(this);
   late final $NotificationInboxTable notificationInbox =
       $NotificationInboxTable(this);
+  late final Index idxReminderRulesEnabledScheduledAt = Index(
+    'idx_reminder_rules_enabled_scheduled_at',
+    'CREATE INDEX idx_reminder_rules_enabled_scheduled_at ON reminder_rules (enabled, scheduled_at)',
+  );
+  late final Index idxReminderRulesOwner = Index(
+    'idx_reminder_rules_owner',
+    'CREATE INDEX idx_reminder_rules_owner ON reminder_rules (owner_type, owner_id)',
+  );
+  late final Index idxNotificationInboxUnread = Index(
+    'idx_notification_inbox_unread',
+    'CREATE INDEX idx_notification_inbox_unread ON notification_inbox (read_at, canceled_at)',
+  );
+  late final Index idxNotificationInboxOwner = Index(
+    'idx_notification_inbox_owner',
+    'CREATE INDEX idx_notification_inbox_owner ON notification_inbox (owner_type, owner_id)',
+  );
+  late final Index idxNotificationInboxScheduleDelivery = Index(
+    'idx_notification_inbox_schedule_delivery',
+    'CREATE INDEX idx_notification_inbox_schedule_delivery ON notification_inbox (scheduled_at, delivered_at)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -15757,7 +15780,22 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     templateInstallations,
     reminderRules,
     notificationInbox,
+    idxReminderRulesEnabledScheduledAt,
+    idxReminderRulesOwner,
+    idxNotificationInboxUnread,
+    idxNotificationInboxOwner,
+    idxNotificationInboxScheduleDelivery,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'reminder_rules',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('notification_inbox', kind: UpdateKind.update)],
+    ),
+  ]);
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
@@ -27388,6 +27426,40 @@ typedef $$ReminderRulesTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
+final class $$ReminderRulesTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $ReminderRulesTable, ReminderRuleRow> {
+  $$ReminderRulesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $NotificationInboxTable,
+    List<NotificationInboxRow>
+  >
+  _notificationInboxRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.notificationInbox,
+        aliasName: 'reminder_rules__id__notification_inbox__reminder_rule_id',
+      );
+
+  $$NotificationInboxTableProcessedTableManager get notificationInboxRefs {
+    final manager = $$NotificationInboxTableTableManager(
+      $_db,
+      $_db.notificationInbox,
+    ).filter((f) => f.reminderRuleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _notificationInboxRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
 class $$ReminderRulesTableFilterComposer
     extends Composer<_$AppDatabase, $ReminderRulesTable> {
   $$ReminderRulesTableFilterComposer({
@@ -27461,6 +27533,31 @@ class $$ReminderRulesTableFilterComposer
     column: $table.canceledAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  Expression<bool> notificationInboxRefs(
+    Expression<bool> Function($$NotificationInboxTableFilterComposer f) f,
+  ) {
+    final $$NotificationInboxTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notificationInbox,
+      getReferencedColumn: (t) => t.reminderRuleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotificationInboxTableFilterComposer(
+            $db: $db,
+            $table: $db.notificationInbox,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$ReminderRulesTableOrderingComposer
@@ -27593,6 +27690,32 @@ class $$ReminderRulesTableAnnotationComposer
     column: $table.canceledAt,
     builder: (column) => column,
   );
+
+  Expression<T> notificationInboxRefs<T extends Object>(
+    Expression<T> Function($$NotificationInboxTableAnnotationComposer a) f,
+  ) {
+    final $$NotificationInboxTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.notificationInbox,
+          getReferencedColumn: (t) => t.reminderRuleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$NotificationInboxTableAnnotationComposer(
+                $db: $db,
+                $table: $db.notificationInbox,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$ReminderRulesTableTableManager
@@ -27606,12 +27729,9 @@ class $$ReminderRulesTableTableManager
           $$ReminderRulesTableAnnotationComposer,
           $$ReminderRulesTableCreateCompanionBuilder,
           $$ReminderRulesTableUpdateCompanionBuilder,
-          (
-            ReminderRuleRow,
-            BaseReferences<_$AppDatabase, $ReminderRulesTable, ReminderRuleRow>,
-          ),
+          (ReminderRuleRow, $$ReminderRulesTableReferences),
           ReminderRuleRow,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool notificationInboxRefs})
         > {
   $$ReminderRulesTableTableManager(_$AppDatabase db, $ReminderRulesTable table)
     : super(
@@ -27689,9 +27809,47 @@ class $$ReminderRulesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ReminderRulesTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({notificationInboxRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (notificationInboxRefs) db.notificationInbox,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (notificationInboxRefs)
+                    await $_getPrefetchedData<
+                      ReminderRuleRow,
+                      $ReminderRulesTable,
+                      NotificationInboxRow
+                    >(
+                      currentTable: table,
+                      referencedTable: $$ReminderRulesTableReferences
+                          ._notificationInboxRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ReminderRulesTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).notificationInboxRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.reminderRuleId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
         ),
       );
 }
@@ -27706,12 +27864,9 @@ typedef $$ReminderRulesTableProcessedTableManager =
       $$ReminderRulesTableAnnotationComposer,
       $$ReminderRulesTableCreateCompanionBuilder,
       $$ReminderRulesTableUpdateCompanionBuilder,
-      (
-        ReminderRuleRow,
-        BaseReferences<_$AppDatabase, $ReminderRulesTable, ReminderRuleRow>,
-      ),
+      (ReminderRuleRow, $$ReminderRulesTableReferences),
       ReminderRuleRow,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool notificationInboxRefs})
     >;
 typedef $$NotificationInboxTableCreateCompanionBuilder =
     NotificationInboxCompanion Function({
@@ -27750,6 +27905,38 @@ typedef $$NotificationInboxTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
+final class $$NotificationInboxTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $NotificationInboxTable,
+          NotificationInboxRow
+        > {
+  $$NotificationInboxTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ReminderRulesTable _reminderRuleIdTable(_$AppDatabase db) => db
+      .reminderRules
+      .createAlias('notification_inbox__reminder_rule_id__reminder_rules__id');
+
+  $$ReminderRulesTableProcessedTableManager? get reminderRuleId {
+    final $_column = $_itemColumn<String>('reminder_rule_id');
+    if ($_column == null) return null;
+    final manager = $$ReminderRulesTableTableManager(
+      $_db,
+      $_db.reminderRules,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_reminderRuleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
 class $$NotificationInboxTableFilterComposer
     extends Composer<_$AppDatabase, $NotificationInboxTable> {
   $$NotificationInboxTableFilterComposer({
@@ -27761,11 +27948,6 @@ class $$NotificationInboxTableFilterComposer
   });
   ColumnFilters<String> get id => $composableBuilder(
     column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get reminderRuleId => $composableBuilder(
-    column: $table.reminderRuleId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -27828,6 +28010,29 @@ class $$NotificationInboxTableFilterComposer
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$ReminderRulesTableFilterComposer get reminderRuleId {
+    final $$ReminderRulesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.reminderRuleId,
+      referencedTable: $db.reminderRules,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReminderRulesTableFilterComposer(
+            $db: $db,
+            $table: $db.reminderRules,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationInboxTableOrderingComposer
@@ -27841,11 +28046,6 @@ class $$NotificationInboxTableOrderingComposer
   });
   ColumnOrderings<String> get id => $composableBuilder(
     column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get reminderRuleId => $composableBuilder(
-    column: $table.reminderRuleId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -27908,6 +28108,29 @@ class $$NotificationInboxTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$ReminderRulesTableOrderingComposer get reminderRuleId {
+    final $$ReminderRulesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.reminderRuleId,
+      referencedTable: $db.reminderRules,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReminderRulesTableOrderingComposer(
+            $db: $db,
+            $table: $db.reminderRules,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationInboxTableAnnotationComposer
@@ -27921,11 +28144,6 @@ class $$NotificationInboxTableAnnotationComposer
   });
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get reminderRuleId => $composableBuilder(
-    column: $table.reminderRuleId,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<String> get ownerType =>
       $composableBuilder(column: $table.ownerType, builder: (column) => column);
@@ -27970,6 +28188,29 @@ class $$NotificationInboxTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$ReminderRulesTableAnnotationComposer get reminderRuleId {
+    final $$ReminderRulesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.reminderRuleId,
+      referencedTable: $db.reminderRules,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReminderRulesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.reminderRules,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationInboxTableTableManager
@@ -27983,16 +28224,9 @@ class $$NotificationInboxTableTableManager
           $$NotificationInboxTableAnnotationComposer,
           $$NotificationInboxTableCreateCompanionBuilder,
           $$NotificationInboxTableUpdateCompanionBuilder,
-          (
-            NotificationInboxRow,
-            BaseReferences<
-              _$AppDatabase,
-              $NotificationInboxTable,
-              NotificationInboxRow
-            >,
-          ),
+          (NotificationInboxRow, $$NotificationInboxTableReferences),
           NotificationInboxRow,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool reminderRuleId})
         > {
   $$NotificationInboxTableTableManager(
     _$AppDatabase db,
@@ -28079,9 +28313,56 @@ class $$NotificationInboxTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$NotificationInboxTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({reminderRuleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (reminderRuleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.reminderRuleId,
+                                referencedTable:
+                                    $$NotificationInboxTableReferences
+                                        ._reminderRuleIdTable(db),
+                                referencedColumn:
+                                    $$NotificationInboxTableReferences
+                                        ._reminderRuleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ),
       );
 }
@@ -28096,16 +28377,9 @@ typedef $$NotificationInboxTableProcessedTableManager =
       $$NotificationInboxTableAnnotationComposer,
       $$NotificationInboxTableCreateCompanionBuilder,
       $$NotificationInboxTableUpdateCompanionBuilder,
-      (
-        NotificationInboxRow,
-        BaseReferences<
-          _$AppDatabase,
-          $NotificationInboxTable,
-          NotificationInboxRow
-        >,
-      ),
+      (NotificationInboxRow, $$NotificationInboxTableReferences),
       NotificationInboxRow,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool reminderRuleId})
     >;
 
 class $AppDatabaseManager {

@@ -3298,6 +3298,11 @@ final class Schema8 extends i0.VersionedSchema {
     templateInstallations,
     reminderRules,
     notificationInbox,
+    idxReminderRulesEnabledScheduledAt,
+    idxReminderRulesOwner,
+    idxNotificationInboxUnread,
+    idxNotificationInboxOwner,
+    idxNotificationInboxScheduleDelivery,
   ];
   late final Shape0 appSettings = Shape0(
     source: i0.VersionedTable(
@@ -3835,6 +3840,26 @@ final class Schema8 extends i0.VersionedSchema {
     ),
     alias: null,
   );
+  final i1.Index idxReminderRulesEnabledScheduledAt = i1.Index(
+    'idx_reminder_rules_enabled_scheduled_at',
+    'CREATE INDEX idx_reminder_rules_enabled_scheduled_at ON reminder_rules (enabled, scheduled_at)',
+  );
+  final i1.Index idxReminderRulesOwner = i1.Index(
+    'idx_reminder_rules_owner',
+    'CREATE INDEX idx_reminder_rules_owner ON reminder_rules (owner_type, owner_id)',
+  );
+  final i1.Index idxNotificationInboxUnread = i1.Index(
+    'idx_notification_inbox_unread',
+    'CREATE INDEX idx_notification_inbox_unread ON notification_inbox (read_at, canceled_at)',
+  );
+  final i1.Index idxNotificationInboxOwner = i1.Index(
+    'idx_notification_inbox_owner',
+    'CREATE INDEX idx_notification_inbox_owner ON notification_inbox (owner_type, owner_id)',
+  );
+  final i1.Index idxNotificationInboxScheduleDelivery = i1.Index(
+    'idx_notification_inbox_schedule_delivery',
+    'CREATE INDEX idx_notification_inbox_schedule_delivery ON notification_inbox (scheduled_at, delivered_at)',
+  );
 }
 
 class Shape22 extends i0.VersionedTable {
@@ -3978,7 +4003,8 @@ i1.GeneratedColumn<String> _column_95(String aliasedName) =>
       aliasedName,
       true,
       type: i1.DriftSqlType.string,
-      $customConstraints: 'NULL',
+      $customConstraints:
+          'NULL REFERENCES reminder_rules(id)ON DELETE SET NULL',
     );
 i1.GeneratedColumn<String> _column_96(String aliasedName) =>
     i1.GeneratedColumn<String>(

@@ -1,0 +1,3 @@
+- NanoRouter can receive Claude Code prompts
+- NanoRouter can write files
+- This is a lightweight model test

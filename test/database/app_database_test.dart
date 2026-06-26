@@ -6,6 +6,42 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:momentum_os/core/database/app_database.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite;
 
+const _expectedTables = <String>{
+  'app_settings',
+  'schema_metadata',
+  'areas',
+  'goals',
+  'projects',
+  'milestones',
+  'tasks',
+  'tags',
+  'entity_tags',
+  'notes',
+  'note_links',
+  'planner_events',
+  'time_blocks',
+  'focus_sessions',
+  'spaces',
+  'space_record_types',
+  'space_fields',
+  'space_statuses',
+  'space_records',
+  'space_record_links',
+  'space_saved_filters',
+  'space_saved_views',
+  'template_installations',
+  'reminder_rules',
+  'notification_inbox',
+};
+
+const _notificationIndexes = <String>{
+  'idx_reminder_rules_enabled_scheduled_at',
+  'idx_reminder_rules_owner',
+  'idx_notification_inbox_unread',
+  'idx_notification_inbox_owner',
+  'idx_notification_inbox_schedule_delivery',
+};
+
 void main() {
   test('database opens, reports current schema version, and closes', () async {
     final database = AppDatabase.inMemory();
@@ -16,61 +52,46 @@ void main() {
     expect(database.schemaVersion, appDatabaseSchemaVersion);
   });
 
-  test(
-    'fresh database creation includes foundation, productivity-core, planner, spaces, and template tables',
-    () async {
-      final database = AppDatabase.inMemory();
-      addTearDown(database.close);
+  test('fresh database contains all tables through schema version 8', () async {
+    final database = AppDatabase.inMemory();
+    addTearDown(database.close);
 
-      final tables = await database
-          .customSelect(
-            "SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name",
-          )
-          .get();
+    final rows = await database
+        .customSelect("SELECT name FROM sqlite_master WHERE type = 'table'")
+        .get();
+    final names = rows.map((row) => row.data['name'] as String).toSet();
 
-      expect(tables.map((row) => row.data['name']), contains('app_settings'));
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('schema_metadata'),
-      );
-      expect(tables.map((row) => row.data['name']), contains('areas'));
-      expect(tables.map((row) => row.data['name']), contains('goals'));
-      expect(tables.map((row) => row.data['name']), contains('projects'));
-      expect(tables.map((row) => row.data['name']), contains('milestones'));
-      expect(tables.map((row) => row.data['name']), contains('tasks'));
-      expect(tables.map((row) => row.data['name']), contains('tags'));
-      expect(tables.map((row) => row.data['name']), contains('entity_tags'));
-      expect(tables.map((row) => row.data['name']), contains('notes'));
-      expect(tables.map((row) => row.data['name']), contains('note_links'));
-      expect(tables.map((row) => row.data['name']), contains('planner_events'));
-      expect(tables.map((row) => row.data['name']), contains('time_blocks'));
-      expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
-      expect(tables.map((row) => row.data['name']), contains('spaces'));
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('space_record_types'),
-      );
-      expect(tables.map((row) => row.data['name']), contains('space_fields'));
-      expect(tables.map((row) => row.data['name']), contains('space_statuses'));
-      expect(tables.map((row) => row.data['name']), contains('space_records'));
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('space_record_links'),
-      );
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('space_saved_filters'),
-      );
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('space_saved_views'),
-      );
-      expect(
-        tables.map((row) => row.data['name']),
-        contains('template_installations'),
-      );
-    },
-  );
+    expect(names, containsAll(_expectedTables));
+  });
+
+  test('notification indexes and reminder foreign key are created', () async {
+    final database = AppDatabase.inMemory();
+    addTearDown(database.close);
+
+    final indexRows = await database
+        .customSelect("SELECT name FROM sqlite_master WHERE type = 'index'")
+        .get();
+    final indexNames = indexRows
+        .map((row) => row.data['name'] as String)
+        .toSet();
+
+    expect(indexNames, containsAll(_notificationIndexes));
+
+    final foreignKeys = await database
+        .customSelect("PRAGMA foreign_key_list('notification_inbox')")
+        .get();
+
+    expect(
+      foreignKeys.any(
+        (row) =>
+            row.data['table'] == 'reminder_rules' &&
+            row.data['from'] == 'reminder_rule_id' &&
+            row.data['to'] == 'id' &&
+            row.data['on_delete'] == 'SET NULL',
+      ),
+      isTrue,
+    );
+  });
 
   test('foreign keys are enabled for database connections', () async {
     final database = AppDatabase.inMemory();
@@ -92,7 +113,7 @@ void main() {
     expect(row.updatedAt.isUtc, isTrue);
   });
 
-  test('migration from version 1 creates template infrastructure tables', () async {
+  test('migration from version 1 creates all current tables', () async {
     final tempDirectory = await Directory.systemTemp.createTemp(
       'momentum_os_migration_test_',
     );
@@ -113,95 +134,32 @@ void main() {
     addTearDown(database.close);
     await database.verifyReady();
 
-    final tables = await database
-        .customSelect(
-          "SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name",
-        )
+    final rows = await database
+        .customSelect("SELECT name FROM sqlite_master WHERE type = 'table'")
         .get();
+    final names = rows.map((row) => row.data['name'] as String).toSet();
 
-    expect(tables.map((row) => row.data['name']), contains('areas'));
-    expect(tables.map((row) => row.data['name']), contains('goals'));
-    expect(tables.map((row) => row.data['name']), contains('projects'));
-    expect(tables.map((row) => row.data['name']), contains('milestones'));
-    expect(tables.map((row) => row.data['name']), contains('tasks'));
-    expect(tables.map((row) => row.data['name']), contains('tags'));
-    expect(tables.map((row) => row.data['name']), contains('entity_tags'));
-    expect(tables.map((row) => row.data['name']), contains('notes'));
-    expect(tables.map((row) => row.data['name']), contains('note_links'));
-    expect(tables.map((row) => row.data['name']), contains('planner_events'));
-    expect(tables.map((row) => row.data['name']), contains('time_blocks'));
-    expect(tables.map((row) => row.data['name']), contains('focus_sessions'));
-    expect(tables.map((row) => row.data['name']), contains('spaces'));
-    expect(
-      tables.map((row) => row.data['name']),
-      contains('space_record_types'),
-    );
-    expect(tables.map((row) => row.data['name']), contains('space_fields'));
-    expect(tables.map((row) => row.data['name']), contains('space_statuses'));
-    expect(tables.map((row) => row.data['name']), contains('space_records'));
-    expect(
-      tables.map((row) => row.data['name']),
-      contains('space_record_links'),
-    );
-    expect(
-      tables.map((row) => row.data['name']),
-      contains('space_saved_filters'),
-    );
-    expect(
-      tables.map((row) => row.data['name']),
-      contains('space_saved_views'),
-    );
-    expect(
-      tables.map((row) => row.data['name']),
-      contains('template_installations'),
-    );
+    expect(names, containsAll(_expectedTables));
   });
 
-  test(
-    'migration snapshots for version 1 and current version are checked in',
-    () {
-      final versionOneSchema = File(
-        'drift_schemas/app_database/drift_schema_v1.json',
-      );
-      final currentSchema = File(
-        'drift_schemas/app_database/drift_schema_v$appDatabaseSchemaVersion.json',
-      );
+  test('current migration snapshot contains notification schema', () {
+    final versionOneSchema = File(
+      'drift_schemas/app_database/drift_schema_v1.json',
+    );
+    final currentSchema = File(
+      'drift_schemas/app_database/drift_schema_v$appDatabaseSchemaVersion.json',
+    );
 
-      expect(versionOneSchema.existsSync(), isTrue);
-      expect(currentSchema.existsSync(), isTrue);
+    expect(versionOneSchema.existsSync(), isTrue);
+    expect(currentSchema.existsSync(), isTrue);
 
-      final schema = jsonDecode(currentSchema.readAsStringSync()) as Map;
+    final schema = jsonDecode(currentSchema.readAsStringSync()).toString();
 
-      expect(
-        currentSchema.path,
-        contains('drift_schema_v$appDatabaseSchemaVersion'),
-      );
-      expect(schema['_meta'], isA<Map>());
-      expect(schema.toString(), contains('app_settings'));
-      expect(schema.toString(), contains('schema_metadata'));
-      expect(schema.toString(), contains('areas'));
-      expect(schema.toString(), contains('goals'));
-      expect(schema.toString(), contains('projects'));
-      expect(schema.toString(), contains('milestones'));
-      expect(schema.toString(), contains('tasks'));
-      expect(schema.toString(), contains('tags'));
-      expect(schema.toString(), contains('entity_tags'));
-      expect(schema.toString(), contains('notes'));
-      expect(schema.toString(), contains('note_links'));
-      expect(schema.toString(), contains('planner_events'));
-      expect(schema.toString(), contains('time_blocks'));
-      expect(schema.toString(), contains('focus_sessions'));
-      expect(schema.toString(), contains('spaces'));
-      expect(schema.toString(), contains('space_record_types'));
-      expect(schema.toString(), contains('space_fields'));
-      expect(schema.toString(), contains('space_statuses'));
-      expect(schema.toString(), contains('space_records'));
-      expect(schema.toString(), contains('space_record_links'));
-      expect(schema.toString(), contains('space_saved_filters'));
-      expect(schema.toString(), contains('space_saved_views'));
-      expect(schema.toString(), contains('template_installations'));
-      expect(schema.toString(), contains('reminder_rules'));
-      expect(schema.toString(), contains('notification_inbox'));
-    },
-  );
+    for (final table in _expectedTables) {
+      expect(schema, contains(table));
+    }
+    for (final index in _notificationIndexes) {
+      expect(schema, contains(index));
+    }
+  });
 }

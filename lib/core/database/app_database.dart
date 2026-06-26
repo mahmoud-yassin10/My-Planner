@@ -7,6 +7,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite;
 
+import 'app_database.steps.dart';
+
 part 'app_database.g.dart';
 
 const appDatabaseSchemaVersion = 8;
@@ -395,6 +397,11 @@ class TemplateInstallations extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@TableIndex(
+  name: 'idx_reminder_rules_enabled_scheduled_at',
+  columns: {#enabled, #scheduledAt},
+)
+@TableIndex(name: 'idx_reminder_rules_owner', columns: {#ownerType, #ownerId})
 @DataClassName('ReminderRuleRow')
 class ReminderRules extends Table {
   TextColumn get id => text()();
@@ -415,10 +422,26 @@ class ReminderRules extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@TableIndex(
+  name: 'idx_notification_inbox_unread',
+  columns: {#readAt, #canceledAt},
+)
+@TableIndex(
+  name: 'idx_notification_inbox_owner',
+  columns: {#ownerType, #ownerId},
+)
+@TableIndex(
+  name: 'idx_notification_inbox_schedule_delivery',
+  columns: {#scheduledAt, #deliveredAt},
+)
 @DataClassName('NotificationInboxRow')
 class NotificationInbox extends Table {
   TextColumn get id => text()();
-  TextColumn get reminderRuleId => text().nullable()();
+  TextColumn get reminderRuleId => text().nullable().references(
+    ReminderRules,
+    #id,
+    onDelete: KeyAction.setNull,
+  )();
   TextColumn get ownerType => text().nullable()();
   TextColumn get ownerId => text().nullable()();
   TextColumn get category => text()();
@@ -482,45 +505,65 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      onUpgrade: (migrator, from, to) async {
-        if (from < 2) {
-          await migrator.createTable(areas);
-          await migrator.createTable(goals);
-          await migrator.createTable(projects);
-          await migrator.createTable(milestones);
-        }
-        if (from < 3) {
-          await migrator.createTable(tasks);
-          await migrator.createTable(tags);
-          await migrator.createTable(entityTags);
-          await migrator.createTable(notes);
-          await migrator.createTable(noteLinks);
-        }
-        if (from < 4) {
-          await migrator.createTable(plannerEvents);
-          await migrator.createTable(timeBlocks);
-        }
-        if (from < 5) {
-          await migrator.createTable(focusSessions);
-        }
-        if (from < 6) {
-          await migrator.createTable(spaces);
-          await migrator.createTable(spaceRecordTypes);
-          await migrator.createTable(spaceFields);
-          await migrator.createTable(spaceStatuses);
-          await migrator.createTable(spaceRecords);
-          await migrator.createTable(spaceRecordLinks);
-          await migrator.createTable(spaceSavedFilters);
-          await migrator.createTable(spaceSavedViews);
-        }
-        if (from < 7) {
-          await migrator.createTable(templateInstallations);
-        }
-        if (from < 8) {
-          await migrator.createTable(reminderRules);
-          await migrator.createTable(notificationInbox);
-        }
-      },
+      onUpgrade: stepByStep(
+        from1To2: (migrator, schema) async {
+          await migrator.createTable(schema.areas);
+          await migrator.createTable(schema.goals);
+          await migrator.createTable(schema.projects);
+          await migrator.createTable(schema.milestones);
+        },
+        from2To3: (migrator, schema) async {
+          await migrator.createTable(schema.tasks);
+          await migrator.createTable(schema.tags);
+          await migrator.createTable(schema.entityTags);
+          await migrator.createTable(schema.notes);
+          await migrator.createTable(schema.noteLinks);
+        },
+        from3To4: (migrator, schema) async {
+          await migrator.createTable(schema.plannerEvents);
+          await migrator.createTable(schema.timeBlocks);
+        },
+        from4To5: (migrator, schema) async {
+          await migrator.createTable(schema.focusSessions);
+        },
+        from5To6: (migrator, schema) async {
+          await migrator.createTable(schema.spaces);
+          await migrator.createTable(schema.spaceRecordTypes);
+          await migrator.createTable(schema.spaceFields);
+          await migrator.createTable(schema.spaceStatuses);
+          await migrator.createTable(schema.spaceRecords);
+          await migrator.createTable(schema.spaceRecordLinks);
+          await migrator.createTable(schema.spaceSavedFilters);
+          await migrator.createTable(schema.spaceSavedViews);
+        },
+        from6To7: (migrator, schema) async {
+          await migrator.createTable(schema.templateInstallations);
+        },
+        from7To8: (migrator, schema) async {
+          await migrator.createTable(schema.reminderRules);
+          await migrator.createTable(schema.notificationInbox);
+          await customStatement(
+            'CREATE INDEX IF NOT EXISTS idx_reminder_rules_enabled_scheduled_at '
+            'ON reminder_rules (enabled, scheduled_at)',
+          );
+          await customStatement(
+            'CREATE INDEX IF NOT EXISTS idx_reminder_rules_owner '
+            'ON reminder_rules (owner_type, owner_id)',
+          );
+          await customStatement(
+            'CREATE INDEX IF NOT EXISTS idx_notification_inbox_unread '
+            'ON notification_inbox (read_at, canceled_at)',
+          );
+          await customStatement(
+            'CREATE INDEX IF NOT EXISTS idx_notification_inbox_owner '
+            'ON notification_inbox (owner_type, owner_id)',
+          );
+          await customStatement(
+            'CREATE INDEX IF NOT EXISTS idx_notification_inbox_schedule_delivery '
+            'ON notification_inbox (scheduled_at, delivered_at)',
+          );
+        },
+      ),
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');
         await into(schemaMetadata).insertOnConflictUpdate(

@@ -223,6 +223,33 @@ Initial validation completed successfully before documentation population:
 | Notifications foundation screen loading, content, empty, and error states | Complete |
 | Focused service, provider, and widget tests | Complete |
 
+## Phase 7B reminder scheduling foundation completion status
+
+| Deliverable | Status |
+|---|---|
+| Replaceable platform-adapter abstraction for scheduling/canceling generic intents | Complete |
+| Local notification service with validation before delegating to adapter | Complete |
+| Deterministic notification identifier strategy for scheduled intents | Complete |
+| Permission-denied and unavailable-platform safe failure behavior | Complete |
+| Schedule, cancel, and reschedule operations for generic intents | Complete |
+| Safe failure types and structured logging for scheduling operations | Complete |
+| Tests using injected fake adapters | Complete |
+| Documentation updates | Complete |
+
+## Phase 7C1 notification persistence schema completion status
+
+| Deliverable | Status |
+|---|---|
+| Database schema version 8 | Complete |
+| `reminder_rules` Drift table with indexes | Complete |
+| `notification_inbox` Drift table with foreign key to `reminder_rules` | Complete |
+| `ON DELETE SET NULL` foreign key behavior | Complete |
+| Five notification indexes created | Complete |
+| Generated `stepByStep` migration from v7 to v8 | Complete |
+| Fresh database tests verify schema version 8 | Complete |
+| Migration tests verify v7 → v8 data preservation | Complete |
+| Domain models for reminder rules and notification inbox items | Complete |
+
 ## Implemented application functionality
 
 The default Flutter counter starter application has been replaced with the first Momentum OS app shell.
@@ -262,6 +289,10 @@ Implemented foundation behavior:
 - Bundled template descriptors are available for planned Phase 6 categories without creating records, example data, or personal workflows.
 - Notification foundation contracts model generic intents, permission state, safe validation, and a replaceable service boundary without scheduling platform notifications.
 - The Notifications route renders foundation permission and empty-inbox states from the notification service provider.
+- Schema version 8 adds `reminder_rules` and `notification_inbox` tables for notification persistence.
+- `reminder_rules` stores scheduled notification rules with owner, category, title, body, scheduled time, enabled state, recurrence, and platform notification ID.
+- `notification_inbox` stores delivered/canceled notification items with optional link to `reminder_rules` via `ON DELETE SET NULL` foreign key.
+- Five indexes support notification queries: enabled/scheduled-at, owner, unread, owner, and schedule-delivery.
 - Database startup is verified through the existing recoverable startup architecture.
 - Settings persistence is exposed through a typed repository interface rather than arbitrary key/value access.
 - UUID and UTC clock services are replaceable through Riverpod.
@@ -304,4 +335,4 @@ Riverpod, GoRouter, centralized themes, reusable UI states, structured logging, 
 
 ## Next milestone
 
-Complete Task `PHASE-7B-REMINDER-SCHEDULING`: add local reminder scheduling behind notification service boundaries.
+Complete Task `PHASE-7C2-NOTIFICATION-REPOSITORY`: implement Drift-backed repository CRUD and provider tests for reminder rules and notification inbox items.

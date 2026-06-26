@@ -2,56 +2,53 @@
 
 ## Task ID
 
-`PHASE-7B-REMINDER-SCHEDULING`
+`PHASE-7C2-NOTIFICATION-REPOSITORY`
 
 ## Goal
 
-Add local reminder scheduling behind the Phase 7A notification service boundary.
+Implement Drift-backed repository CRUD and provider tests for reminder rules and notification inbox items.
 
-Focus on a replaceable platform-adapter shape, safe scheduling and cancellation contracts, permission-denial handling, and tests that prove scheduling behavior without wiring feature data into reminders yet.
+Focus on repository operations behind clean domainサーバント boundaries, with full test coverage for create, read, update, delete, watch streams, and failure translation.
 
 ## Scope
 
 Included:
 
-- Platform-notification adapter abstraction for scheduling and canceling generic notification intents
-- Local notification service implementation that delegates to the adapter only after validation
-- Deterministic notification identifier strategy for scheduled intents
-- Permission-denied and unavailable-platform behavior
-- Schedule, cancel, and reschedule operations for generic intents
-- Safe failure types and structured logging for scheduling operations
-- Tests using injected fake adapters; do not depend on console output
+- ReminderRules repository with CRUD, watch streams, and validation
+- NotificationInbox repository with CRUD, watch streams, and validation
+- Repository boundary tests with in-memory database
+- Provider tests for dependency replacement
+- Failure translation to PersistenceFailure
 - Documentation updates
 
 Excluded:
 
-- Task, event, goal, template, Space, AI, or automation reminders
-- Reminder rules table
-- Notification inbox persistence
-- Background jobs
-- Snooze behavior
+- Platform notification adapters
+- Android notification channels
+- Runtime permission configuration
+- Workmanager
+- Snooze
 - Quiet hours
+- Background reconciliation
 - Automation rules or runs
-- Search indexing
-- Analytics dashboards or charts
-- Backup files or restore flows
+- Analytics
+- AI
 - Cloud synchronization
 
 ## Architecture Requirements
 
 - Read all required repository documentation before editing.
-- Preserve Phase 1 navigation, Phase 2 persistence behavior, Phase 3 productivity-core behavior, Phase 4 Planner behavior, Phase 5 Spaces behavior, Phase 6 template behavior, and Phase 7A notification foundation behavior.
-- Keep widgets and screens away from platform APIs.
+- Preserve Phase 1-7C1 behavior.
+- Keep widgets and screens away from repository implementations.
 - Keep domain contracts free of Flutter presentation packages.
-- Keep scheduling behind replaceable service/provider boundaries.
-- Do not schedule reminders from feature records in this phase.
-- Do not add persistence unless the task is explicitly updated to include reminder rules or notification inbox storage.
+- Use existing IdService for UUID v4 identifiers.
+- Use existing UtcClock for persisted timestamps.
+- Use existing AppLogger for structured logging.
 
 ## Files likely affected
 
-- `lib/core/notifications/`
-- `lib/features/notifications/`
-- `test/core/`
+- `lib/features/notifications/domain/`
+- `lib/features/notifications/data/`
 - `test/features/notifications/`
 - `PROJECT_STATUS.md`
 - `NEXT_TASK.md`
@@ -65,29 +62,25 @@ Excluded:
 
 Run from the Flutter project root:
 
-- `flutter pub get`
-- `dart run build_runner build --delete-conflicting-outputs`
-- `dart run drift_dev make-migrations`
 - `dart format .`
 - `flutter analyze`
 - `flutter test`
-- `flutter build apk --debug`
 - `git diff --check`
 - `git status --short`
 
 ## Acceptance criteria
 
-- Generic notification intents can be scheduled, canceled, and rescheduled through a replaceable boundary.
-- Invalid intents and permission-denied states fail safely and log through structured logging.
-- Tests prove adapter calls without depending on real platform notifications.
-- No task/event/goal/template/Space data schedules reminders yet.
+- Reminder rules can be created, read, updated, deleted, and watched through repository boundary.
+- Notification inbox items can be created, read, updated, deleted, and watched through repository boundary.
+- Invalid在全国 Crud operations validate required fields and translate failures safely.
+- Watch streams emit updates reactively.
+- Tests prove repository behavior without depending on real platform notifications.
 - `flutter analyze` reports no issues.
 - All tests pass.
-- Debug APK builds.
 - Documentation is updated.
 
 ## Stop condition
 
-Stop after Phase 7B reminder scheduling foundation passes validation and documentation is current.
+Stop after Phase 7C2 notification repository CRUD and provider tests pass validation and documentation is current.
 
-Do not implement feature-driven reminders, reminder rules persistence, notification inbox persistence, background jobs, snooze, quiet hours, automations, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.
+Do not implement platform notification adapters, Android notification channels, snooze, quiet hours, automations, AI, Search indexing, Analytics, Backup/Restore, or Cloud functionality.

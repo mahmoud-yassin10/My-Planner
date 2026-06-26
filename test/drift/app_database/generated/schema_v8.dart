@@ -12316,7 +12316,7 @@ class NotificationInbox extends Table
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    $customConstraints: 'NULL',
+    $customConstraints: 'NULL REFERENCES reminder_rules(id)ON DELETE SET NULL',
   );
   late final GeneratedColumn<String> ownerType = GeneratedColumn<String>(
     'owner_type',
@@ -13016,6 +13016,26 @@ class DatabaseAtV8 extends GeneratedDatabase {
       TemplateInstallations(this);
   late final ReminderRules reminderRules = ReminderRules(this);
   late final NotificationInbox notificationInbox = NotificationInbox(this);
+  late final Index idxReminderRulesEnabledScheduledAt = Index(
+    'idx_reminder_rules_enabled_scheduled_at',
+    'CREATE INDEX idx_reminder_rules_enabled_scheduled_at ON reminder_rules (enabled, scheduled_at)',
+  );
+  late final Index idxReminderRulesOwner = Index(
+    'idx_reminder_rules_owner',
+    'CREATE INDEX idx_reminder_rules_owner ON reminder_rules (owner_type, owner_id)',
+  );
+  late final Index idxNotificationInboxUnread = Index(
+    'idx_notification_inbox_unread',
+    'CREATE INDEX idx_notification_inbox_unread ON notification_inbox (read_at, canceled_at)',
+  );
+  late final Index idxNotificationInboxOwner = Index(
+    'idx_notification_inbox_owner',
+    'CREATE INDEX idx_notification_inbox_owner ON notification_inbox (owner_type, owner_id)',
+  );
+  late final Index idxNotificationInboxScheduleDelivery = Index(
+    'idx_notification_inbox_schedule_delivery',
+    'CREATE INDEX idx_notification_inbox_schedule_delivery ON notification_inbox (scheduled_at, delivered_at)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -13046,7 +13066,22 @@ class DatabaseAtV8 extends GeneratedDatabase {
     templateInstallations,
     reminderRules,
     notificationInbox,
+    idxReminderRulesEnabledScheduledAt,
+    idxReminderRulesOwner,
+    idxNotificationInboxUnread,
+    idxNotificationInboxOwner,
+    idxNotificationInboxScheduleDelivery,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'reminder_rules',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('notification_inbox', kind: UpdateKind.update)],
+    ),
+  ]);
   @override
   int get schemaVersion => 8;
   @override

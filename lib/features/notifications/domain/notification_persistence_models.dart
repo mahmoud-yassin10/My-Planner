@@ -1,7 +1,7 @@
-/// Domain models for notification persistence.
-///
-/// These are pure Dart classes representing reminder rules and notification
-/// inbox items. They do not import Drift and are safe to use in domain layers.
+// Domain models for notification persistence.
+//
+// These are pure Dart classes representing reminder rules and notification
+// inbox items. They do not import Drift and are safe to use in domain layers.
 
 /// Reminder-rule domain model.
 ///
